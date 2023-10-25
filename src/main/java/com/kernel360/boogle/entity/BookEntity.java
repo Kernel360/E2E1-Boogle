@@ -1,7 +1,10 @@
 package com.kernel360.boogle.entity;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,33 +17,42 @@ import java.time.LocalDateTime;
 public class BookEntity extends CommonEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BOOK_ID")
+    @Column(name = "book_id")
     private Long bookId;
 
-    @Column(name = "BOOK_TITLE")
+    @Column(name = "book_title")
     private String bookTitle;
 
-    @Column(name = "CATEGORY_ID")
+    @Column(name = "category_id")
     private Long categoryId;
 
-    @Column(name = "THUMBNAIL_URL")
+    @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
-    @Column(name = "AUTHOR")
+    @Column(name = "author")
     private String author;
 
-    @Column(name = "PUBLISHER")
+    @Column(name = "publisher")
     private String publisher;
 
-    @Column(name = "ISBN")
+    @Column(name = "isbn")
     private Long isbn;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "PUBLISH_DATE")
+    @Column(name = "publish_date")
     private LocalDateTime publishDate;
 
-    @Column(name = "SALES_PRICE")
+    @Column(name = "sales_price")
     private int salesPrice;
+
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    @Column(name = "deleted_yn")
+    private String deletedYn;
 }

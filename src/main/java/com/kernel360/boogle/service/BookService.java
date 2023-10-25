@@ -1,8 +1,8 @@
 package com.kernel360.boogle.service;
 
+import com.kernel360.boogle.dto.BookDTO;
 import com.kernel360.boogle.entity.BookEntity;
 import com.kernel360.boogle.repository.book.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -13,10 +13,14 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 public class BookService {
-
     private final BookRepository bookRepository;
 
     public List<BookEntity> findAllBook() {
         return bookRepository.findAll();
     }
+
+    public void saveBook(BookDTO book) {
+        bookRepository.save(book.getBookEntity());
+    }
+
 }
