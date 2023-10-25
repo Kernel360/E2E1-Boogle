@@ -4,10 +4,22 @@ spring:
     properties:
       format_sql: true
       dialect: org.hibernate.dialect.MySQL8Dialect
-  #    hibernate:
-  #      ddl-auto: validate
+      hibernate:
+        ddl-auto: validate
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     driver-class name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    username: root
-    password: ""
+    url: jdbc:mysql://e2e-boogle-db.ck74at0lmilr.us-east-1.rds.amazonaws.com:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: admin
+    password: admin123$
+#  thymeleaf:
+#    prefix: classpath:templates/
+#    check-template-location: true
+#    suffix: html
+#    mode: HTML
+#    cache: false
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ANT_PATH_MATCHER

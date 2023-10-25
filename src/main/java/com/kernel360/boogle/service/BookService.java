@@ -1,6 +1,6 @@
 package com.kernel360.boogle.service;
 
-import com.kernel360.boogle.entity.Book;
+import com.kernel360.boogle.entity.BookEntity;
 import com.kernel360.boogle.repository.book.BookRepository;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -14,7 +14,7 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public List<Book> findAllBook() {
+    public List<BookEntity> findAllBook() {
         return bookRepository.findAll();
     }
 }
