@@ -3,5 +3,10 @@ package com.kernel360.boogle.repository.book;
 import com.kernel360.boogle.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
+    BookEntity save(BookEntity book);
+
+    List<BookEntity> findAll();
 }
