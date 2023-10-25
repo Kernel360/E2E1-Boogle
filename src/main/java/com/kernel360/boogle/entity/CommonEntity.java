@@ -11,14 +11,17 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class CommonEntity {
+    @Column(name = "CREATED_BY")
     private String createdBy;
     @CreatedDate
-    @Column(name = "created_at", columnDefinition = "DATETIME")
+    @Column(name = "CREATED_AT", columnDefinition = "DATETIME")
     private LocalDateTime createdAt;
+    @Column(name = "LAST_MODIFIED_BY")
     private String lastModifiedBy;
     @LastModifiedDate
-    @Column(name = "modified_at", columnDefinition = "DATETIME")
+    @Column(name = "LAST_MODIFIED_AT", columnDefinition = "DATETIME")
     private LocalDateTime lastModifiedAt;
-    private boolean isDeleted;
+
+    @Column(name = "DELETED_AT")
     private LocalDateTime deletedAt;
 }
