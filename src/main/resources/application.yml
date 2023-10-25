@@ -10,4 +10,4 @@ spring:
     driver-class name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: root
-    password: admin1234
+    password: ""
