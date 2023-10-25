@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 필요한 스타일시트 및 스크립트 로드 -->
+</head>
+<body>
+<div>
+    <input type="text" id="searchInput" placeholder="도서 검색">
+    <button id="searchButton"><i class="fa fa-search"></i></button>
+</div>
+<div th:each="book : ${books}">
+    <div class="book-box">
+        <img th:src="${book.imageUrl}" alt="Book Cover">
+        <h3 th:text="${book.title}"></h3>
+        <p th:text="${book.author}"></p>
+        <p th:text="${book.publisher}"></p>
+        <p th:text="${book.publicationDate}"></p>
+        <p th:text="${book.price}"></p>
+        <p th:text="${book.likes} Likes"></p>
+    </div>
+</div>
+</body>
+</html>
