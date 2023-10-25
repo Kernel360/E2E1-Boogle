@@ -14,12 +14,3 @@ spring:
     url: jdbc:mysql://e2e-boogle-db.ck74at0lmilr.us-east-1.rds.amazonaws.com:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: admin
     password: ""
-#  thymeleaf:
-#    prefix: classpath:templates/
-#    check-template-location: true
-#    suffix: html
-#    mode: HTML
-#    cache: false
-#  mvc:
-#    pathmatch:
-#      matching-strategy: ANT_PATH_MATCHER

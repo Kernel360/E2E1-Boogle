@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class BookDTO {
-    private Long id;
+    private Long bookId;
     private String bookTitle;
-    private Long thumbnailUrl;
+    private String thumbnailUrl;
     private String author;
     private String publisher;
     private LocalDateTime publishDate;
