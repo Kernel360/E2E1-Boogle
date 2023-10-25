@@ -13,7 +13,7 @@ spring:
     driver-class name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://e2e-boogle-db.ck74at0lmilr.us-east-1.rds.amazonaws.com:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: admin
-    password: admin123$
+    password: ""
 #  thymeleaf:
 #    prefix: classpath:templates/
 #    check-template-location: true
