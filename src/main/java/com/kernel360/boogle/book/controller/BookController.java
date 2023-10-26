@@ -2,7 +2,9 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.model.BookRequest;
 import com.kernel360.boogle.book.service.BookService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,6 +15,15 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+
+    @Value("${aladin.api.ttb-key}")
+    private String aladinApiKey;
+
+    @Value("${aladin.api.book-list.url}")
+    private String aladinBookListUrl;
+
+    @Value("${aladin.api.book-detail.url}")
+    private String aladinBookDetailUrl;
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
@@ -53,5 +64,19 @@ public class BookController {
         List<BookEntity> bookList = new ArrayList<>(bookService.findBookBySearchWord(searchWord));
         mv.addObject("books", bookList);
         return mv;
+    }
+
+    @GetMapping("/admin/book-detail")
+    public ModelAndView getBookDetail(@RequestParam Long bookId) {
+        ModelAndView mv = new ModelAndView("amendBook");
+        BookEntity book = bookService.findById(bookId).get();
+        mv.addObject("book", book);
+        return mv;
+    }
+    @GetMapping("/test/book")
+    public void getAladinBook(BookRequest request) { //List<BookDTO>
+//        System.out.println("aladinApiKey= " + aladinApiKey);
+//        System.out.println("aladinBookListUrl= " + aladinBookListUrl);
+//        System.out.println("aladinBookDetailUrl= " + aladinBookDetailUrl);
     }
 }

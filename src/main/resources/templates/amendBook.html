@@ -44,52 +44,93 @@
     #saveButton i {
       font-size: 18px;
     }
+    input[readonly] {
+      background-color: #eee;
+      color: #777;
+      border: 1px solid #ddd;
+    }
   </style>
+  <script type="text/javascript">
+    function save() {
+      let data = {
+        bookEntity: {
+          bookId: document.getElementById('book_id').value,
+          bookTitle: document.getElementById('book_title').value,
+          categoryId: document.getElementById('category_id').value,
+          thumbnailUrl: document.getElementById('thumbnail_url').value,
+          author: document.getElementById('author').value,
+          publisher: document.getElementById('publisher').value,
+          isbn: document.getElementById('isbn').value,
+          description: document.getElementById('description').value,
+          publishDate: document.getElementById('publish_date').value.replaceAll(".", "-") + "T10:00:00.000Z",
+          salesPrice: document.getElementById('sales_price').value,
+          createdBy: document.getElementById('created_by').value
+        }
+      };
+
+      let xhr = new XMLHttpRequest();
+      xhr.open('PATCH', '/admin/book', true);
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          alert('도서 정보가 저장되었습니다.');
+        } else {
+          alert('도서 정보 저장 중 오류가 발생했습니다.');
+        }
+      };
+
+      xhr.send(JSON.stringify(data));
+    }
+  </script>
 </head>
 <body>
 <div class="container">
   <div class="row">
     <div class="col-8">
+      <h1 class="text-center">도서 정보</h1>
       <div class="form-container">
-        <form th:action="@{'/api/updateBook/' + ${book_id}}" method="post">
+        <form th:action="@{'/api/updateBook/' + ${bookId}}" method="post">
+          <input type="hidden" id="book_id" name="book_id" th:value="${book.bookId}">
+          <input type="hidden" id="created_by" name="created_by" th:value="${book.createdBy}">
           <div class="form-group">
             <label for="book_title">도서 제목</label>
-            <input type="text" id="book_title" name="book_title" th:value="${book_title}">
+            <input th:readonly="${book.bookId != null}" type="text" id="book_title" name="book_title" th:value="${book.bookTitle}">
           </div>
           <div class="form-group">
             <label for="category_id">카테고리 ID</label>
-            <input type="text" id="category_id" name="category_id" th:value="${category_id}">
+            <input type="text" id="category_id" name="category_id" th:value="${book.categoryId}">
           </div>
           <div class="form-group">
             <label for="thumbnail_url">썸네일 URL</label>
-            <input type="text" id="thumbnail_url" name="thumbnail_url" th:value="${thumbnail_url}">
+            <input th:readonly="${book.bookId != null}" type="text" id="thumbnail_url" name="thumbnail_url" th:value="${book.thumbnailUrl}">
           </div>
           <div class="form-group">
             <label for="author">저자</label>
-            <input type="text" id="author" name="author" th:value="${author}">
+            <input th:readonly="${book.bookId != null}" type="text" id="author" name="author" th:value="${book.author}">
           </div>
           <div class="form-group">
             <label for="publisher">출판사</label>
-            <input type="text" id="publisher" name="publisher" th:value="${publisher}">
+            <input type="text" id="publisher" name="publisher" th:value="${book.publisher}">
           </div>
           <div class="form-group">
             <label for="isbn">ISBN</label>
-            <input type="text" id="isbn" name="isbn" th:value="${isbn}">
+            <input th:readonly="${book.bookId != null}" type="text" id="isbn" name="isbn" th:value="${book.isbn}">
           </div>
           <div class="form-group">
-            <label for="description">도서 설명</label><br>
-            <textarea id="description" name="description" th:text="${description}"></textarea>
+            <label for="description">도서 요약</label><br>
+            <textarea id="description" name="description" style="width: 100%;" th:text="${book.description}"></textarea>
           </div>
           <div class="form-group">
             <label for="publish_date">출판일</label>
-            <input type="date" id="publish_date" name="publish_date" th:value="${publish_date}">
+            <input th:readonly="${book.bookId != null}" id="publish_date" name="publish_date" th:value="${#temporals.format(book.publishDate, 'yyyy.MM.dd')}">
           </div>
           <div class="form-group">
             <label for="sales_price">판매 가격</label>
-            <input type="text" id="sales_price" name="sales_price" th:value="${sales_price}">
+            <input th:readonly="${book.bookId != null}" type="text" id="sales_price" name="sales_price" th:value="${book.salesPrice}">
           </div>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary" th:onclick="|save();|">수정</button>
+            <button type="button" class="btn btn-primary" th:onclick="|save();|">저장</button>
             <button type="button" class="btn btn-secondary" th:onclick="|cancel();|">취소</button>
           </div>
         </form>
