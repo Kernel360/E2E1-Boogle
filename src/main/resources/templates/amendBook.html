@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>도서 정보</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h1 class="text-center">도서 정보</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          도서 정보
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">도서 제목</h5>
+          <input type="text" class="form-control" th:field="*{도서제목}" />
+          <h5 class="card-title">저자</h5>
+          <input type="text" class="form-control" th:field="*{저자}" />
+          <h5 class="card-title">출판사</h5>
+          <input type="text" class="form-control" th:field="*{출판사}" />
+          <h5 class="card-title">출판일</h5>
+          <input type="date" class="form-control" th:field="*{출판일}" />
+          <h5 class="card-title">판매 가격</h5>
+          <input type="number" class="form-control" th:field="*{판매가격}" />
+          <br>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary" th:onclick="|save();|">수정</button>
+            <button type="button" class="btn btn-secondary" th:onclick="|cancel();|">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
