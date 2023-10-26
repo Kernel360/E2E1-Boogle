@@ -64,8 +64,4 @@ public class BookController {
         mv.addObject("book", book);
         return mv;
     }
-    @GetMapping("/test/book")
-    public void getAladinBook(BookRequest request) { //List<BookDTO>
-
-    }
 }
