@@ -1,6 +1,6 @@
-package com.kernel360.boogle.dto;
+package com.kernel360.boogle.book.model;
 
-import com.kernel360.boogle.entity.BookEntity;
+import com.kernel360.boogle.book.db.BookEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.kernel360.boogle.service;
+package com.kernel360.boogle.book.service;
 
-import com.kernel360.boogle.dto.BookDTO;
-import com.kernel360.boogle.entity.BookEntity;
-import com.kernel360.boogle.repository.book.BookRepository;
+import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.db.BookEntity;
+import com.kernel360.boogle.book.db.BookRepository;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package com.kernel360.boogle.entity;
+package com.kernel360.boogle.book.db;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

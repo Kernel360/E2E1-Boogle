@@ -1,4 +1,4 @@
-package com.kernel360.boogle.entity;
+package com.kernel360.boogle.book.db;
 
 
 import lombok.AllArgsConstructor;
