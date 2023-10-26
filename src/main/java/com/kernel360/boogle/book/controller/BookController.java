@@ -16,15 +16,6 @@ public class BookController {
 
     private final BookService bookService;
 
-    @Value("${aladin.api.ttb-key}")
-    private String aladinApiKey;
-
-    @Value("${aladin.api.book-list.url}")
-    private String aladinBookListUrl;
-
-    @Value("${aladin.api.book-detail.url}")
-    private String aladinBookDetailUrl;
-
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
@@ -75,8 +66,6 @@ public class BookController {
     }
     @GetMapping("/test/book")
     public void getAladinBook(BookRequest request) { //List<BookDTO>
-//        System.out.println("aladinApiKey= " + aladinApiKey);
-//        System.out.println("aladinBookListUrl= " + aladinBookListUrl);
-//        System.out.println("aladinBookDetailUrl= " + aladinBookDetailUrl);
+
     }
 }
