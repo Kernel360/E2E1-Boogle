@@ -1,6 +1,5 @@
-package com.kernel360.boogle.repository.book;
+package com.kernel360.boogle.book.db;
 
-import com.kernel360.boogle.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
