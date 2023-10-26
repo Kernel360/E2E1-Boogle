@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -23,4 +26,13 @@ public class BookService {
         bookRepository.save(book.getBookEntity());
     }
 
+    public List<BookEntity> findBookBySearchWord(String searchWord) {
+        Set<BookEntity> uniqueBooks = new HashSet<>();
+
+        uniqueBooks.addAll(bookRepository.findBookEntitiesByBookTitleContaining(searchWord));
+        uniqueBooks.addAll(bookRepository.findBookEntitiesByAuthorContaining(searchWord));
+        uniqueBooks.addAll(bookRepository.findBookEntitiesByPublisherContaining(searchWord));
+
+        return new ArrayList<>(uniqueBooks);
+    }
 }
