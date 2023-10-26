@@ -1,0 +1,26 @@
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: validate
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: root
+    password: ""
+
+thymeleaf:
+  cache: false
+  check-template-location: true
+  prefix: classpath:/templates/
+  suffix: .html
+  enabled: true
