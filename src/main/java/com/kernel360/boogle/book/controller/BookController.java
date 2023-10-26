@@ -52,7 +52,6 @@ public class BookController {
         ModelAndView mv = new ModelAndView("bookSearch");
         List<BookEntity> bookList = new ArrayList<>(bookService.findBookBySearchWord(searchWord));
         mv.addObject("books", bookList);
-        System.out.println(searchWord);
         return mv;
     }
 }
