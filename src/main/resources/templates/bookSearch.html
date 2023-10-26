@@ -43,6 +43,18 @@
         #searchButton i {
             font-size: 18px;
         }
+
+        .book-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .book-table th,
+        .book-table td {
+            border: none; /* 칼럼 간의 구분선 제거 */
+            padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
+            text-align: left;
+        }
     </style>
 </head>
 <body>
@@ -51,26 +63,33 @@
         <div class="col-8">
             <form th:action="@{/api/bookSearch}" method="get">
                 <input type="text" id="searchInput" placeholder="도서 검색" name="searchWord">
+                <button id="searchButton" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
             </form>
-        </div>
-        <div class="col-4">
-            <button id="searchButton" type="submit">
-                <i class="fa fa-search"></i>
-            </button>
         </div>
     </div>
     <div class="row">
-        <div th:each="book : ${books}" class="col-md-4">
-            <div class="book-box">
-                <!-- <img th:src="${book.imageUrl}" alt="Book Cover"> -->
-                <h3 th:text="${book.bookTitle}"></h3>
-                <p th:text="${book.author}"></p>
-                <p th:text="${book.publisher}"></p>
-                <p th:text="${book.publishDate}"></p>
-                <p th:text="${book.salesPrice}"></p>
-                <!-- <p th:text="${book.likes} Likes"></p> -->
-            </div>
-        </div>
+        <table class="book-table">
+            <thead>
+            <tr>
+                <th>도서 제목</th>
+                <th>저자</th>
+                <th>출판사</th>
+                <th>출판일</th>
+                <th>판매 가격</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}" class="book-box">
+                <td th:text="${book.bookTitle}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.publisher}"></td>
+                <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
+                <td th:text="${book.salesPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
