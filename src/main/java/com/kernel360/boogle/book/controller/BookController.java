@@ -41,6 +41,11 @@ public class BookController {
         return bookService.findAllBook();
     }
 
+    @PatchMapping("/admin/book")
+    public void updateBook(@RequestBody BookDTO book) {
+        bookService.updateBook(book);
+    }  
+
     // 검색어(제목,저자,출판사)에 따른 도서목록 검색
     @GetMapping("/api/bookSearch")
     public ModelAndView getBookByBookTitle(@RequestParam String searchWord) {

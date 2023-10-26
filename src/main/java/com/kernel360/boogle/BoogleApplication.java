@@ -10,5 +10,4 @@ public class BoogleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BoogleApplication.class, args);
 	}
-
 }
