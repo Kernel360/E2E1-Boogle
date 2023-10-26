@@ -15,13 +15,5 @@ public interface BookService {
 
     public void updateBook(BookDTO book);
 
-    public List<BookEntity> findBookBySearchWord(String searchWord) {
-        Set<BookEntity> uniqueBooks = new HashSet<>();
-
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByBookTitleContaining(searchWord));
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByAuthorContaining(searchWord));
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByPublisherContaining(searchWord));
-
-        return new ArrayList<>(uniqueBooks);
-    }
+    List<BookEntity> findBookBySearchWord(String searchWord);
 }
