@@ -31,6 +31,11 @@ public class BookController {
         return "login";
     }
 
+    @GetMapping("/admin")
+    String adminPage(){
+        return "amendBook";
+    }
+
     @PostMapping("/admin/book")
     public void saveBook(@RequestBody BookDTO book) {
         bookService.saveBook(book);

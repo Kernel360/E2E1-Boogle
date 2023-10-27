@@ -87,6 +87,13 @@
                 <td th:text="${book.publisher}"></td>
                 <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
                 <td th:text="${book.salesPrice}"></td>
+                <form th:action="@{/api/}" method="post">
+                    <td>
+                        <button>
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </form>
             </tr>
             </tbody>
         </table>
