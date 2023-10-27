@@ -17,7 +17,6 @@ spring:
     url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: root
     password: ""
-
 thymeleaf:
   cache: false
   check-template-location: true

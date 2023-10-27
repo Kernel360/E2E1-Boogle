@@ -1,99 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
 <head>
-    <meta charset="UTF-8">
-    <!-- 필요한 스타일시트 및 스크립트 로드 -->
+  <meta charset="UTF-8">
+  <!-- 필요한 스타일시트 및 스크립트 로드 -->
 
-    <!-- 부트스트랩 스타일시트 추가 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- 부트스트랩 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <!-- Font Awesome 스타일시트 추가 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+  <!-- Font Awesome 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
 
-    <!-- 추가적인 CSS 스타일 추가 -->
-    <style>
-        body {
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
+  <!-- 추가적인 CSS 스타일 추가 -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
 
-        .book-box {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-        }
+    .book-box {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+    }
 
-        #searchInput {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
+    #searchInput {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
 
-        #searchButton {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    #searchButton {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        #searchButton i {
-            font-size: 18px;
-        }
+    #searchButton i {
+      font-size: 18px;
+    }
 
-        .book-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+    .book-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-        .book-table th,
-        .book-table td {
-            border: none; /* 칼럼 간의 구분선 제거 */
-            padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
-            text-align: left;
-        }
-    </style>
+    .book-table th,
+    .book-table td {
+      border: none; /* 칼럼 간의 구분선 제거 */
+      padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-8">
-            <form th:action="@{/api/bookSearch}" method="get">
-                <input type="text" id="searchInput" placeholder="도서 검색" name="searchWord">
-                <button id="searchButton" type="submit">
-                    <i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
+  <div class="row">
+    <div class="col-8">
+      <form th:action="@{/api/bookSearch}" method="get">
+        <input type="text" id="searchInput" placeholder="도서 검색" name="searchWord">
+        <button id="searchButton" type="submit">
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
     </div>
-    <div class="row">
-        <table class="book-table">
-            <thead>
-            <tr>
-                <th>도서 제목</th>
-                <th>저자</th>
-                <th>출판사</th>
-                <th>출판일</th>
-                <th>판매 가격</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="book : ${books}" class="book-box">
-                <td>
-                    <a th:href="@{/admin/book-detail(bookId=${book.bookId})}">[[${book.bookTitle}]]</a>
-                </td>
-                <td th:text="${book.author}"></td>
-                <td th:text="${book.publisher}"></td>
-                <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
-                <td th:text="${book.salesPrice}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+  </div>
+  <div class="row">
+    <table class="book-table">
+      <thead>
+      <tr>
+        <th>도서 제목</th>
+        <th>저자</th>
+        <th>출판사</th>
+        <th>출판일</th>
+        <th>판매 가격</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tbody>
+      <tr th:each="book : ${paging}" class="book-box">
+        <td>
+          <a th:href="@{/admin/book-detail(bookId=${book.bookId})}">[[${book.bookTitle}]]</a>
+        </td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.publisher}"></td>
+        <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
+        <td th:text="${book.salesPrice}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 </body>
 </html>

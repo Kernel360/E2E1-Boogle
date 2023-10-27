@@ -5,6 +5,9 @@ import com.kernel360.boogle.book.db.BookRepository;
 import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -55,4 +58,12 @@ public class BookServiceImpl implements BookService {
     public Optional<BookEntity> findById(Long bookId) {
         return bookRepository.findById(bookId);
     }
+
+    @Override
+    public Page<BookEntity> getPage(int page) {
+        Pageable pageable = PageRequest.of(page, 3);
+        return this.bookRepository.findAll(pageable);
+    }
+
+
 }
