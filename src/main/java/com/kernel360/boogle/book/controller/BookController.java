@@ -5,6 +5,8 @@ import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookRequest;
 import com.kernel360.boogle.book.service.BookService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,6 +30,15 @@ public class BookController {
         return mv;
     }
 
+    @GetMapping("/api/pagingTest")
+    public String pageList(ModelAndView mv, @RequestParam(value="page", defaultValue = "0") int page) {
+        Page<BookEntity> paging = this.bookService.getPage(page);
+        mv.addObject("paging", paging);
+        return "pagingTest";
+    }
+
+
+
     @GetMapping("/admin/login")
     String login(){
         return "login";
@@ -46,8 +57,7 @@ public class BookController {
     @PatchMapping("/admin/book")
     public void updateBook(@RequestBody BookDTO book) {
         bookService.updateBook(book);
-    }  
-
+    }
     // 검색어(제목,저자,출판사)에 따른 도서목록 검색
     @GetMapping("/api/bookSearch")
     public ModelAndView getBookByBookTitle(@RequestParam String searchWord) {
