@@ -54,5 +54,5 @@ public class BookEntity extends CommonEntity{
     private String lastModifiedBy;
 
     @Column(name = "deleted_yn")
-    private String deletedYn;
+    private String deletedYn = "N";
 }
