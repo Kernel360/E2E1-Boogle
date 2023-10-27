@@ -2,7 +2,9 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.model.BookRequest;
 import com.kernel360.boogle.book.service.BookService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,6 +59,14 @@ public class BookController {
         ModelAndView mv = new ModelAndView("bookSearch");
         List<BookEntity> bookList = new ArrayList<>(bookService.findBookBySearchWord(searchWord));
         mv.addObject("books", bookList);
+        return mv;
+    }
+
+    @GetMapping("/admin/book-detail")
+    public ModelAndView getBookDetail(@RequestParam Long bookId) {
+        ModelAndView mv = new ModelAndView("amendBook");
+        BookEntity book = bookService.findById(bookId).get();
+        mv.addObject("book", book);
         return mv;
     }
 }

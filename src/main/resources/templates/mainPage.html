@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <!-- 필요한 스타일시트 및 스크립트 로드 -->
 
     <!-- 부트스트랩 스타일시트 추가 -->
@@ -82,7 +83,9 @@
             </thead>
             <tbody>
             <tr th:each="book : ${books}" class="book-box">
-                <td th:text="${book.bookTitle}"></td>
+                <td>
+                    <a th:href="@{/admin/book-detail(bookId=${book.bookId})}">[[${book.bookTitle}]]</a>
+                </td>
                 <td th:text="${book.author}"></td>
                 <td th:text="${book.publisher}"></td>
                 <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
