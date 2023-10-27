@@ -61,7 +61,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Page<BookEntity> getPage(int page) {
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, 6);
         return this.bookRepository.findAll(pageable);
     }
 
