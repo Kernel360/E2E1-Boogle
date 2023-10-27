@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class BookController {
 
     private final BookService bookService;
@@ -30,7 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/admin/login")
-    String login() {
+    public String login() {
         return "login";
     }
 
