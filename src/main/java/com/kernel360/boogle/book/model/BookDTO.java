@@ -27,7 +27,5 @@ public class BookDTO {
     private String createdBy;
     private String lastModifiedBy;
     private String deletedYn;
-
-    @Transient
     private BookEntity bookEntity;
 }
