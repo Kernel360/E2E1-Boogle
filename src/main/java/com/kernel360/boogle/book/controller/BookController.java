@@ -6,6 +6,7 @@ import com.kernel360.boogle.book.model.BookRequest;
 import com.kernel360.boogle.book.service.BookService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class BookController {
 
     private final BookService bookService;
@@ -22,22 +23,14 @@ public class BookController {
         this.bookService = bookService;
     }
 
+
     @GetMapping("/api/mainPage")
-    public ModelAndView viewPostForm() {
+    public ModelAndView pageList( @RequestParam(value="page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("mainPage");
-        List<BookEntity> bookList = new ArrayList<>(bookService.findAllBook());
-        mv.addObject("books", bookList);
+        Page<BookEntity> paging = this.bookService.getPage(page);
+        mv.addObject( "paging",paging);
         return mv;
     }
-
-    @GetMapping("/api/pagingTest")
-    public String pageList(ModelAndView mv, @RequestParam(value="page", defaultValue = "0") int page) {
-        Page<BookEntity> paging = this.bookService.getPage(page);
-        mv.addObject("paging", paging);
-        return "pagingTest";
-    }
-
-
 
     @GetMapping("/admin/login")
     String login(){

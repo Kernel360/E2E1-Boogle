@@ -8,6 +8,7 @@ class BoogleApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
