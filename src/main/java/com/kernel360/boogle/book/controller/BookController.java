@@ -2,12 +2,9 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
-import com.kernel360.boogle.book.model.BookRequest;
 import com.kernel360.boogle.book.service.BookService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,7 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/admin/login")
-    String login(){
+    String login() {
         return "login";
     }
 
@@ -51,6 +48,7 @@ public class BookController {
     public void updateBook(@RequestBody BookDTO book) {
         bookService.updateBook(book);
     }
+
     // 검색어(제목,저자,출판사)에 따른 도서목록 검색
     @GetMapping("/api/bookSearch")
     public ModelAndView getBookByBookTitle(@RequestParam String searchWord) {
@@ -65,6 +63,12 @@ public class BookController {
         ModelAndView mv = new ModelAndView("amendBook");
         BookEntity book = bookService.findById(bookId).get();
         mv.addObject("book", book);
+        return mv;
+    }
+
+    @GetMapping("/admin/createBook")
+    public ModelAndView getBookCreate() {
+        ModelAndView mv = new ModelAndView("createBook");
         return mv;
     }
 }

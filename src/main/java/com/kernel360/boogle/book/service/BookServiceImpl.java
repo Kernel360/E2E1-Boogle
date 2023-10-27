@@ -27,6 +27,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void saveBook(BookDTO book) {
+        book.getBookEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
         bookRepository.save(book.getBookEntity());
     }
 
