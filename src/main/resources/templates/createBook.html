@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+
+<head>
+  <!-- 필요한 스타일시트 및 스크립트 로드 -->
+  <!-- 부트스트랩 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Font Awesome 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+  <!-- 추가적인 CSS 스타일 추가 -->
+  <style>
+    body {
+      background-color: #F8F9FA;
+      padding: 20px;
+    }
+    .form-container {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 5px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    #saveButton {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #saveButton i {
+      font-size: 18px;
+    }
+    input[readonly] {
+      background-color: #eee;
+      color: #777;
+      border: 1px solid #ddd;
+    }
+  </style>
+  <script type="text/javascript">
+    function createBook() {
+      let data = {
+        bookEntity: {
+          bookTitle: document.getElementById('book_title').value,
+          categoryId: document.getElementById('category_id').value,
+          thumbnailUrl: document.getElementById('thumbnail_url').value,
+          author: document.getElementById('author').value,
+          publisher: document.getElementById('publisher').value,
+          isbn: document.getElementById('isbn').value,
+          description: document.getElementById('description').value,
+          publishDate: document.getElementById('publish_date').value.replaceAll(".", "-") + "T10:00:00.000Z",
+          salesPrice: document.getElementById('sales_price').value
+        }
+      };
+
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', '/admin/book', true);
+      xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          alert('도서 정보가 생성되었습니다.');
+          window.location.href = '/api/mainPage'; // 정상적으로 생성 후, 메인페이지로 이동
+        } else {
+          alert('도서 정보 생성 중 오류가 발생했습니다.');
+        }
+      };
+
+      xhr.send(JSON.stringify(data));
+    }
+    function cancel() {
+      window.location.href = '/api/mainPage'; // 취소 버튼 누를 때 메인 페이지로 이동
+    }
+  </script>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <h1 class="text-center">도서 정보 추가</h1>
+      <div class="form-container">
+        <form th:action="@{'/api/createBook'}" method="post">
+          <!-- 필수 도서 정보 입력 필드 -->
+          <div class="form-group">
+            <label for="book_title">도서 제목</label>
+            <input type="text" id="book_title" name="book_title" required>
+          </div>
+          <div class="form-group">
+            <label for="category_id">카테고리 ID</label>
+            <input type="text" id="category_id" name="category_id" required>
+          </div>
+          <div class="form-group">
+            <label for="thumbnail_url">썸네일 URL</label>
+            <input type="text" id="thumbnail_url" name="thumbnail_url" required>
+          </div>
+          <div class="form-group">
+            <label for="author">저자</label>
+            <input type="text" id="author" name="author" required>
+          </div>
+          <div class="form-group">
+            <label for="publisher">출판사</label>
+            <input type="text" id="publisher" name="publisher" required>
+          </div>
+          <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" name="isbn" required>
+          </div>
+          <div class="form-group">
+            <label for="description">도서 요약</label><br>
+            <textarea id="description" name="description" style="width: 100%;" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="publish_date">출판일</label>
+            <input type="date" id="publish_date" name="publish_date" required>
+          </div>
+          <div class="form-group">
+            <label for="sales_price">판매 가격</label>
+            <input type="text" id="sales_price" name="sales_price" required>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary" th:onclick="|createBook();|">생성</button>
+            <button type="button" class="btn btn-secondary" th:onclick="|cancel();|">취소</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
