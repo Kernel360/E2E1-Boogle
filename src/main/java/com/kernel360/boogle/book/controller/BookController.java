@@ -23,8 +23,6 @@ public class BookController {
     @GetMapping("/api/mainPage")
     public ModelAndView pageList( @RequestParam(value="page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("mainPage");
-
-        // TODO: Paging과 삭제 도서를 제외하고 paging 하기
         Page<BookEntity> paging = this.bookService.getPage(page);
         mv.addObject( "paging",paging);
         return mv;
