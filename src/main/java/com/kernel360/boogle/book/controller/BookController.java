@@ -17,11 +17,10 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    private final BookServiceImpl bookServiceImpl;
+    // private final BookServiceImpl bookServiceImpl;
 
     public BookController(BookService bookService, BookServiceImpl bookServiceImpl) {
         this.bookService = bookService;
-        this.bookServiceImpl = bookServiceImpl;
     }
 
     @GetMapping("/api/mainPage")
@@ -38,7 +37,7 @@ public class BookController {
     public String deleteBook(
             @RequestBody BookViewRequest bookViewRequest
     ) {
-        bookServiceImpl.deleteBook(bookViewRequest);
+        bookService.deleteBook(bookViewRequest);
         return "redirect:/api/mainPage";
     }
 
