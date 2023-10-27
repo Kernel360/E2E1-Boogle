@@ -34,7 +34,7 @@ public class BookController {
         return mv;
     }
 
-    @PostMapping(value="/api/mainPage")
+    @PostMapping("/api/mainPage")
     public String deleteBook(
             @RequestBody BookViewRequest bookViewRequest
     ) {
