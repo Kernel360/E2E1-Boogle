@@ -57,6 +57,12 @@
       padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
       text-align: left;
     }
+
+    /* 스타일 수정 - 현재 페이지 페이징에 'active' 클래스 적용 */
+    .pagination .page-item.active .page-link {
+      background-color: #110f0f;
+      color: #6dc571;
+    }
   </style>
 </head>
 <body>
@@ -69,6 +75,10 @@
           <i class="fa fa-search"></i>
         </button>
       </form>
+    </div>
+    <!-- 도서 추가 버튼 -->
+    <div class="col-4 text-right">
+      <a th:href="@{/admin/createBook}" class="btn btn-primary">도서 추가</a>
     </div>
   </div>
   <div class="row">
@@ -83,7 +93,6 @@
       </tr>
       </thead>
       <tbody>
-      <tbody>
       <tr th:each="book : ${paging}" class="book-box">
         <td>
           <a th:href="@{/admin/book-detail(bookId=${book.bookId})}">[[${book.bookTitle}]]</a>
@@ -95,6 +104,29 @@
       </tr>
       </tbody>
     </table>
+  </div>
+  <!-- 페이지 번호를 표시하는 부분 -->
+  <div class="row">
+    <div class="col-12">
+      <ul class="pagination">
+        <li th:if="${paging.hasPrevious()}" class="page-item">
+          <a th:href="@{/api/mainPage(page=0)}" class="page-link">처음</a>
+        </li>
+        <li th:if="${paging.hasPrevious()}" class="page-item">
+          <a th:href="@{/api/mainPage(page=${paging.number - 1})}" class="page-link">이전</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, paging.totalPages - 1)}"
+             th:classappend="(${i} == ${paging.number}) ? 'active' : '' ">
+          <a th:href="@{/api/mainPage(page=${i})}" class="page-link" th:text="${i + 1}"></a>
+        </li>
+        <li th:if="${paging.hasNext()}" class="page-item">
+          <a th:href="@{/api/mainPage(page=${paging.number + 1})}" class="page-link">다음</a>
+        </li>
+        <li th:if="${paging.hasNext()}" class="page-item">
+          <a th:href="@{/api/mainPage(page=${paging.totalPages - 1})}" class="page-link">마지막</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 </body>
