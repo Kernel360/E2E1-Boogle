@@ -4,9 +4,7 @@ import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
-import com.kernel360.boogle.book.service.BookServiceImpl;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,9 +15,8 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-    // private final BookServiceImpl bookServiceImpl;
 
-    public BookController(BookService bookService, BookServiceImpl bookServiceImpl) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 
