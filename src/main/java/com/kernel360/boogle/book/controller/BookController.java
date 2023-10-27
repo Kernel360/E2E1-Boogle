@@ -2,7 +2,9 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
+import com.kernel360.boogle.book.service.BookServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,22 +13,33 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class BookController {
 
     private final BookService bookService;
+    private final BookServiceImpl bookServiceImpl;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookServiceImpl bookServiceImpl) {
         this.bookService = bookService;
+        this.bookServiceImpl = bookServiceImpl;
     }
-
 
     @GetMapping("/api/mainPage")
     public ModelAndView pageList( @RequestParam(value="page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("mainPage");
+
+        // TODO: Paging과 삭제 도서를 제외하고 paging 하기
         Page<BookEntity> paging = this.bookService.getPage(page);
         mv.addObject( "paging",paging);
         return mv;
+    }
+
+    @PostMapping(value="/api/mainPage")
+    public String deleteBook(
+            @RequestBody BookViewRequest bookViewRequest
+    ) {
+        bookServiceImpl.deleteBook(bookViewRequest);
+        return "redirect:/api/mainPage";
     }
 
     @GetMapping("/admin/login")

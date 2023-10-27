@@ -18,5 +18,5 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     List<BookEntity> findBookEntitiesByAuthorContaining(String author);
     List<BookEntity> findBookEntitiesByPublisherContaining(String publisher);
     Optional<BookEntity> findById(Long bookId);
-
+    Page<BookEntity> findAllByDeletedYnNotOrderByBookIdDesc(Pageable pageable, String deletedYn);
 }

@@ -3,6 +3,7 @@ package com.kernel360.boogle.book.service;
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookRequest;
+import com.kernel360.boogle.book.model.BookViewRequest;
 import org.springframework.data.domain.Page;
 import java.util.*;
 
@@ -21,5 +22,5 @@ public interface BookService {
 
     Page<BookEntity> getPage(int page);
 
-
+    public void deleteBook(BookViewRequest bookViewRequest);
 }
