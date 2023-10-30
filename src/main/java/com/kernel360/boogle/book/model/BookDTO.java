@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Transient;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,10 +23,13 @@ public class BookDTO {
     private String publisher;
     private Long isbn;
     private String description;
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
     private int salesPrice;
     private String createdBy;
+    private LocalDateTime createdAt;
     private String lastModifiedBy;
-    private String deletedYn;
+    private LocalDateTime lastModifiedAt;
+    private String isDeleted;
+    private LocalDateTime deletedAt;
     private BookEntity bookEntity;
 }

@@ -5,8 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,7 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity(name = "BOOK")
-public class BookEntity extends CommonEntity{
+@EntityListeners(AuditingEntityListener.class)
+public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "book_id")
@@ -42,17 +47,28 @@ public class BookEntity extends CommonEntity{
     private String description;
 
     @Column(name = "publish_date")
-    private LocalDateTime publishDate;
+    private LocalDate publishDate;
 
     @Column(name = "sales_price")
-    private int salesPrice;
+    private Integer salesPrice;
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;
 
+    @CreatedDate
+    @Column(name = "created_at", columnDefinition = "DATETIME", updatable = false)
+    private LocalDateTime createdAt;
+
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
-    @Column(name = "deleted_yn")
-    private String deletedYn = "N";
+    @LastModifiedDate
+    @Column(name = "last_modified_at", columnDefinition = "DATETIME")
+    private LocalDateTime lastModifiedAt;
+
+    @Column(name = "is_deleted")
+    private String isDeleted = "N";
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }

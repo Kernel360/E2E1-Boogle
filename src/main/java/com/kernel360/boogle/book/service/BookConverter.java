@@ -19,8 +19,11 @@ public class BookConverter {
                 .publishDate(bookEntity.getPublishDate())
                 .salesPrice(bookEntity.getSalesPrice())
                 .createdBy(bookEntity.getCreatedBy())
+                .createdAt(bookEntity.getCreatedAt())
                 .lastModifiedBy(bookEntity.getLastModifiedBy())
-                .deletedYn(bookEntity.getDeletedYn())
+                .lastModifiedAt(bookEntity.getLastModifiedAt())
+                .isDeleted(bookEntity.getIsDeleted())
+                .deletedAt(bookEntity.getDeletedAt())
                 .build();
 
     }
