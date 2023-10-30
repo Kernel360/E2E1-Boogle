@@ -69,23 +69,23 @@
       };
 
       let xhr = new XMLHttpRequest();
-      xhr.open('PATCH', '/admin/book', true);
+      xhr.open('PATCH', '/admin/updateBook', true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
       xhr.onload = function() {
         if (xhr.status === 200) {
-          alert('도서 정보가 저장되었습니다.');
-          window.location.href = '/api/mainPage'; // 정상적으로 변경 후, 메인페이지로 이동
+          alert('도서 정보가 수정되었습니다.');
+          window.location.href = '/admin/getAllBooks'; // 정상적으로 변경 후, 메인페이지로 이동
 
         } else {
-          alert('도서 정보 저장 중 오류가 발생했습니다.');
+          alert('도서 정보 수정 중 오류가 발생했습니다.');
         }
       };
 
       xhr.send(JSON.stringify(data));
     }
     function cancel() {
-      window.location.href = '/api/mainPage'; // 취소 버튼 누를 때 메인 페이지로 이동
+      window.location.href = '/admin/getAllBooks'; // 취소 버튼 누를 때 메인 페이지로 이동
     }
   </script>
 </head>

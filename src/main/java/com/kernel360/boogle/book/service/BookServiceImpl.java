@@ -21,14 +21,12 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private static final String SEARCH_TYPE_TITLE = "title";
+    private static final String SEARCH_TYPE_AUTHOR = "author";
+    private static final String SEARCH_TYPE_PUBLISHER = "publisher";
 
     @Override
-    public List<BookEntity> findAllBook() {
-        return bookRepository.findAll();
-    }
-
-    @Override
-    public void saveBook(BookDTO book) {
+    public void createBook(BookDTO book) {
         book.getBookEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
         bookRepository.save(book.getBookEntity());
     }
@@ -37,17 +35,6 @@ public class BookServiceImpl implements BookService {
     public void updateBook(BookDTO book) {
         book.getBookEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야함
         bookRepository.save(book.getBookEntity());
-    }
-
-    @Override
-    public List<BookEntity> findBookBySearchWord(String searchWord) {
-        Set<BookEntity> uniqueBooks = new HashSet<>();
-
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByBookTitleContaining(searchWord));
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByAuthorContaining(searchWord));
-        uniqueBooks.addAll(bookRepository.findBookEntitiesByPublisherContaining(searchWord));
-
-        return new ArrayList<>(uniqueBooks);
     }
 
     @Override
@@ -62,9 +49,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Page<BookEntity> getPage(int page) {
+    public Page<BookEntity> getAllBooks(int page, String searchWord, String searchType) {
         Pageable pageable = PageRequest.of(page, 6);
-        return this.bookRepository.findAllByDeletedYnNotOrderByBookIdDesc(pageable, "Y");
+
+        return switch (searchType) {
+            case SEARCH_TYPE_TITLE ->
+                    bookRepository.findBookEntitiesByBookTitleContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
+            case SEARCH_TYPE_AUTHOR ->
+                    bookRepository.findBookEntitiesByAuthorContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
+            case SEARCH_TYPE_PUBLISHER ->
+                    bookRepository.findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
+            default -> bookRepository.findAllByIsDeletedNotOrderByBookIdDesc(pageable, "Y");
+        };
     }
 
     @Override
@@ -73,7 +69,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.findById(bookViewRequest.getBookId())
                 .map(
                         it -> {
-                            it.setDeletedYn("Y");
+                            it.setIsDeleted("Y");
                             bookRepository.save(it);
                             return it;
                         }
