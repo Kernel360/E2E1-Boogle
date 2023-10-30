@@ -66,6 +66,40 @@
   </style>
 </head>
 <body>
+<script>
+  function deleteBook(bookId) {
+    // JSON 데이터를 생성
+    let data = {
+      bookId: bookId
+    };
+
+    // 서버로 POST 요청을 보냄
+    fetch('/api/mainPage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+            .then(response => {
+              if (response.ok) {
+                // 성공적으로 처리된 경우의 로직을 여기에 추가
+                window.location.href = '/api/mainPage';
+                alert('도서 정보가 성공적으로 삭제되었습니다.');
+              } else {
+                // 오류 처리 로직을 여기에 추가
+                alert('도서 정보 삭제 중 오류가 발생했습니다.');
+              }
+            })
+            .catch(error => {
+              // 네트워크 오류 등의 예외 처리
+              console.error('요청을 보내는 중 오류가 발생했습니다.', error);
+              alert('도서 정보 삭제 중 오류가 발생했습니다.');
+            });
+    location.reload();
+  }
+</script>
+
 <div class="container">
   <div class="row">
     <div class="col-8">
@@ -101,6 +135,11 @@
         <td th:text="${book.publisher}"></td>
         <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
         <td th:text="${book.salesPrice}"></td>
+        <td>
+          <button class="delete-button" data-bookId="${book.bookId}" th:onclick="|deleteBook(${book.bookId});|">
+            <i class="fas fa-trash"></i>
+          </button>
+        </td>
       </tr>
       </tbody>
     </table>

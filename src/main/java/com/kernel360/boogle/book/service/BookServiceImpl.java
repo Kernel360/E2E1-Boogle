@@ -4,11 +4,13 @@ import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.db.BookRepository;
 import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookRequest;
+import com.kernel360.boogle.book.model.BookViewRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -62,8 +64,19 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<BookEntity> getPage(int page) {
         Pageable pageable = PageRequest.of(page, 6);
-        return this.bookRepository.findAll(pageable);
+        return this.bookRepository.findAllByDeletedYnNotOrderByBookIdDesc(pageable, "Y");
     }
 
-
+    @Override
+    public void deleteBook(
+            @RequestBody BookViewRequest bookViewRequest) {
+        bookRepository.findById(bookViewRequest.getBookId())
+                .map(
+                        it -> {
+                            it.setDeletedYn("Y");
+                            bookRepository.save(it);
+                            return it;
+                        }
+                );
+    }
 }

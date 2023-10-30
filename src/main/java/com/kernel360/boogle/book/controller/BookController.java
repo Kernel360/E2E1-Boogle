@@ -2,9 +2,9 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,13 +20,20 @@ public class BookController {
         this.bookService = bookService;
     }
 
-
     @GetMapping("/api/mainPage")
     public ModelAndView pageList( @RequestParam(value="page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("mainPage");
         Page<BookEntity> paging = this.bookService.getPage(page);
         mv.addObject( "paging",paging);
         return mv;
+    }
+
+    @PostMapping("/api/mainPage")
+    public String deleteBook(
+            @RequestBody BookViewRequest bookViewRequest
+    ) {
+        bookService.deleteBook(bookViewRequest);
+        return "redirect:/api/mainPage";
     }
 
     @GetMapping("/admin/login")
