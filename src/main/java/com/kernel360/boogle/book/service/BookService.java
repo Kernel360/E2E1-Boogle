@@ -8,19 +8,15 @@ import org.springframework.data.domain.Page;
 import java.util.*;
 
 public interface BookService {
-    public List<BookEntity> findAllBook();
-
-    public void saveBook(BookDTO book);
+    public void createBook(BookDTO book);
 
     public void updateBook(BookDTO book);
-
-    List<BookEntity> findBookBySearchWord(String searchWord);
 
     List<BookDTO> findAladinBook(BookRequest request);
 
     Optional<BookEntity> findById(Long bookId);
 
-    Page<BookEntity> getPage(int page);
+    Page<BookEntity> getAllBooks(int page, String searchWord, String searchType);
 
     public void deleteBook(BookViewRequest bookViewRequest);
 }
