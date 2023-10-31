@@ -21,14 +21,15 @@ import java.time.LocalDateTime;
 public class BookReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_report_id", nullable = false)
-    private Long bookReportId;
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @ManyToOne
-    @Column(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id", nullable = false)
     private BookEntity bookEntity;
 
 //    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
+//    @JoinColumn(name = "member_id", nullable = false)
     @Column(name = "member_id", nullable = false)
     private Long memberId;
 //    private MemberEntity memeberEntity;

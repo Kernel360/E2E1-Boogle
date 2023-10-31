@@ -11,7 +11,7 @@ public interface BookReportService {
 
     Optional<BookReportEntity> getBookReportById(Long bookReportId);
 
-    Page<BookReportEntity> getAllBookReports(String isPublic, int page);
+    Page<BookReportEntity> getPublicBookReports(String isPublic, int page);
 
     Page<BookReportEntity> getMyBookReports(Long memberId, int page);
 

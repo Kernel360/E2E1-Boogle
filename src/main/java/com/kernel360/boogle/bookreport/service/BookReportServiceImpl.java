@@ -30,7 +30,7 @@ public class BookReportServiceImpl implements BookReportService {
     }
 
     @Override
-    public Page<BookReportEntity> getAllBookReports(String isPublic, int page) {
+    public Page<BookReportEntity> getPublicBookReports(String isPublic, int page) {
         return null;
     }
 

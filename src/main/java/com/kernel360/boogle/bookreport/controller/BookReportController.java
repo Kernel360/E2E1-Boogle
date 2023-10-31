@@ -31,7 +31,7 @@ public class BookReportController {
     }
 
     @GetMapping("/book-reports")
-    public List<BookReportDTO> getAllBookReports() {
+    public List<BookReportDTO> getPublicBookReports() {
         return new ArrayList<>();
     }
 

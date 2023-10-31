@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface BookReportRepository extends JpaRepository<BookReportEntity, Long> {
     BookReportEntity save(BookReportEntity bookReport);
 
-    Page<BookReportEntity> findAllByIsPublicEqualsAndIsDeletedNotOrderByBookReportIdDesc(String isPublic, String isDeleted, Pageable pageable);
+    Page<BookReportEntity> findAllByIsPublicEqualsAndIsDeletedNotOrderByIdDesc(String isPublic, String isDeleted, Pageable pageable);
 
-    Page<BookReportEntity> findAllByMemberIdEqualsAndIsDeletedNotOrderByBookReportIdDesc(Long memberId, String isDeleted, Pageable pageable);
+    Page<BookReportEntity> findAllByMemberIdEqualsAndIsDeletedNotOrderByIdDesc(Long memberId, String isDeleted, Pageable pageable);
 
     Optional<BookReportEntity> findById(Long bookReportId);
 
