@@ -5,10 +5,12 @@ import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookSearchType;
 import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
+import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@Api(tags = {"도서 관련 API"})
 @RestController
 public class BookController {
 

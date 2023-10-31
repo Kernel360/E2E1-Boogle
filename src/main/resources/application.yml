@@ -17,6 +17,15 @@ spring:
     url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: root
     password: ""
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+springfox:
+  documenration:
+    swagger:
+      use-model-v3: false
+
 thymeleaf:
   cache: false
   check-template-location: true

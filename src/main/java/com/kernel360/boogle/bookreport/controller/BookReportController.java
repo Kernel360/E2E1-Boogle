@@ -2,11 +2,13 @@ package com.kernel360.boogle.bookreport.controller;
 
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(tags = {"독후감 관련 API"})
 @RestController
 public class BookReportController {
     private final BookReportService bookReportService;
