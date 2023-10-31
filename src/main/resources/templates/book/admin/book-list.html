@@ -70,13 +70,13 @@
   async function deleteBook(bookId) {
     // JSON 데이터를 생성
     let data = {
-      bookId: bookId
+      id: bookId
     };
 
     try {
-      // 서버로 POST 요청을 보냄
-      const response = await fetch('/admin/deleteBook', {
-        method: 'POST',
+      // 서버로 PATCH 요청을 보냄
+      const response = await fetch('/admin/book/delete', {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -86,7 +86,7 @@
       if (response.ok) {
         // 성공적으로 처리된 경우의 로직을 여기에 추가
         alert('도서 정보가 성공적으로 삭제되었습니다.');
-        window.location.href = '/admin/getAllBooks'; // 도서 목록 페이지로 리디렉션
+        window.location.href = '/admin/books'; // 도서 목록 페이지로 리디렉션
       } else {
         // 오류 처리 로직을 여기에 추가
         alert('도서 정보 삭제 중 오류가 발생했습니다.');
@@ -117,7 +117,7 @@
 <div class="container">
   <div class="row">
     <div class="col-8">
-      <form th:action="@{/admin/getAllBooks}" method="get" onsubmit="return validateSearch();">
+      <form th:action="@{/admin/books}" method="get" onsubmit="return validateSearch();">
         <div class="input-group">
           <select name="searchType" id="searchType">
             <option value="">선택</option>
@@ -134,7 +134,7 @@
     </div>
     <!-- 도서 추가 버튼 -->
     <div class="col-4 text-right">
-      <a th:href="@{/admin/createBook}" class="btn btn-primary">도서 추가</a>
+      <a th:href="@{/admin/book}" class="btn btn-primary">도서 추가</a>
     </div>
   </div>
   <div class="row">
@@ -151,14 +151,14 @@
       <tbody>
       <tr th:each="book : ${books}" class="book-box">
         <td>
-          <a th:href="@{/admin/getBookById(bookId=${book.bookId})}">[[${book.bookTitle}]]</a>
+          <a th:href="@{/admin/book(id=${book.id})}">[[${book.title}]]</a>
         </td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.publisher}"></td>
         <td th:text="${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}"></td>
         <td th:text="${book.salesPrice}"></td>
         <td>
-          <button class="delete-button" data-bookId="${book.bookId}" th:onclick="|deleteBook(${book.bookId});|">
+          <button class="delete-button" data-id="${book.id}" th:onclick="|deleteBook(${book.id});|">
             <i class="fas fa-trash"></i>
           </button>
         </td>
@@ -171,20 +171,20 @@
     <div class="col-12">
       <ul class="pagination">
         <li th:if="${books.hasPrevious()}" class="page-item">
-          <a th:href="@{/admin/getAllBooks(page=0, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">처음</a>
+          <a th:href="@{/admin/books(page=0, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">처음</a>
         </li>
         <li th:if="${books.hasPrevious()}" class="page-item">
-          <a th:href="@{/admin/getAllBooks(page=${books.number - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">이전</a>
+          <a th:href="@{/admin/books(page=${books.number - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">이전</a>
         </li>
         <li th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
              th:classappend="(${i} == ${books.number}) ? 'active' : '' ">
-          <a th:href="@{/admin/getAllBooks(page=${i}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link" th:text="${i + 1}"></a>
+          <a th:href="@{/admin/books(page=${i}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link" th:text="${i + 1}"></a>
         </li>
         <li th:if="${books.hasNext()}" class="page-item">
-          <a th:href="@{/admin/getAllBooks(page=${books.number + 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">다음</a>
+          <a th:href="@{/admin/books(page=${books.number + 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">다음</a>
         </li>
         <li th:if="${books.hasNext()}" class="page-item">
-          <a th:href="@{/admin/getAllBooks(page=${books.totalPages - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">마지막</a>
+          <a th:href="@{/admin/books(page=${books.totalPages - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">마지막</a>
         </li>
       </ul>
     </div>

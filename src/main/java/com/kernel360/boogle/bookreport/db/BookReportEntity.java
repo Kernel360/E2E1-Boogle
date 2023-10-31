@@ -1,6 +1,6 @@
-package com.kernel360.boogle.book.db;
+package com.kernel360.boogle.bookreport.db;
 
-
+import com.kernel360.boogle.book.db.BookEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,47 +10,38 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "BOOK")
+@Entity(name = "BOOK_REPORT")
 @EntityListeners(AuditingEntityListener.class)
-public class BookEntity {
+public class BookReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private BookEntity bookEntity;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+//    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
+//    @JoinColumn(name = "member_id", nullable = false)
+    @Column(name = "member_id", nullable = false)
+    private Long memberId;
+//    private MemberEntity memeberEntity;
 
-    @Column(name = "thumbnail_url")
-    private String thumbnailUrl;
+    @Column(name = "is_public", nullable = false)
+    private String isPublic;
 
-    @Column(name = "author")
-    private String author;
+    @Column(name = "book_report_title", nullable = false)
+    private String bookReportTitle;
 
-    @Column(name = "publisher")
-    private String publisher;
-
-    @Column(name = "isbn")
-    private Long isbn;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "publish_date")
-    private LocalDate publishDate;
-
-    @Column(name = "sales_price")
-    private Integer salesPrice;
+    @Column(name = "book_report_content", nullable = false)
+    private String bookReportContent;
 
     @Column(name = "created_by", nullable = false)
     private String createdBy;
