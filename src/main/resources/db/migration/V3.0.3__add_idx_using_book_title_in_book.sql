@@ -1,0 +1,1 @@
+CREATE INDEX idx_book_title ON E2E_BOOGLE.BOOK (BOOK_TITLE);
