@@ -22,11 +22,11 @@ import java.time.LocalDateTime;
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
-    private Long bookId;
+    @Column(name = "id")
+    private Long id;
 
-    @Column(name = "book_title")
-    private String bookTitle;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "category_id")
     private Long categoryId;

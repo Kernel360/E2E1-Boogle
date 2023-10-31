@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookDTO {
-    private Long bookId;
-    private String bookTitle;
+    private Long id;
+    private String title;
     private Long categoryId;
     private String thumbnailUrl;
     private String author;
