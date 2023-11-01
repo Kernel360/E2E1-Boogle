@@ -50,11 +50,11 @@ public class BookController {
         return "redirect:/admin/books";
     }
 
-    @GetMapping("/admin/login")
-    public String login() {
-        return "login";
-    }
-
+//    @GetMapping("/admin/login")
+//    public String login() {
+//        return "login";
+//    }
+// TODO Security 로 이전
     @PostMapping("/admin/book")
     public void createBook(@RequestBody BookDTO book) {
         bookService.createBook(book);
