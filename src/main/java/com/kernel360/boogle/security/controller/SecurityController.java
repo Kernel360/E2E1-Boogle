@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class SecurityController {
 
-    @GetMapping("/admin/login")
+    @GetMapping("/login")
     public ModelAndView login(String errorCode, String logout) {
 
         log.info("login get ..........");
@@ -16,6 +16,6 @@ public class SecurityController {
         if (logout != null) {
             log.info("user logout.........");
         }
-        return new ModelAndView("/login");
+        return new ModelAndView("login");
     }
 }
