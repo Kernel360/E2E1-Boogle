@@ -25,9 +25,13 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("----------------configure----------------------");
+        log.info("----------------configure------" +
+                "----------------");
 
-        http.formLogin().loginPage("http://localhost:8080/admin/getAllBooks");
+        http.formLogin()
+                .loginPage("/admin/login")
+                .defaultSuccessUrl("/admin/books")
+                .failureUrl("/admin/login");
 
         http.csrf().disable();
 

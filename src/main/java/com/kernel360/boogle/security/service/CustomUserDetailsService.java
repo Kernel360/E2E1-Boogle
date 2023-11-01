@@ -22,12 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("loadUserByUsername: " + username);
 
-        return User.builder().username("user1")
+        return User.builder().username("admin")
 //                .password("1111")
-                .password(passwordEncoder.encode("1111"))
+                .password(passwordEncoder.encode("admin1234!"))
                 .authorities("ROLE_USER")
                 .build();
     }
-
-
 }
