@@ -16,6 +16,6 @@ public class SecurityController {
         if (logout != null) {
             log.info("user logout.........");
         }
-        return new ModelAndView("/book/admin/book-login");
+        return new ModelAndView("/login");
     }
 }
