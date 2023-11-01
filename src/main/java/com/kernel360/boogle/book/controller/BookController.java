@@ -19,6 +19,7 @@ public class BookController {
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
+
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -74,10 +75,9 @@ public class BookController {
         mv.addObject("book", book);
         return mv;
     }
-
     @GetMapping("/admin/book/create")
     public ModelAndView createBook() {
-        ModelAndView mv = new ModelAndView("book/admin/book-create");
-        return mv;
+
+        return new ModelAndView("book/admin/book-create");
     }
 }
