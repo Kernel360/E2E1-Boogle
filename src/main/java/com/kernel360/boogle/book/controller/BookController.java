@@ -7,6 +7,7 @@ import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,8 +19,10 @@ public class BookController {
 
     public BookController(BookService bookService) {
         this.bookService = bookService;
+
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/admin/books")
     public ModelAndView pageList(
             @RequestParam(value="page", defaultValue = "0") int page,
@@ -50,11 +53,6 @@ public class BookController {
         return "redirect:/admin/books";
     }
 
-    @GetMapping("/admin/login")
-    public String login() {
-        return "login";
-    }
-
     @PostMapping("/admin/book")
     public void createBook(@RequestBody BookDTO book) {
         bookService.createBook(book);
@@ -72,10 +70,9 @@ public class BookController {
         mv.addObject("book", book);
         return mv;
     }
-
     @GetMapping("/admin/book/create")
     public ModelAndView createBook() {
-        ModelAndView mv = new ModelAndView("book/admin/book-create");
-        return mv;
+
+        return new ModelAndView("book/admin/book-create");
     }
 }
