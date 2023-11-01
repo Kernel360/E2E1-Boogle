@@ -30,12 +30,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateBook(BookDTO book) {
-        book.getBookEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야함
-        bookRepository.save(book.getBookEntity());
-    }
-
-    @Override
     public Optional<BookEntity> getBookById(Long bookId) {
         return bookRepository.findById(bookId);
     }
@@ -62,6 +56,12 @@ public class BookServiceImpl implements BookService {
     public Page<BookEntity> getBooksByPublisher(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return bookRepository.findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+    }
+
+    @Override
+    public void updateBook(BookDTO book) {
+        book.getBookEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야함
+        bookRepository.save(book.getBookEntity());
     }
 
     @Override

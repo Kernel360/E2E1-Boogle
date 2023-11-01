@@ -20,8 +20,24 @@ public class BookController {
         this.bookService = bookService;
     }
 
+    @GetMapping("/admin/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/admin/book/create")
+    public ModelAndView createBook() {
+        ModelAndView mv = new ModelAndView("book/admin/book-create");
+        return mv;
+    }
+
+    @PostMapping("/admin/book")
+    public void createBook(@RequestBody BookDTO book) {
+        bookService.createBook(book);
+    }
+
     @GetMapping("/admin/books")
-    public ModelAndView pageList(
+    public ModelAndView getBooks(
             @RequestParam(value="page", defaultValue = "0") int page,
             @RequestParam(value = "searchWord", required = false, defaultValue = "") String searchWord,
             @RequestParam(value = "searchType", required = false, defaultValue = "") String searchType) {
@@ -42,22 +58,12 @@ public class BookController {
         return mv;
     }
 
-    @PatchMapping("/admin/book/delete")
-    public String deleteBook(
-            @RequestBody BookViewRequest bookViewRequest
-    ) {
-        bookService.deleteBook(bookViewRequest);
-        return "redirect:/admin/books";
-    }
-
-    @GetMapping("/admin/login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping("/admin/book")
-    public void createBook(@RequestBody BookDTO book) {
-        bookService.createBook(book);
+    @GetMapping("/admin/book")
+    public ModelAndView getBookById(@RequestParam Long id) {
+        ModelAndView mv = new ModelAndView("book/admin/book-update");
+        BookEntity book = bookService.getBookById(id).get();
+        mv.addObject("book", book);
+        return mv;
     }
 
     @PatchMapping("/admin/book")
@@ -65,17 +71,11 @@ public class BookController {
         bookService.updateBook(book);
     }
 
-    @GetMapping("/admin/book")
-    public ModelAndView getBookDetail(@RequestParam Long id) {
-        ModelAndView mv = new ModelAndView("book/admin/book-update");
-        BookEntity book = bookService.getBookById(id).get();
-        mv.addObject("book", book);
-        return mv;
-    }
-
-    @GetMapping("/admin/book/create")
-    public ModelAndView createBook() {
-        ModelAndView mv = new ModelAndView("book/admin/book-create");
-        return mv;
+    @PatchMapping("/admin/book/delete")
+    public String deleteBook(
+            @RequestBody BookViewRequest bookViewRequest
+    ) {
+        bookService.deleteBook(bookViewRequest);
+        return "redirect:/admin/books";
     }
 }
