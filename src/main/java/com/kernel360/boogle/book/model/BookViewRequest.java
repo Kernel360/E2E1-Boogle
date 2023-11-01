@@ -12,5 +12,5 @@ import lombok.*;
 public class BookViewRequest {
 
     @NotNull
-    private Long bookId;
+    private Long id;
 }

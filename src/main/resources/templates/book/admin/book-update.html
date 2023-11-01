@@ -54,8 +54,8 @@
     function save() {
       let data = {
         bookEntity: {
-          bookId: document.getElementById('book_id').value,
-          bookTitle: document.getElementById('book_title').value,
+          id: document.getElementById('id').value,
+          title: document.getElementById('title').value,
           categoryId: document.getElementById('category_id').value,
           thumbnailUrl: document.getElementById('thumbnail_url').value,
           author: document.getElementById('author').value,
@@ -69,13 +69,13 @@
       };
 
       let xhr = new XMLHttpRequest();
-      xhr.open('PATCH', '/admin/updateBook', true);
+      xhr.open('PATCH', '/admin/book', true);
       xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
       xhr.onload = function() {
         if (xhr.status === 200) {
           alert('도서 정보가 수정되었습니다.');
-          window.location.href = '/admin/getAllBooks'; // 정상적으로 변경 후, 메인페이지로 이동
+          window.location.href = '/admin/books'; // 정상적으로 변경 후, 메인페이지로 이동
 
         } else {
           alert('도서 정보 수정 중 오류가 발생했습니다.');
@@ -85,7 +85,7 @@
       xhr.send(JSON.stringify(data));
     }
     function cancel() {
-      window.location.href = '/admin/getAllBooks'; // 취소 버튼 누를 때 메인 페이지로 이동
+      window.location.href = '/admin/books'; // 취소 버튼 누를 때 메인 페이지로 이동
     }
   </script>
 </head>
@@ -95,12 +95,12 @@
     <div class="col-8">
       <h1 class="text-center">도서 정보</h1>
       <div class="form-container">
-        <form th:action="@{'/api/updateBook/' + ${bookId}}" method="post">
-          <input type="hidden" id="book_id" name="book_id" th:value="${book.bookId}">
+        <form th:action="@{'/admin/book/' + ${}}" method="post">
+          <input type="hidden" id="id" name="id" th:value="${book.id}">
           <input type="hidden" id="created_by" name="created_by" th:value="${book.createdBy}">
           <div class="form-group">
-            <label for="book_title">도서 제목</label>
-            <input th:readonly="${book.bookId != null}" type="text" id="book_title" name="book_title" th:value="${book.bookTitle}">
+            <label for="title">도서 제목</label>
+            <input th:readonly="${book.id != null}" type="text" id="title" name="title" th:value="${book.title}">
           </div>
           <div class="form-group">
             <label for="category_id">카테고리 ID</label>
@@ -108,11 +108,11 @@
           </div>
           <div class="form-group">
             <label for="thumbnail_url">썸네일 URL</label>
-            <input th:readonly="${book.bookId != null}" type="text" id="thumbnail_url" name="thumbnail_url" th:value="${book.thumbnailUrl}">
+            <input th:readonly="${book.id != null}" type="text" id="thumbnail_url" name="thumbnail_url" th:value="${book.thumbnailUrl}">
           </div>
           <div class="form-group">
             <label for="author">저자</label>
-            <input th:readonly="${book.bookId != null}" type="text" id="author" name="author" th:value="${book.author}">
+            <input th:readonly="${book.id != null}" type="text" id="author" name="author" th:value="${book.author}">
           </div>
           <div class="form-group">
             <label for="publisher">출판사</label>
@@ -120,7 +120,7 @@
           </div>
           <div class="form-group">
             <label for="isbn">ISBN</label>
-            <input th:readonly="${book.bookId != null}" type="text" id="isbn" name="isbn" th:value="${book.isbn}">
+            <input th:readonly="${book.id != null}" type="text" id="isbn" name="isbn" th:value="${book.isbn}">
           </div>
           <div class="form-group">
             <label for="description">도서 요약</label><br>
@@ -128,11 +128,11 @@
           </div>
           <div class="form-group">
             <label for="publish_date">출판일</label>
-            <input th:readonly="${book.bookId != null}" id="publish_date" name="publish_date" th:value="${#temporals.format(book.publishDate, 'yyyy.MM.dd')}">
+            <input th:readonly="${book.id != null}" id="publish_date" name="publish_date" th:value="${#temporals.format(book.publishDate, 'yyyy.MM.dd')}">
           </div>
           <div class="form-group">
             <label for="sales_price">판매 가격</label>
-            <input th:readonly="${book.bookId != null}" type="text" id="sales_price" name="sales_price" th:value="${book.salesPrice}">
+            <input th:readonly="${book.id != null}" type="text" id="sales_price" name="sales_price" th:value="${book.salesPrice}">
           </div>
           <div class="d-flex justify-content-center">
             <button type="button" class="btn btn-primary" th:onclick="|save();|">저장</button>

@@ -10,11 +10,17 @@ import java.util.Optional;
 public interface BookService {
     public void createBook(BookDTO book);
 
+    Optional<BookEntity> getBookById(Long bookId);
+
+    Page<BookEntity> getBooks(int page, String searchWord);
+
+    Page<BookEntity> getBooksByAuthor(int page, String searchWord);
+
+    Page<BookEntity> getBooksByTitle(int page, String searchWord);
+
+    Page<BookEntity> getBooksByPublisher(int page, String searchWord) ;
+
     public void updateBook(BookDTO book);
-
-    Optional<BookEntity> findById(Long bookId);
-
-    Page<BookEntity> getAllBooks(int page, String searchWord, String searchType);
 
     public void deleteBook(BookViewRequest bookViewRequest);
 }

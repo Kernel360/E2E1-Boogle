@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 public class BookConverter {
     public BookDTO toDto(BookEntity bookEntity) {
         return BookDTO.builder()
-                .bookId(bookEntity.getBookId())
-                .bookTitle(bookEntity.getBookTitle())
+                .id(bookEntity.getId())
+                .title(bookEntity.getTitle())
                 .categoryId(bookEntity.getCategoryId())
                 .thumbnailUrl(bookEntity.getThumbnailUrl())
                 .author(bookEntity.getAuthor())

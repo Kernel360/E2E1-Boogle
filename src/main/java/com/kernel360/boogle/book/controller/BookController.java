@@ -2,12 +2,15 @@ package com.kernel360.boogle.book.controller;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
+import com.kernel360.boogle.book.model.BookSearchType;
 import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
+import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+@Api(tags = {"도서 관련 API"})
 @RestController
 public class BookController {
 
@@ -17,23 +20,34 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/admin/getAllBooks")
+    @GetMapping("/admin/books")
     public ModelAndView pageList(
             @RequestParam(value="page", defaultValue = "0") int page,
             @RequestParam(value = "searchWord", required = false, defaultValue = "") String searchWord,
             @RequestParam(value = "searchType", required = false, defaultValue = "") String searchType) {
         ModelAndView mv = new ModelAndView("book/admin/book-list");
-        Page<BookEntity> books = bookService.getAllBooks(page, searchWord, searchType);
+        Page<BookEntity> books = null;
+
+        if(searchType.equals(BookSearchType.TITLE.getType())) {
+            books = bookService.getBooksByTitle(page, searchWord);
+        } else if (searchType.equals(BookSearchType.AUTHOR.getType())) {
+            books = bookService.getBooksByAuthor(page, searchWord);
+        } else if (searchType.equals(BookSearchType.PUBLISHER.getType())) {
+            books = bookService.getBooksByPublisher(page, searchWord);
+        } else {
+            books = bookService.getBooks(page, searchWord);
+        }
+
         mv.addObject( "books",books);
         return mv;
     }
 
-    @PostMapping("/admin/deleteBook")
+    @PatchMapping("/admin/book/delete")
     public String deleteBook(
             @RequestBody BookViewRequest bookViewRequest
     ) {
         bookService.deleteBook(bookViewRequest);
-        return "redirect:/admin/getAllBooks";
+        return "redirect:/admin/books";
     }
 
     @GetMapping("/admin/login")
@@ -41,25 +55,25 @@ public class BookController {
         return "login";
     }
 
-    @PostMapping("/admin/createBook")
+    @PostMapping("/admin/book")
     public void createBook(@RequestBody BookDTO book) {
         bookService.createBook(book);
     }
 
-    @PatchMapping("/admin/updateBook")
+    @PatchMapping("/admin/book")
     public void updateBook(@RequestBody BookDTO book) {
         bookService.updateBook(book);
     }
 
-    @GetMapping("/admin/getBookById")
-    public ModelAndView getBookDetail(@RequestParam Long bookId) {
+    @GetMapping("/admin/book")
+    public ModelAndView getBookDetail(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView("book/admin/book-update");
-        BookEntity book = bookService.findById(bookId).get();
+        BookEntity book = bookService.getBookById(id).get();
         mv.addObject("book", book);
         return mv;
     }
 
-    @GetMapping("/admin/createBook")
+    @GetMapping("/admin/book/create")
     public ModelAndView createBook() {
         ModelAndView mv = new ModelAndView("book/admin/book-create");
         return mv;

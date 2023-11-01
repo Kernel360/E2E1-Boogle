@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -20,9 +21,7 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
-    private static final String SEARCH_TYPE_TITLE = "title";
-    private static final String SEARCH_TYPE_AUTHOR = "author";
-    private static final String SEARCH_TYPE_PUBLISHER = "publisher";
+    private static final Integer PAGE_SIZE = 6;
 
     @Override
     public void createBook(BookDTO book) {
@@ -37,32 +36,42 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<BookEntity> findById(Long bookId) {
+    public Optional<BookEntity> getBookById(Long bookId) {
         return bookRepository.findById(bookId);
     }
 
     @Override
-    public Page<BookEntity> getAllBooks(int page, String searchWord, String searchType) {
-        Pageable pageable = PageRequest.of(page, 6);
+    public Page<BookEntity> getBooks(int page, String searchWord) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return bookRepository.findAllByIsDeletedNotOrderByIdDesc(pageable, "Y");
+    }
 
-        return switch (searchType) {
-            case SEARCH_TYPE_TITLE ->
-                    bookRepository.findBookEntitiesByBookTitleContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
-            case SEARCH_TYPE_AUTHOR ->
-                    bookRepository.findBookEntitiesByAuthorContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
-            case SEARCH_TYPE_PUBLISHER ->
-                    bookRepository.findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByBookIdDesc(searchWord, pageable, "Y");
-            default -> bookRepository.findAllByIsDeletedNotOrderByBookIdDesc(pageable, "Y");
-        };
+    @Override
+    public Page<BookEntity> getBooksByTitle(int page, String searchWord) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return bookRepository.findBookEntitiesByTitleContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+    }
+
+    @Override
+    public Page<BookEntity> getBooksByAuthor(int page, String searchWord) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return bookRepository.findBookEntitiesByAuthorContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+    }
+
+    @Override
+    public Page<BookEntity> getBooksByPublisher(int page, String searchWord) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return bookRepository.findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
     }
 
     @Override
     public void deleteBook(
             @RequestBody BookViewRequest bookViewRequest) {
-        bookRepository.findById(bookViewRequest.getBookId())
+        bookRepository.findById(bookViewRequest.getId())
                 .map(
                         it -> {
                             it.setIsDeleted("Y");
+                            it.setDeletedAt(LocalDateTime.now());
                             bookRepository.save(it);
                             return it;
                         }
