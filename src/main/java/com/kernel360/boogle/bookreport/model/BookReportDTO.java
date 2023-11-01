@@ -1,6 +1,7 @@
 package com.kernel360.boogle.bookreport.model;
 
 import com.kernel360.boogle.book.db.BookEntity;
+발import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ public class BookReportDTO {
     private Long id;
     private BookEntity bookEntity;
     private Long memberId;
-//    private MemberEntity memeberEntity;
+    //    private MemberEntity memeberEntity;
     private String isPublic;
     private String bookReportTitle;
     private String bookReportContent;
@@ -26,4 +27,5 @@ public class BookReportDTO {
     private LocalDateTime lastModifiedAt;
     private String isDeleted;
     private LocalDateTime deletedAt;
+    private BookReportEntity bookReportEntity;
 }
