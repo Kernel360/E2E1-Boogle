@@ -18,4 +18,9 @@ public class SecurityController {
         }
         return new ModelAndView("login");
     }
+
+    @GetMapping("/register")
+    public ModelAndView register(String errorCode) {
+        return new ModelAndView("register");
+    }
 }

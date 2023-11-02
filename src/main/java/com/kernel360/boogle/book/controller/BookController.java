@@ -10,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+@PreAuthorize("hasRole('ADMIN')")
 @Api(tags = {"도서 관련 API"})
 @RestController
 public class BookController {
@@ -22,7 +22,6 @@ public class BookController {
 
     }
 
-    @PreAuthorize("hasRole('USER')")
     @GetMapping("/admin/books")
     public ModelAndView pageList(
             @RequestParam(value="page", defaultValue = "0") int page,

@@ -25,7 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return User.builder().username("admin")
 //                .password("1111")
                 .password(passwordEncoder.encode("admin1234!"))
-                .authorities("ROLE_USER")
+                //.authorities(new String[] {"ROLE_USER","ROLE_ADMIN"})
+                .authorities("ROLE_USER","ROLE_ADMIN")
                 .build();
     }
 }
