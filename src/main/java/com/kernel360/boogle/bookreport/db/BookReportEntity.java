@@ -30,20 +30,20 @@ public class BookReportEntity {
 
 //    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
 //    @JoinColumn(name = "member_id", nullable = false)
-    @Column(name = "member_id", nullable = false)
+    @Column(name = "member_id")
     private Long memberId;
 //    private MemberEntity memeberEntity;
 
     @Column(name = "is_public", nullable = false)
     private String isPublic;
 
-    @Column(name = "book_report_title", nullable = false)
-    private String bookReportTitle;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "book_report_content", nullable = false)
-    private String bookReportContent;
+    @Column(name = "content", nullable = false)
+    private String content;
 
-    @Column(name = "created_by", nullable = false)
+    @Column(name = "created_by")
     private String createdBy;
 
     @CreatedDate

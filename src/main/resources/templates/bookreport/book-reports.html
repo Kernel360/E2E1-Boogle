@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let bookReportsCurrentPage = parseInt(document.getElementById('currentPage').value);
+        let bookReportsTotalPages = parseInt(document.getElementById('totalPages').value);
+
+        function updateURL(page, currentPath) {
+            var currentParams = new URLSearchParams(window.location.search);
+            currentParams.set('page', page);
+            var newUrl = currentPath + '?' + currentParams.toString();
+            window.location.href = newUrl;
+        }
+
+        let firstPageLink = document.getElementById('firstPageLink');
+        let previousPageLink = document.getElementById('previousPageLink');
+        let nextPageLink = document.getElementById('nextPageLink');
+        let lastPageLink = document.getElementById('lastPageLink');
+
+        if (firstPageLink) {
+            firstPageLink.addEventListener('click', function() {
+                updateURL(0, window.location.pathname);
+            });
+        }
+
+        if (previousPageLink) {
+            previousPageLink.addEventListener('click', function() {
+                updateURL(bookReportsCurrentPage - 1, window.location.pathname);
+            });
+        }
+
+        if (nextPageLink) {
+            nextPageLink.addEventListener('click', function() {
+                updateURL(bookReportsCurrentPage + 1, window.location.pathname);
+            });
+        }
+
+        if (lastPageLink) {
+            lastPageLink.addEventListener('click', function() {
+                updateURL(bookReportsTotalPages - 1, window.location.pathname);
+            });
+        }
+
+        for (var i = 0; i < bookReportsTotalPages; i++) {
+            var pageLink = document.getElementById('pageLink' + i);
+            if (pageLink) {
+                pageLink.addEventListener('click', function() {
+                    var page = this.textContent - 1;
+                    updateURL(page, window.location.pathname);
+                });
+            }
+        }
+    });
+</script>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<!-- Page header with logo and tagline-->
+<header class="py-5 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Welcome to Blog Home!</h1>
+            <p class="lead mb-0">A Bootstrap 5 starter layout for your next blog homepage</p>
+        </div>
+    </div>
+</header>
+<!-- Page content-->
+<div class="container">
+    <!-- "독후감 작성" button -->
+    <div class="text-end mb-3">
+        <a href="/book-report/create" class="btn btn-primary">독후감 작성</a>
+    </div>
+    <!-- Blog entries-->
+    <div class="row">
+        <div class="col-4" th:each="bookReport, iterStat : ${bookReports}">
+            <div class="card mb-4">
+                <a th:href="@{/book-report(id=${bookReport.id})}"><img class="card-img-top" th:src="${bookReport.bookEntity.thumbnailUrl}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted" th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></div>
+                    <h2 class="card-title h4" th:text="${bookReport.title}"></h2>
+                    <p class="card-text" th:text="${bookReport.content}"></p>
+                    <a th:href="@{/book-report(id=${bookReport.id})}" class="btn btn-primary" href="#!">더 보기 →</a>
+                </div>
+            </div>
+            <!-- Add this to start a new row after every 3 columns -->
+            <div th:if="${iterStat.count % 3 == 2}" class="w-100"></div>
+        </div>
+    </div>
+    <!-- Pagination-->
+    <nav aria-label="Pagination">
+        <input type="hidden" id="currentPage" name="currentPage" th:value="${currentPageNumber}">
+        <input type="hidden" id="totalPages" name="totalPages" th:value="${totalPagesNumber}">
+        <hr class="my-3 center" />
+        <ul class="pagination justify-content-center">
+            <li th:if="${bookReports.hasPrevious()}" class="page-item">
+                <a id="firstPageLink" class="page-link">처음</a>
+            </li>
+            <li th:if="${bookReports.hasPrevious()}" class="page-item">
+                <a id="previousPageLink" class="page-link">이전</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, bookReports.totalPages - 1)}"
+                th:classappend="(${i} == ${bookReports.number}) ? 'active' : '' ">
+                <a th:id="'pageLink'+${i}" class="page-link" th:text="${i + 1}"></a>
+            </li>
+            <li th:if="${bookReports.hasNext()}" class="page-item">
+                <a id="nextPageLink" class="page-link">다음</a>
+            </li>
+            <li th:if="${bookReports.hasNext()}" class="page-item">
+                <a id="lastPageLink" class="page-link">마지막</a>
+            </li>
+        </ul>
+    </nav>
+<!--    </div>-->
+</div>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
