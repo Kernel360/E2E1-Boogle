@@ -7,6 +7,7 @@ import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,6 +37,7 @@ public class BookController {
         bookService.createBook(book);
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/admin/books")
     public ModelAndView getBooks(
             @RequestParam(value="page", defaultValue = "0") int page,
