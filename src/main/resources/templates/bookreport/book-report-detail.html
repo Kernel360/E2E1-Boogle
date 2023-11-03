@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Post - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<script type="text/javascript">
+    async function deleteBookReport(bookReportId) {
+        // JSON 데이터를 생성
+        let data = {
+            id: bookReportId
+        };
+
+        try {
+            // 서버로 PATCH 요청을 보냄
+            const response = await fetch('/book-report/delete', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                // 성공적으로 처리된 경우의 로직을 여기에 추가
+                alert('독후감이 성공적으로 삭제되었습니다.');
+                const memberId = 1; // 로그인 정보로 변경해야 함
+                window.location.href = '/my-book-reports?memberId=' + memberId;
+            } else {
+                // 오류 처리 로직을 여기에 추가
+                alert('독후감 삭제 중 오류가 발생했습니다.');
+            }
+        } catch (error) {
+            // 네트워크 오류 등의 예외 처리
+            console.error('요청을 보내는 중 오류가 발생했습니다.', error);
+            alert('독후감 삭제 중 오류가 발생했습니다.');
+        }
+    }
+
+    function updateBookReport(bookReportId) {
+        window.location.href = '/book-report/update?bookReportId=' + bookReportId;
+
+    }
+</script>
+<body>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<!-- Page content-->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Post content-->
+            <article>
+                <div class="row">
+                    <header class="mb-4 col-8">
+                        <!-- Post title -->
+                        <h1 class="fw-bolder mb-1" th:text="${bookReport.title}"></h1>
+                        <!-- Post meta content -->
+                        <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')} + ' by ' + '멤버 DB 추가 시, 연결 필요합니다.'"></div>
+                    </header>
+                    <div class="col-4 text-end">
+                        <!-- Submit button -->
+                        <button type="button" class="btn btn-primary" th:onclick="|updateBookReport(${bookReport.id});|">수정</button>
+                        <button type="button" class="btn btn-danger" th:onclick="|deleteBookReport(${bookReport.id});|">삭제</button>
+                    </div>
+                </div>
+                <!-- Preview image figure -->
+                <figure class="mb-4">
+                    <img class="img-fluid rounded" th:src="${bookReport.bookEntity.thumbnailUrl}" alt="Book Cover" />
+                </figure>
+                <!-- Post content -->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4" th:text="${bookReport.content}">
+                    </p>
+                    <!-- Add more content placeholders as needed -->
+                </section>
+            </article>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

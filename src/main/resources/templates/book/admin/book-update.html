@@ -95,7 +95,7 @@
     <div class="col-8">
       <h1 class="text-center">도서 정보</h1>
       <div class="form-container">
-        <form th:action="@{'/admin/book/' + ${}}" method="post">
+        <form th:action="@{'/admin/book/'}" method="post">
           <input type="hidden" id="id" name="id" th:value="${book.id}">
           <input type="hidden" id="created_by" name="created_by" th:value="${book.createdBy}">
           <div class="form-group">
