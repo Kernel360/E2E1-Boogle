@@ -11,13 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-@Api(tags = {"도서 관련 API"})
+@Api(tags = {"도서 관련 Admin API"})
 @RestController
-public class BookController {
+public class BookAdminController {
 
     private final BookService bookService;
 
-    public BookController(BookService bookService) {
+    public BookAdminController(BookService bookService) {
         this.bookService = bookService;
     }
 
@@ -43,7 +43,7 @@ public class BookController {
             @RequestParam(value="page", defaultValue = "0") int page,
             @RequestParam(value = "searchWord", required = false, defaultValue = "") String searchWord,
             @RequestParam(value = "searchType", required = false, defaultValue = "") String searchType) {
-        ModelAndView mv = new ModelAndView("book/admin/book-list");
+        ModelAndView mv = new ModelAndView("book/admin/books");
         Page<BookEntity> books = null;
 
         if(searchType.equals(BookSearchType.TITLE.getType())) {

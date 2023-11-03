@@ -49,6 +49,12 @@ public class BookReportServiceImpl implements BookReportService {
     }
 
     @Override
+    public Page<BookReportEntity> getAllBookReports(int page) {
+        Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        return bookReportRepository.findAllByIsDeletedNotOrderByIdDesc("Y", pageable);
+    }
+
+    @Override
     public void updateBookRepoert(BookReportDTO bookReport) {
         bookReport.getBookReportEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야 함
         bookReport.getBookReportEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함
