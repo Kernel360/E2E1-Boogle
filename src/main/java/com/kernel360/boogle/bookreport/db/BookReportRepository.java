@@ -13,6 +13,8 @@ public interface BookReportRepository extends JpaRepository<BookReportEntity, Lo
 
     Page<BookReportEntity> findAllByMemberIdEqualsAndIsDeletedNotOrderByIdDesc(Long memberId, String isDeleted, Pageable pageable);
 
+    Page<BookReportEntity> findAllByIsDeletedNotOrderByIdDesc(String isDeleted, Pageable pageable);
+
     Optional<BookReportEntity> findById(Long bookReportId);
 
 

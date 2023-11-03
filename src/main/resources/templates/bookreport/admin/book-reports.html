@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head>
+    <meta charset="UTF-8">
+    <!-- 필요한 스타일시트 및 스크립트 로드 -->
+
+    <!-- 부트스트랩 스타일시트 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Font Awesome 스타일시트 추가 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+
+    <!-- 추가적인 CSS 스타일 추가 -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .book-report-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        #searchInput {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #searchButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #searchButton i {
+            font-size: 18px;
+        }
+
+        .book-report-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .book-report-table th,
+        .book-report-table td {
+            border: none; /* 칼럼 간의 구분선 제거 */
+            padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
+            text-align: left;
+        }
+
+        /* 스타일 수정 - 현재 페이지 페이징에 'active' 클래스 적용 */
+        .pagination .page-item.active .page-link {
+            background-color: #110f0f;
+            color: #6dc571;
+        }
+    </style>
+</head>
+<body>
+<script>
+    // function validateSearch() {
+    //     // 선택된 검색 분야 값 가져오기
+    //     var searchType = document.getElementById("searchType").value;
+    //
+    //     // 검색 분야가 빈 문자열인 경우 알림 표시
+    //     if (searchType === "") {
+    //         alert("검색 분야를 설정해 주세요.");
+    //         return false; // 검색 중단
+    //     }
+    //
+    //     // 검색 분야가 설정되었을 경우, 폼 제출
+    //     return true;
+    // }
+</script>
+
+<div class="container">
+    <div class="row">
+        <table class="book-report-table">
+            <thead>
+            <tr>
+                <th>독후감 제목</th>
+                <th>도서 ID</th>
+                <th>공개 여부</th>
+                <th>작성자</th>
+                <th>작성일</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bookReport : ${bookReports}" class="book-report-box">
+                <td>
+                    <a th:href="@{/admin/book-report(id=${bookReport.id})}">[[${bookReport.title}]]</a>
+                </td>
+                <td th:text="${bookReport.bookEntity.id}"></td>
+                <td th:text="${bookReport.isPublic == 'N' ? '비공개' : '공개'}"></td>
+                <td th:text="${bookReport.createdBy}"></td>
+                <td th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 페이지 번호를 표시하는 부분 -->
+    <div class="row">
+        <div class="col-12">
+            <ul class="pagination">
+                <li th:if="${bookReports.hasPrevious()}" class="page-item">
+                    <a th:href="@{/admin/book-reports(page=0)}" class="page-link">처음</a>
+                </li>
+                <li th:if="${bookReports.hasPrevious()}" class="page-item">
+                    <a th:href="@{/admin/book-reports(page=${bookReports.number - 1})}" class="page-link">이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, bookReports.totalPages - 1)}"
+                    th:classappend="(${i} == ${bookReports.number}) ? 'active' : '' ">
+                    <a th:href="@{/admin/book-reports(page=${i})}" class="page-link" th:text="${i + 1}"></a>
+                </li>
+                <li th:if="${bookReports.hasNext()}" class="page-item">
+                    <a th:href="@{/admin/book-reports(page=${bookReports.number + 1})}" class="page-link">다음</a>
+                </li>
+                <li th:if="${bookReports.hasNext()}" class="page-item">
+                    <a th:href="@{/admin/book-reports(page=${bookReports.totalPages - 1})}" class="page-link">마지막</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
