@@ -17,6 +17,12 @@ public class BookReportController {
         this.bookReportService = bookReportService;
     }
 
+    @GetMapping("/book-report/create")
+    public ModelAndView createBookReport() {
+        ModelAndView mv = new ModelAndView("bookreport/book-report-create");
+        return mv;
+    }
+
     @PostMapping("/book-report")
     public void createBookReport(@RequestBody BookReportDTO bookReport) {
         bookReportService.createBookReport(bookReport);
@@ -24,7 +30,7 @@ public class BookReportController {
 
     @GetMapping("/book-report")
     public ModelAndView getBookReportById(@RequestParam Long id) {
-        ModelAndView mv = new ModelAndView("bookreport/book-detail");
+        ModelAndView mv = new ModelAndView("bookreport/book-report-detail");
         BookReportEntity bookReport = bookReportService.getBookReportById(id).get();
         mv.addObject("bookReport", bookReport);
         return mv;
@@ -32,11 +38,15 @@ public class BookReportController {
 
     @GetMapping("/my-book-reports")
     public ModelAndView getMyBookReports(
-            @RequestParam Long memberId,
+            @RequestParam(value = "memberId") Long memberId,
             @RequestParam(value = "page", defaultValue = "0") int page) {
-        ModelAndView mv = new ModelAndView("bookreport/my-book-reports");
+        ModelAndView mv = new ModelAndView("bookreport/book-reports");
         Page<BookReportEntity> bookReports = bookReportService.getMyBookReports(memberId, page);
         mv.addObject("bookReports", bookReports);
+        int currentPageNumber = bookReports.getNumber();
+        int totalPagesNumber = bookReports.getTotalPages();
+        mv.addObject("currentPageNumber", currentPageNumber);
+        mv.addObject("totalPagesNumber", totalPagesNumber);
         return mv;
     }
 
@@ -44,9 +54,21 @@ public class BookReportController {
     public ModelAndView getPublicBookReports(
             @RequestParam(value = "page", defaultValue = "0") int page
     ) {
-        ModelAndView mv = new ModelAndView("bookreport/public-book-reports");
+        ModelAndView mv = new ModelAndView("bookreport/book-reports");
         Page<BookReportEntity> bookReports = bookReportService.getPublicBookReports("Y", page);
         mv.addObject("bookReports", bookReports);
+        int currentPageNumber = bookReports.getNumber();
+        int totalPagesNumber = bookReports.getTotalPages();
+        mv.addObject("currentPageNumber", currentPageNumber);
+        mv.addObject("totalPagesNumber", totalPagesNumber);
+        return mv;
+    }
+
+    @GetMapping("/book-report/update")
+    public ModelAndView updateBookReport(@RequestParam(value = "bookReportId") Long bookReportId) {
+        ModelAndView mv = new ModelAndView("bookreport/book-report-update");
+        BookReportEntity bookReport = bookReportService.getBookReportById(bookReportId).get();
+        mv.addObject("bookReport", bookReport);
         return mv;
     }
 
@@ -56,8 +78,7 @@ public class BookReportController {
     }
 
     @PatchMapping("/book-report/delete")
-    public String deleteBookReport(@RequestParam BookReportDTO bookReport) {
+    public void deleteBookReport(@RequestBody BookReportDTO bookReport) {
         bookReportService.deleteBookReport(bookReport.getId());
-        return "redirect:/my-book-reports";
     }
 }

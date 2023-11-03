@@ -27,6 +27,7 @@ public class BookReportServiceImpl implements BookReportService {
     @Override
     public void createBookReport(BookReportDTO bookReport) {
         bookReport.getBookReportEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
+        bookReport.getBookReportEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함
         bookReportRepository.save(bookReport.getBookReportEntity());
     }
 
@@ -50,6 +51,8 @@ public class BookReportServiceImpl implements BookReportService {
     @Override
     public void updateBookRepoert(BookReportDTO bookReport) {
         bookReport.getBookReportEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야 함
+        bookReport.getBookReportEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함
+        bookReport.getBookReportEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
         bookReportRepository.save(bookReport.getBookReportEntity());
     }
 
