@@ -34,8 +34,7 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.info("----------------configure------" +
-                "----------------");
+        log.info("----------------configure------" + "----------------");
 
         http.formLogin()
                 .loginPage("/admin/login")

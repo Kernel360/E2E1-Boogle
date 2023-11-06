@@ -6,20 +6,21 @@ import com.kernel360.boogle.book.model.BookSearchType;
 import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
 import io.swagger.annotations.Api;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
+
 @PreAuthorize("hasRole('ADMIN')")
 @Api(tags = {"도서 관련 API"})
+@RequiredArgsConstructor
 @RestController
 public class BookController {
 
     private final BookService bookService;
-
-    public BookController(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @GetMapping("/admin/login")
     public String login() {
@@ -45,11 +46,23 @@ public class BookController {
         ModelAndView mv = new ModelAndView("book/admin/book-list");
         Page<BookEntity> books = null;
 
-        if(searchType.equals(BookSearchType.TITLE.getType())) {
+        BookSearchType searchEnumType = BookSearchType.valueOf(searchType);
+
+//        if(searchType.equals(BookSearchType.TITLE.getType())) {
+//            books = bookService.getBooksByTitle(page, searchWord);
+//        } else if (searchType.equals(BookSearchType.AUTHOR.getType())) {
+//            books = bookService.getBooksByAuthor(page, searchWord);
+//        } else if (searchType.equals(BookSearchType.PUBLISHER.getType())) {
+//            books = bookService.getBooksByPublisher(page, searchWord);
+//        } else {
+//            books = bookService.getBooks(page, searchWord);
+//        }
+
+        if(searchEnumType.isTitle()) {
             books = bookService.getBooksByTitle(page, searchWord);
-        } else if (searchType.equals(BookSearchType.AUTHOR.getType())) {
+        } else if (searchEnumType.isAuthor()) {
             books = bookService.getBooksByAuthor(page, searchWord);
-        } else if (searchType.equals(BookSearchType.PUBLISHER.getType())) {
+        } else if (searchEnumType.isPublisher()) {
             books = bookService.getBooksByPublisher(page, searchWord);
         } else {
             books = bookService.getBooks(page, searchWord);
@@ -62,6 +75,14 @@ public class BookController {
     @GetMapping("/admin/book")
     public ModelAndView getBookById(@RequestParam Long id) {
         ModelAndView mv = new ModelAndView("book/admin/book-update");
+
+
+        Optional<BookEntity> bookById = bookService.getBookById(id);
+        if(bookById.isPresent()) {
+            BookEntity bookEntity = bookById.get();
+        }
+
+
         BookEntity book = bookService.getBookById(id).get();
         mv.addObject("book", book);
         return mv;

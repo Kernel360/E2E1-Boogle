@@ -2,9 +2,9 @@ package com.kernel360.boogle.book.service;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookDTO;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class BookConverter {
     public BookDTO toDto(BookEntity bookEntity) {
         return BookDTO.builder()

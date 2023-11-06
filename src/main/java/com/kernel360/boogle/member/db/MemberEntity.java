@@ -8,8 +8,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -59,17 +57,19 @@ public class MemberEntity {
     @Column(name = "last_modified_at", columnDefinition = "DATETIME")
     private LocalDateTime lastModifiedAt;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
-    @Column(name = "role_set")
-    @Enumerated(EnumType.STRING)
-    private Set<MemberRole> roleSet = new HashSet<>();
+//    @ElementCollection(fetch = FetchType.LAZY)
+//    @Builder.Default
+//    @Column(name = "role_set")
+//    @Enumerated(EnumType.STRING)
+//    private Set<MemberRole> roleSet = new HashSet<>();
+    @Column(name = "user_role", nullable = false)
+    private String userRole = "USER";
 
-    public void addRole(MemberRole memberRole) {
-        this.roleSet.add(memberRole);
-    }
-
-    public void clearRole() {
-        this.roleSet.clear();
-    }
+//    public void addRole(MemberRole memberRole) {
+//        this.roleSet.add(memberRole);
+//    }
+//
+//    public void clearRole() {
+//        this.roleSet.clear();
+//    }
 }

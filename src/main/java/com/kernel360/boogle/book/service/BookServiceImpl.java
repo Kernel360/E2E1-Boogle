@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Page<BookEntity> getBooks(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
+        ArrayList<Object> objectArrayList = new ArrayList<>();
         return bookRepository.findAllByIsDeletedNotOrderByIdDesc(pageable, "Y");
     }
 
