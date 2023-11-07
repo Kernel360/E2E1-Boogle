@@ -2,16 +2,15 @@ package com.kernel360.boogle.reply.db;
 
 
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -26,7 +25,6 @@ public class ReplyEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-
     //    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
     //    @JoinColumn(name = "member_id", nullable = false)
     @Column(name = "member_id")
@@ -39,8 +37,13 @@ public class ReplyEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @Column(name = "parent_reply_id")
+    @Column(name = "parent_reply_id", updatable = false)
     private Long parentReplyId;
+
+    @ToString.Exclude
+    @OrderBy("createdAt ASC")
+    @OneToMany(mappedBy = "parentReplyId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    private Set<ReplyEntity> childReplies = new LinkedHashSet<>();
 
     @CreatedDate
     @Column(name = "created_at", columnDefinition = "DATETIME", updatable = false)
