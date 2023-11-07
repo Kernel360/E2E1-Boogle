@@ -42,24 +42,12 @@ class SignupControllerTest {
 
     @Test
     void signup() throws Exception {
-        MemberEntity member = memberService.signup(
-                MemberSignupDTO.builder()
-                        .email("kkk@gmail.com")
-                        .password("password")
-                        .name("김커널")
-                        .nickname("커널킴")
-                        .gender("M")
-                        .birthdate(LocalDate.of(2000, 1, 1))
-                        .phoneNumber("010-1111-2222")
-                        .build());
-
         MultiValueMap<String, String> mvMap = new LinkedMultiValueMap<>();
         mvMap.add("email", "kkk@gmail.com");
         mvMap.add("password", "password");
         mvMap.add("name", "김커널");
         mvMap.add("nickname", "커널킴");
         mvMap.add("gender", "M");
-        mvMap.add("birthdate", "2000-01-01");
         mvMap.add("phoneNumber", "010-1111-2222");
 
         mockMvc.perform(
