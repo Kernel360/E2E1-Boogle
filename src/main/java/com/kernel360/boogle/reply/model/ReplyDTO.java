@@ -24,4 +24,19 @@ public class ReplyDTO {
     private String isDeleted;
     private LocalDateTime deletedAt;
     private ReplyEntity replyEntity;
+
+    public static ReplyDTO from(ReplyEntity replyEntity) {
+        return new ReplyDTO(
+                replyEntity.getId(),
+                replyEntity.getMemberId(),
+                replyEntity.getBookReportEntity(),
+                replyEntity.getContent(),
+                replyEntity.getParentReplyId(),
+                replyEntity.getCreatedAt(),
+                replyEntity.getLastModifiedAt(),
+                replyEntity.getIsDeleted(),
+                replyEntity.getDeletedAt(),
+                replyEntity
+        );
+    }
 }

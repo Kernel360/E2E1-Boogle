@@ -42,7 +42,7 @@ public class ReplyEntity {
 
     @ToString.Exclude
     @OrderBy("createdAt ASC")
-    @OneToMany(mappedBy = "parentReplyId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentReplyId", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<ReplyEntity> childReplies = new LinkedHashSet<>();
 
     @CreatedDate
@@ -58,6 +58,4 @@ public class ReplyEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-
 }

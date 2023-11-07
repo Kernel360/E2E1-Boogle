@@ -2,10 +2,10 @@ package com.kernel360.boogle.reply.service;
 
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.db.BookReportRepository;
-import com.kernel360.boogle.reply.db.ReplyEntity;
 import com.kernel360.boogle.reply.db.ReplyRepository;
 import com.kernel360.boogle.reply.model.ReplyDTO;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,13 +30,12 @@ public class ReplyServiceImpl implements ReplyService{
     }
 
     @Override
-    public Optional<List<ReplyEntity>> getRepliesByBookReport(Long bookReportId) {
-        Optional<BookReportEntity> bookReport = bookReportRepository.findById(bookReportId);
-        if (bookReport.isPresent()) {
-            return replyRepository.findReplyEntitiesByBookReportEntityAndIsDeleted(bookReport.get(), "N");
-        } else {
-            return Optional.empty();
-        }
+    public Optional<List<ReplyDTO>> getRepliesByBookReportId(Long bookReportId) {
+        BookReportEntity bookReport =bookReportRepository.findById(bookReportId).get();
+        return Optional.of(replyRepository.findAllByBookReportEntityAndIsDeleted(bookReport, "N")
+                .stream()
+                .map(ReplyDTO::from)
+                .toList());
     }
 
     @Override
@@ -55,6 +54,14 @@ public class ReplyServiceImpl implements ReplyService{
                             return it;
                         }
                 );
-
+        replyRepository.findAllByParentReplyId(replyId).ifPresent(
+                childReplies -> {
+                    childReplies.forEach(childReply -> {
+                                childReply.setIsDeleted("Y");
+                                childReply.setDeletedAt(LocalDateTime.now());
+                                replyRepository.save(childReply);
+                    });
+                }
+        );
     }
 }
