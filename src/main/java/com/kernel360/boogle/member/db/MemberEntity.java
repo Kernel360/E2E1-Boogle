@@ -60,11 +60,6 @@ public class MemberEntity implements UserDetails {
     @Column(name = "last_modified_at", columnDefinition = "DATETIME")
     private LocalDateTime lastModifiedAt;
 
-    //    @ElementCollection(fetch = FetchType.LAZY)
-//    @Builder.Default
-//    @Column(name = "role_set")
-//    @Enumerated(EnumType.STRING)
-//    private Set<MemberRole> roleSet = new HashSet<>();
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private MemberRole role;
@@ -102,12 +97,4 @@ public class MemberEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-//    public void addRole(MemberRole memberRole) {
-//        this.roleSet.add(memberRole);
-//    }
-//
-//    public void clearRole() {
-//        this.roleSet.clear();
-//    }
 }
