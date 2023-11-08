@@ -44,13 +44,6 @@ class MemberServiceTest {
         then(member.getUsername()).isEqualTo("김커널"); // 유저명이 user123인지 검증
         then(member.getPassword()).startsWith("{bcrypt}"); // 패스워드가 {bcrypt}로 시작하는지 검증
         then(member.getRole()).isEqualTo(MemberRole.ROLE_USER);
-//        then(member.getAuthorities()).hasSize(1); // Authorities가 1개인지 검증
-//        then(member.getAuthorities().stream().findFirst().get().getAuthority()).isEqualTo("ROLE_USER");
-//        then(member.isAdmin()).isFalse(); // 어드민 여부가 False인지 검증
-//        then(member.isAccountNonExpired()).isTrue();
-//        then(member.isAccountNonLocked()).isTrue();
-//        then(member.isEnabled()).isTrue();
-//        then(member.isCredentialsNonExpired()).isTrue();
     }
 
     @Test
