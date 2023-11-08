@@ -42,33 +42,24 @@ fit=no" />
 <div class="container-fluid d-flex justify-content-center" style="height: 100vh">
     <div class="card align-self-center w-50">
         <div class="card-header">
-            <h3 class="text-center">Welcome To Boogle</h3>
+            <h3 class="text-center">Welcome to Boogle</h3>
         </div>
         <div class="card-body">
-            <th:block th:if="${param.logout != null}">
-                <h1>Logout..........</h1>
-            </th:block>
-
-            <form id="registerForm" action="/admin/login" method="post" th:if = "${param.logout == null}">
+            <form id="registerForm" th:action="@{/login}" method="post" th:if = "${param.logout == null}">
                 <div class="input-group mb-3">
                     <span class="input-group-text">아이디</span>
-                    <input type="text" name="username" class="form-control" placeholder="USER_ID">
+                    <input type="text" name="username" class="form-control" placeholder="EMAIL">
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">패스워드</span>
-                    <input type="text" name="password" class="form-control" placeholder="PASSWORD">
+                    <input type="password" name="password" class="form-control" placeholder="PASSWORD">
                 </div>
                 <div class="my-4">
                     <div class="float-end">
-                        <button type="submit" class="btn btn-primary submitBtn">LOGIN</button>
+                        <button type="submit" class="btn btn-primary submitBtn">로그인</button>
                     </div>
-                </div>
-                <div>
-                    <div class="input-group mb-3 ">
-                        <input class="fork-check-input" type="checkbox" name="remember-me">
-                        <label class="form-check-label">
-                             자동 로그인
-                        </label>
+                    <div class="float-end" style="margin: 8px 16px 0px 0px;">
+                        <a href="/signup">회원가입</a>
                     </div>
                 </div>
             </form>
