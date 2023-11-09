@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -32,3 +34,12 @@ thymeleaf:
   prefix: classpath:/templates/
   suffix: .html
   enabled: true
+
+logging:
+  file:
+    path: ./logs
+    name: log
+  logback:
+    rollingpolicy:
+      max-history: 20
+      total-size-cap: 100MB
