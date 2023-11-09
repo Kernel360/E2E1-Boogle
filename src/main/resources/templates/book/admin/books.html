@@ -15,7 +15,7 @@
   <style>
     body {
       background-color: #f8f9fa;
-      padding: 20px;
+      padding: 0px;
     }
 
     .book-box {
@@ -113,8 +113,65 @@
     return true;
   }
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let booksCurrentPage = parseInt(document.getElementById('currentPage').value);
+    let booksTotalPages = parseInt(document.getElementById('totalPages').value);
 
-<div class="container">
+    function updateURL(page, currentPath) {
+      var currentParams = new URLSearchParams(window.location.search);
+      currentParams.set('page', page);
+      var newUrl = currentPath + '?' + currentParams.toString();
+      window.location.href = newUrl;
+    }
+
+    let firstPageLink = document.getElementById('firstPageLink');
+    let previousPageLink = document.getElementById('previousPageLink');
+    let nextPageLink = document.getElementById('nextPageLink');
+    let lastPageLink = document.getElementById('lastPageLink');
+
+    if (firstPageLink) {
+      firstPageLink.addEventListener('click', function () {
+        updateURL(0, window.location.pathname);
+      });
+    }
+
+    if (previousPageLink) {
+      previousPageLink.addEventListener('click', function () {
+        updateURL(booksCurrentPage - 1, window.location.pathname);
+      });
+    }
+
+    if (nextPageLink) {
+      nextPageLink.addEventListener('click', function () {
+        updateURL(booksCurrentPage + 1, window.location.pathname);
+      });
+    }
+
+    if (lastPageLink) {
+      lastPageLink.addEventListener('click', function () {
+        updateURL(booksTotalPages - 1, window.location.pathname);
+      });
+    }
+
+    for (var i = 0; i < booksTotalPages; i++) {
+      var pageLink = document.getElementById('pageLink' + i);
+      if (pageLink) {
+        if (i < Math.max(0, booksCurrentPage - 5) || i > Math.min(booksTotalPages, booksCurrentPage + 5)) {
+          pageLink.style.display = 'none';
+        } else {
+          pageLink.style.display = 'inline-block';
+          pageLink.addEventListener('click', function () {
+            var page = this.textContent - 1;
+            updateURL(page, window.location.pathname);
+          });
+        }
+      }
+    }
+  });
+</script>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<div class="container mt-5">
   <div class="row">
     <div class="col-8">
       <form th:action="@{/admin/books}" method="get" onsubmit="return validateSearch();">
@@ -169,26 +226,30 @@
   <!-- 페이지 번호를 표시하는 부분 -->
   <div class="row">
     <div class="col-12">
-      <ul class="pagination">
+      <hr class="my-3 center" />
+      <ul class="pagination justify-content-center">
+        <input type="hidden" id="currentPage" name="currentPage" th:value="${books.number}">
+        <input type="hidden" id="totalPages" name="totalPages" th:value="${books.totalPages}">
         <li th:if="${books.hasPrevious()}" class="page-item">
-          <a th:href="@{/admin/books(page=0, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">처음</a>
+          <a id="firstPageLink" class="page-link">처음</a>
         </li>
         <li th:if="${books.hasPrevious()}" class="page-item">
-          <a th:href="@{/admin/books(page=${books.number - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">이전</a>
+          <a id="previousPageLink" class="page-link">이전</a>
         </li>
         <li th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
-             th:classappend="(${i} == ${books.number}) ? 'active' : '' ">
-          <a th:href="@{/admin/books(page=${i}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link" th:text="${i + 1}"></a>
+            th:classappend="(${i} == ${books.number}) ? 'active' : '' ">
+          <a th:id="'pageLink'+${i}" class="page-link" th:text="${i + 1}"></a>
         </li>
         <li th:if="${books.hasNext()}" class="page-item">
-          <a th:href="@{/admin/books(page=${books.number + 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">다음</a>
+          <a id="nextPageLink" class="page-link">다음</a>
         </li>
         <li th:if="${books.hasNext()}" class="page-item">
-          <a th:href="@{/admin/books(page=${books.totalPages - 1}, searchType=${param.searchType}, searchWord=${param.searchWord})}" class="page-link">마지막</a>
+          <a id="lastPageLink" class="page-link">마지막</a>
         </li>
       </ul>
     </div>
   </div>
 </div>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
 </body>
 </html>

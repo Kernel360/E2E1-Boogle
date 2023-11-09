@@ -55,10 +55,15 @@
         for (var i = 0; i < bookReportsTotalPages; i++) {
             var pageLink = document.getElementById('pageLink' + i);
             if (pageLink) {
-                pageLink.addEventListener('click', function() {
-                    var page = this.textContent - 1;
-                    updateURL(page, window.location.pathname);
-                });
+                if (i < Math.max(0, bookReportsCurrentPage - 5) || i > Math.min(bookReportsTotalPages, bookReportsCurrentPage + 5)) {
+                    pageLink.style.display = 'none';
+                } else {
+                    pageLink.style.display = 'inline-block';
+                    pageLink.addEventListener('click', function () {
+                        var page = this.textContent - 1;
+                        updateURL(page, window.location.pathname);
+                    });
+                }
             }
         }
     });
