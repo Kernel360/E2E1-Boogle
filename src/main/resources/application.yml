@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: local
   flyway:
     enabled: true
     baseline-on-migrate: true
@@ -14,7 +16,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   datasource:
     driver-class name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    url: jdbc:mysql://e2e-boogle-db.cin7zvt8fyi9.ap-northeast-2.rds.amazonaws.com:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
     username: root
     password: ""
   mvc:
@@ -32,3 +34,12 @@ thymeleaf:
   prefix: classpath:/templates/
   suffix: .html
   enabled: true
+
+logging:
+  file:
+    path: ./logs
+    name: log
+  logback:
+    rollingpolicy:
+      max-history: 20
+      total-size-cap: 100MB
