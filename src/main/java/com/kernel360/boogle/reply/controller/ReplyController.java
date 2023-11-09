@@ -24,13 +24,6 @@ public class ReplyController {
         replyService.createReply(reply);
     }
 
-//    @GetMapping("/book-report-replies")
-//    public Set<ReplyResponse> getRepliesByBookReport(@RequestParam Long bookReportId) {
-//        ModelAndView mv = new ModelAndView("replies");
-//        Optional<List<ReplyDTO>> repbookReportIdlyDTOS = replyService.getRepliesByBookReportId(bookReportId);
-//        return ReplyResponse.organizeChildReplies(replyDTOS.get());
-//    }
-
     @PatchMapping("/reply")
     public void updateReply(@RequestBody ReplyDTO reply) {
         replyService.updateReply(reply);
