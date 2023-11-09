@@ -21,8 +21,6 @@ public class ReplyDTO {
     private Long parentReplyId;
     private LocalDateTime createdAt;
     private LocalDateTime lastModifiedAt;
-    private String isDeleted;
-    private LocalDateTime deletedAt;
     private ReplyEntity replyEntity;
 
     public static ReplyDTO from(ReplyEntity replyEntity) {
@@ -34,8 +32,6 @@ public class ReplyDTO {
                 replyEntity.getParentReplyId(),
                 replyEntity.getCreatedAt(),
                 replyEntity.getLastModifiedAt(),
-                replyEntity.getIsDeleted(),
-                replyEntity.getDeletedAt(),
                 replyEntity
         );
     }

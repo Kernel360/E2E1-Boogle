@@ -3,19 +3,32 @@ package com.kernel360.boogle.bookreport.controller;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
+import com.kernel360.boogle.reply.model.ReplyDTO;
+import com.kernel360.boogle.reply.model.ReplyResponse;
+import com.kernel360.boogle.reply.service.ReplyService;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.Optional;
+
 @Api(tags = {"독후감 관련 API"})
 @RestController
 public class BookReportController {
-    private final BookReportService bookReportService;
 
-    public BookReportController(BookReportService bookReportService) {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final BookReportService bookReportService;
+    private final ReplyService replyService;
+
+    public BookReportController(BookReportService bookReportService, ReplyService replyService) {
         this.bookReportService = bookReportService;
+        this.replyService = replyService;
     }
+
 
     @GetMapping("/book-report/create")
     public ModelAndView createBookReport() {
@@ -33,6 +46,10 @@ public class BookReportController {
         ModelAndView mv = new ModelAndView("bookreport/book-report-detail");
         BookReportEntity bookReport = bookReportService.getBookReportById(id).get();
         mv.addObject("bookReport", bookReport);
+
+        Optional<List<ReplyDTO>> replyDTOS = replyService.getRepliesByBookReportId(id);
+        var replies = ReplyResponse.organizeChildReplies(replyDTOS.get());
+        mv.addObject("replies", replies);
         return mv;
     }
 

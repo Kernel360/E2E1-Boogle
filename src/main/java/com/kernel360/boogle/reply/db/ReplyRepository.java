@@ -9,9 +9,11 @@ import java.util.Optional;
 public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
     ReplyEntity save(ReplyEntity reply);
 
-    List<ReplyEntity> findAllByBookReportEntityAndIsDeleted(BookReportEntity bookReportEntity, String isDeleted);
+    List<ReplyEntity> findAllByBookReportEntity(BookReportEntity bookReportEntity);
 
     Optional<ReplyEntity> findById(Long replyId);
 
     Optional<List<ReplyEntity>> findAllByParentReplyId(Long parentReplyId);
+
+    void deleteById(Long id);
 }

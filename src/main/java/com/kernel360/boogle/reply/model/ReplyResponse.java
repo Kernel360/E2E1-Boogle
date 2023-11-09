@@ -14,14 +14,13 @@ public record ReplyResponse(
         Long parentReplyId,
         Set<ReplyResponse> childReplies,
         LocalDateTime createdAt,
-        LocalDateTime lastModifiedAt,
-        String isDeleted
+        LocalDateTime lastModifiedAt
 ) {
-    private static ReplyResponse of(Long id, Long memberId, Long bookReportId, String bookReportCreatedBy, String content, Long parentReplyId, LocalDateTime createdAt, LocalDateTime lastModifiedAt, String isDeleted) {
+    private static ReplyResponse of(Long id, Long memberId, Long bookReportId, String bookReportCreatedBy, String content, Long parentReplyId, LocalDateTime createdAt, LocalDateTime lastModifiedAt) {
         Comparator<ReplyResponse> childRepliesComparator = Comparator
                 .comparing(ReplyResponse::createdAt)
                 .thenComparingLong(ReplyResponse::id);
-        return new ReplyResponse(id, memberId, bookReportId, bookReportCreatedBy, content, parentReplyId, new TreeSet<>(childRepliesComparator), createdAt, lastModifiedAt, isDeleted);
+        return new ReplyResponse(id, memberId, bookReportId, bookReportCreatedBy, content, parentReplyId, new TreeSet<>(childRepliesComparator), createdAt, lastModifiedAt);
     }
 
     public static ReplyResponse from(ReplyDTO replyDTO) {
@@ -36,8 +35,7 @@ public record ReplyResponse(
                 replyDTO.getContent(),
                 replyDTO.getParentReplyId(),
                 replyDTO.getCreatedAt(),
-                replyDTO.getLastModifiedAt(),
-                replyDTO.getIsDeleted()
+                replyDTO.getLastModifiedAt()
         );
     }
 

@@ -42,7 +42,7 @@ public class ReplyEntity {
 
     @ToString.Exclude
     @OrderBy("createdAt ASC")
-    @OneToMany(mappedBy = "parentReplyId", cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parentReplyId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     private Set<ReplyEntity> childReplies = new LinkedHashSet<>();
 
     @CreatedDate
@@ -52,10 +52,4 @@ public class ReplyEntity {
     @LastModifiedDate
     @Column(name = "last_modified_at", columnDefinition = "DATETIME")
     private LocalDateTime lastModifiedAt;
-
-    @Column(name = "is_deleted")
-    private String isDeleted = "N";
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
 }

@@ -32,7 +32,7 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public Optional<List<ReplyDTO>> getRepliesByBookReportId(Long bookReportId) {
         BookReportEntity bookReport =bookReportRepository.findById(bookReportId).get();
-        return Optional.of(replyRepository.findAllByBookReportEntityAndIsDeleted(bookReport, "N")
+        return Optional.of(replyRepository.findAllByBookReportEntity(bookReport)
                 .stream()
                 .map(ReplyDTO::from)
                 .toList());
@@ -43,25 +43,31 @@ public class ReplyServiceImpl implements ReplyService{
         replyRepository.save(reply.getReplyEntity());
     }
 
+//    @Override
+//    public void deleteReply(Long replyId) {
+//        replyRepository.findById(replyId)
+//                .map(
+//                        it -> {
+//                            it.setIsDeleted("Y");
+//                            it.setDeletedAt(LocalDateTime.now());
+//                            replyRepository.save(it);
+//                            return it;
+//                        }
+//                );
+//        replyRepository.findAllByParentReplyId(replyId).ifPresent(
+//                childReplies -> {
+//                    childReplies.forEach(childReply -> {
+//                                childReply.setIsDeleted("Y");
+//                                childReply.setDeletedAt(LocalDateTime.now());
+//                                replyRepository.save(childReply);
+//                    });
+//                }
+//        );
+//    }
+
+
     @Override
-    public void deleteReply(Long replyId) {
-        replyRepository.findById(replyId)
-                .map(
-                        it -> {
-                            it.setIsDeleted("Y");
-                            it.setDeletedAt(LocalDateTime.now());
-                            replyRepository.save(it);
-                            return it;
-                        }
-                );
-        replyRepository.findAllByParentReplyId(replyId).ifPresent(
-                childReplies -> {
-                    childReplies.forEach(childReply -> {
-                                childReply.setIsDeleted("Y");
-                                childReply.setDeletedAt(LocalDateTime.now());
-                                replyRepository.save(childReply);
-                    });
-                }
-        );
+    public void deleteReply(ReplyDTO reply) {
+        replyRepository.deleteById(reply.getId());
     }
 }
