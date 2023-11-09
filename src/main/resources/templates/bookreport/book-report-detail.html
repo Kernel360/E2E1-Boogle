@@ -12,6 +12,30 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <script type="text/javascript">
+    function createReply(isChildReply) {
+        let data = {
+            replyEntity: {
+                bookReportEntity: {id: document.getElementById('bookReportId').value},
+                content: isChildReply ? document.getElementById('child-content-' + isChildReply).value : document.getElementById('reply-textbox').value,
+                parentReplyId: isChildReply ? document.getElementById('parent-reply-id-' + isChildReply).value : null
+            }
+        };
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', '/reply', true);
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('댓글이 생성되었습니다.');
+                window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
+            } else {
+                alert('댓글 생성 중 오류가 발생했습니다.');
+            }
+        };
+        xhr.send(JSON.stringify(data));
+    }
+
     async function deleteBookReport(bookReportId) {
         // JSON 데이터를 생성
         let data = {
@@ -43,6 +67,52 @@
         }
     }
 
+    async function deleteReply(replyId) {
+        // JSON 데이터를 생성
+        let data = {
+            id: replyId
+        };
+
+        try {
+            // 서버로 PATCH 요청을 보냄
+            const response = await fetch('/reply', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                // 성공적으로 처리된 경우의 로직을 여기에 추가
+                alert('댓글이 성공적으로 삭제되었습니다.');
+                window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
+            } else {
+                // 오류 처리 로직을 여기에 추가
+                alert('댓글 삭제 중 오류가 발생했습니다..');
+            }
+        } catch (error) {
+            // 네트워크 오류 등의 예외 처리
+            console.error('요청을 보내는 중 오류가 발생했습니다.', error);
+            alert('댓글 삭제 중 오류가 발생했습니다.');
+            alert(error);
+        }
+
+        // let xhr = new XMLHttpRequest();
+        // xhr.open('DELETE', '/reply', true);
+        // xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        //
+        // xhr.onload = function() {
+        //     if (xhr.status === 200) {
+        //         alert('댓글이 성공적으로 삭제되었습니다.');
+        //         window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
+        //     } else {
+        //         alert('댓글 삭제 중 오류가 발생했습니다.');
+        //     }
+        // };
+        //
+        // xhr.send(JSON.stringify(data));
+    }
+
     function updateBookReport(bookReportId) {
         window.location.href = '/book-report/update?bookReportId=' + bookReportId;
 
@@ -56,6 +126,7 @@
         <div class="col-lg-12">
             <!-- Post content-->
             <article>
+                <input type="hidden" id="bookReportId" name="bookReportId" th:value="${bookReport.id}">
                 <div class="row">
                     <header class="mb-4 col-8">
                         <!-- Post title -->
@@ -79,6 +150,68 @@
                     </p>
                     <!-- Add more content placeholders as needed -->
                 </section>
+
+                <form class="reply-form" th:action="@{/reply}" th:method="post">
+                    <input type="hidden" class="book-report-id" th:name="bookReportId" th:value="${bookReport.id}" />
+                    <div class="col-md-9 col-lg-8">
+                        <label for="reply-textbox" hidden>댓글</label>
+                        <textarea class="form-control reply-textbox" id="reply-textbox" placeholder="댓글 쓰기.." rows="3" required th:name="content"></textarea>
+                    </div>
+                    <div class="col-md-3 col-lg-4">
+                        <label for="reply-submit" hidden>댓글 쓰기</label>
+                        <button class="btn btn-primary" id="reply-submit" type="button" th:onclick="|createReply(false);|">쓰기</button>
+                    </div>
+                </form>
+                <ul id="article-replys" class="row col-md-10 col-lg-8 pt-3">
+                    <li class="parent-reply" th:each="reply, replyIndex : ${replies}">
+                        <form class="reply-delete-form">
+                            <input type="hidden" class="book-report-id" th:name="id" th:value="${bookReport.id}" />
+                            <div class="row">
+                                <div class="col-md-10 col-lg-9">
+                                    <strong th:text="${reply.memberId}"></strong>
+                                    <small><time th:datetime="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></time></small>
+                                    <p class="mb-1" th:text="${reply.content}"></p>
+                                </div>
+                                <div class="col-2 mb-3 align-self-center">
+                                    <button type="submit" class="btn btn-outline-danger" th:onclick="|deleteReply(${reply.id});|">삭제</button>
+                                </div>
+                            </div>
+                        </form>
+                        <ul class="row me-0" th:if="${not #lists.isEmpty(reply.childReplies)}">
+                            <li class="child-reply" th:each="childReply : ${reply.childReplies}">
+                                <form class="reply-delete-form">
+                                    <input type="hidden" class="book-report-id" th:name="id" th:value="${bookReport.id}" />
+                                    <div class="row">
+                                        <div class="col-md-10 col-lg-9">
+                                            <strong th:text="${childReply.memberId}"></strong>
+                                            <small><time th:datetime="${#temporals.format(childReply.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:text="${#temporals.format(childReply.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></time></small>
+                                            <p class="mb-1" th:text="${childReply.content}"></p>
+                                        </div>
+                                        <div class="col-2 mb-3 align-self-center">
+                                            <button type="submit" class="btn btn-outline-danger" th:onclick="|deleteReply(${childReply.id});|">삭제</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                        <div class="row">
+                            <details class="col-md-10 col-lg-9 mb-4">
+                                <summary>대댓글 달기</summary>
+                                <form class="reply-form" th:action="@{/reply}" th:method="post">
+                                    <input type="hidden" class="book-report-id" th:name="bookReportId"
+                                           th:value="${bookReport.id}"/>
+                                    <input type="hidden" class="parent-reply-id" th:id="'parent-reply-id-' + ${replyIndex.index + 1}"
+                                           th:name="parentReplyId" th:value="${reply.id}"/>
+                                    <div>
+                                        <textarea class="form-control reply-textbox" th:id="'child-content-' + ${replyIndex.index + 1}" placeholder="대댓글 쓰기.." rows="2" required th:name="content"></textarea>
+                                        <button class="form-control btn btn-primary mt-2" type="button" th:onclick="|createReply(${replyIndex.index + 1});|">쓰기</button>
+                                    </div>
+                                </form>
+                            </details>
+                        </div>
+                    </li>
+                </ul>
+
             </article>
         </div>
     </div>
