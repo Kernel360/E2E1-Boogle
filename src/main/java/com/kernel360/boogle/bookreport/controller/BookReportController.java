@@ -4,6 +4,8 @@ import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
 import io.swagger.annotations.Api;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Api(tags = {"독후감 관련 API"})
 @RestController
 public class BookReportController {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private final BookReportService bookReportService;
 
     public BookReportController(BookReportService bookReportService) {
