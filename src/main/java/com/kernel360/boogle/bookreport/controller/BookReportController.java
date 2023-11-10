@@ -91,7 +91,7 @@ public class BookReportController {
 
     @PatchMapping("/book-report")
     public void updateBookReport(@RequestBody BookReportDTO bookReport) {
-        bookReportService.updateBookRepoert(bookReport);
+        bookReportService.updateBookReport(bookReport);
     }
 
     @PatchMapping("/book-report/delete")

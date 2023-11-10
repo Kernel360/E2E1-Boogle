@@ -65,4 +65,10 @@ out/
 .DS_Store
 
 ### yml ###
-.yml
+*.yml
+
+### log ###
+*.log
+
+### docker-mysql ###
+!**/src/test/mysql/
