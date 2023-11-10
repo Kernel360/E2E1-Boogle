@@ -4,20 +4,24 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
+<style>
+    .test{
+        text-align : right;
+    }
+</style>
 <body>
 <!-- fragment navigation bar를 정의합니다. -->
 <nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#!">Boogle</a>
+        <a class="navbar-brand" href="">Boogle</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 test">
 <!--                <li class="nav-item"><span sec:authorize="isAuthenticated()" sec:authentication="name">님, 안녕하세요</li>-->
                 <li class="nav-item"><a class="nav-link active" href="/book-reports" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/book-reports}">독후감</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/admin/books" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/books}">도서 검색</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/admin/book-reports" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/book-reports}">독후감</a></li>
                 <!--                <li class="nav-item"><a class="nav-link active" href="/mypage" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/mypage}">마이페이지</a></li>-->
-
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/books" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/books}">도서 검색</a></li>
-                <li class="nav-item"><a class="nav-link active" href="/book-reports" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/book-reports}">독후감</a></li>
 
                 <th:block sec:authorize="!isAuthenticated()">
                     <li class="nav-item"><a class="nav-link active" href="/login">로그인</a></li>
