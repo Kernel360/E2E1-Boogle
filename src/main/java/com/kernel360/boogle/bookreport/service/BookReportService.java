@@ -17,7 +17,7 @@ public interface BookReportService {
 
     Page<BookReportEntity> getAllBookReports(int page);
 
-    public void updateBookRepoert(BookReportDTO bookReport);
+    public void updateBookReport(BookReportDTO bookReport);
 
     public void deleteBookReport(Long bookReportId);
 

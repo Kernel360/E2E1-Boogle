@@ -1,6 +1,9 @@
 package com.kernel360.boogle.bookreport.service;
 
+import com.kernel360.boogle.book.db.BookRepository;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
+import com.kernel360.boogle.bookreport.db.BookReportRepository;
+import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,10 +23,29 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class BookReportServiceTest {
 
     @Autowired
+    private BookRepository bookRepository;
+
+    @Autowired
+    private BookReportRepository bookReportRepository;
+
+    @Autowired
     private BookReportService bookReportService;
 
     @Test
     void createBookReport() {
+        long rowCount = bookReportRepository.count();
+        BookReportDTO bookReportDTO = BookReportDTO.builder()
+                .bookReportEntity(
+                        BookReportEntity.builder()
+                                .bookEntity(bookRepository.findById(54L).get())
+                                .isPublic("N")
+                                .title("타이틀1")
+                                .content("독후감1")
+                                .build()
+                )
+                .build();
+        bookReportService.createBookReport(bookReportDTO);
+        assertEquals(bookReportRepository.count(), rowCount + 1);
     }
 
     @Test
@@ -60,5 +83,30 @@ class BookReportServiceTest {
                 ).getContent().size(),
                 6
         );
+    }
+
+
+    @Test
+    void updateBookReport() {
+        BookReportDTO bookReportDTO = BookReportDTO.builder()
+                .bookReportEntity(
+                    BookReportEntity.builder()
+                        .id(1L)
+                        .bookEntity(bookRepository.findById(54L).get())
+                        .isPublic("N")
+                        .title("타이틀1")
+                        .content("독후감1")
+                        .build()
+                )
+                .build();
+        bookReportService.updateBookReport(bookReportDTO);
+        assertThat(bookReportRepository.findById(1L).get().getIsPublic()).isEqualTo("N");
+    }
+
+    @Test
+    void deleteBookReport() {
+        Long bookReportId = 1L;
+        bookReportService.deleteBookReport(bookReportId);
+        assertThat(bookReportRepository.findById(bookReportId).get().getIsDeleted()).isEqualTo("Y");
     }
 }
