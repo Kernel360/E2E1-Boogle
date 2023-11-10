@@ -3,16 +3,18 @@
 <meta charset="UTF-8">
 
 <head>
+  <meta charset="UTF-8">
   <!-- 필요한 스타일시트 및 스크립트 로드 -->
   <!-- 부트스트랩 스타일시트 추가 -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <!-- Font Awesome 스타일시트 추가 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+  <link href="./../../css/styles.css" rel="stylesheet" />
   <!-- 추가적인 CSS 스타일 추가 -->
   <style>
     body {
       background-color: #F8F9FA;
-      padding: 20px;
+      padding: 0px;
     }
     .form-container {
       background-color: #fff;
@@ -87,7 +89,8 @@
   </script>
 </head>
 <body>
-<div class="container">
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<div class="container mt-5">
   <div class="row">
     <div class="col-8">
       <h1 class="text-center">도서 정보 추가</h1>
@@ -139,5 +142,6 @@
     </div>
   </div>
 </div>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
 </body>
 </html>
