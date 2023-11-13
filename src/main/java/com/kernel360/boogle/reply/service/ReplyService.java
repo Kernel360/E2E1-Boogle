@@ -1,16 +1,45 @@
 package com.kernel360.boogle.reply.service;
 
+import com.kernel360.boogle.bookreport.db.BookReportEntity;
+import com.kernel360.boogle.bookreport.db.BookReportRepository;
+import com.kernel360.boogle.reply.db.ReplyRepository;
 import com.kernel360.boogle.reply.model.ReplyDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ReplyService {
-    public void createReply(ReplyDTO reply);
+@Service
+@Transactional
+public class ReplyService {
 
-    Optional<List<ReplyDTO>> getRepliesByBookReportId(Long bookReportId);
+    private final ReplyRepository replyRepository;
+    private final BookReportRepository bookReportRepository;
 
-    public void updateReply(ReplyDTO reply);
+    public ReplyService(ReplyRepository replyRepository, BookReportRepository bookReportRepository) {
+        this.replyRepository = replyRepository;
+        this.bookReportRepository = bookReportRepository;
+    }
 
-    public void deleteReply(ReplyDTO reply);
+    public void createReply(ReplyDTO reply) {
+        reply.getReplyEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함.
+        replyRepository.save(reply.getReplyEntity());
+    }
+
+    public Optional<List<ReplyDTO>> getRepliesByBookReportId(Long bookReportId) {
+        BookReportEntity bookReport =bookReportRepository.findById(bookReportId).get();
+        return Optional.of(replyRepository.findAllByBookReportEntity(bookReport)
+                .stream()
+                .map(ReplyDTO::from)
+                .toList());
+    }
+
+    public void updateReply(ReplyDTO reply) {
+        replyRepository.save(reply.getReplyEntity());
+    }
+
+    public void deleteReply(ReplyDTO reply) {
+        replyRepository.deleteById(reply.getId());
+    }
 }
