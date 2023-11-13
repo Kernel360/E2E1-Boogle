@@ -34,6 +34,27 @@
             </div>
         </div>
     </div>
+    <div th:if="${bookReports.isPresent() and not #lists.isEmpty(bookReports.get())}" class="row mt-5 justify-content-center">
+        <div class="card pt-3 px-2 col-md-6">
+            <h2 class="text-center my-4">관련 독후감 목록</h2>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">도서 독후감 제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성날짜</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bookReport : ${bookReports.get()}">
+                    <td><a th:href="@{'/book-report?id=' + ${bookReport.id}}" th:text="${bookReport.title}"></a></td>
+                    <td th:text="${bookReport.memberId}"></td>
+                    <td th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
 </body>
