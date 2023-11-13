@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<div class="container my-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-4">
+                    <img th:src="${book.thumbnailUrl}" class="card-img-top" alt="Book Image" />
+                </div>
+                <div class="col-md-8 d-flex align-items-center">
+                    <div class="card py-5 px-3">
+                        <div class="card-body">
+                            <h1 th:text="${book.title}" class="card-title text-center mb-5"></h1>
+                            <h5 th:text="'저자: ' + ${book.author}" class="card-text mb-4"></h5>
+                            <h5 th:text="'출판사: ' + ${book.publisher}" class="card-text mb-4"></h5>
+                            <p th:text="'출판일: ' + ${#temporals.format(book.publishDate, 'yyyy년 MM월 dd일')}" class="card-text mb-3"></p>
+                            <p th:text="'ISBN: ' + ${book.isbn}" class="card-text mb-3"></p>
+                            <p th:text="'판매 가격: ' + ${book.salesPrice}" class="card-text mb-3"></p>
+                            <p th:text="'도서 설명: ' + ${book.description}" class="card-text"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+</body>
+</html>
