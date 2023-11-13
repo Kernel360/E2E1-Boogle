@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,6 +48,10 @@ public class BookReportService {
     public Page<BookReportEntity> getAllBookReports(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return bookReportRepository.findAllByIsDeletedNotOrderByIdDesc("Y", pageable);
+    }
+
+    public Optional<List<BookReportEntity>> getPublicBookReportsByBookId(Long bookId) {
+        return bookReportRepository.findAllByBookEntity_IdAndIsDeletedAndIsPublicOrderByCreatedAtDesc(bookId, "N", "Y");
     }
 
     public void updateBookReport(BookReportDTO bookReport) {

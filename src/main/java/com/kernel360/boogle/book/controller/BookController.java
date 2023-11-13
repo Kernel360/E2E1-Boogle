@@ -3,6 +3,8 @@ package com.kernel360.boogle.book.controller;
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.model.BookSearchType;
 import com.kernel360.boogle.book.service.BookService;
+import com.kernel360.boogle.bookreport.db.BookReportEntity;
+import com.kernel360.boogle.bookreport.service.BookReportService;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.Optional;
+
 @Api(tags = "도서 관련 User API")
 @RestController
 public class BookController {
 
     private final BookService bookService;
+    private final BookReportService bookReportService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, BookReportService bookReportService) {
         this.bookService = bookService;
+        this.bookReportService = bookReportService;
     }
 
     @GetMapping("/books")
@@ -47,6 +54,8 @@ public class BookController {
         ModelAndView mv = new ModelAndView("book/book-detail");
         BookEntity book = bookService.getBookById(id).get();
         mv.addObject("book", book);
+        Optional<List<BookReportEntity>> bookReports = bookReportService.getPublicBookReportsByBookId(id);
+        mv.addObject("bookReports", bookReports);
         return mv;
     }
 }
