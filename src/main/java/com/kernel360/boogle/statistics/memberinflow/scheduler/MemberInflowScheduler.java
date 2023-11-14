@@ -36,9 +36,9 @@ public class MemberInflowScheduler {
      */
     @Scheduled(cron="0 0 2 * * MON")
     public void scheduledWeeklyMemberInflow() {
-        LocalDateTime updateDate = LocalDateTime.now().minusWeeks(1);
+        LocalDate updateDate = LocalDate.now().minusWeeks(1);
 
-        List<Integer> monthAndWeekNumber = memberInflowAggregation.getMonthAndWeekNumber(updateDate.toLocalDate());
+        List<Integer> monthAndWeekNumber = memberInflowAggregation.getMonthAndWeekNumber(updateDate);
 
         if(
                 memberInflowRepository.findByYearAndMonthAndWeek(
@@ -51,7 +51,7 @@ public class MemberInflowScheduler {
                     .year(updateDate.getYear())
                     .month(monthAndWeekNumber.get(0))
                     .week(monthAndWeekNumber.get(1))
-                    .inflow(memberInflowAggregation.getWeeklyInflow(updateDate.toLocalDate()))
+                    .inflow(memberInflowAggregation.getWeeklyInflow(updateDate))
                     .build(), memberInflowConverter::toEntity);
         }
     }
