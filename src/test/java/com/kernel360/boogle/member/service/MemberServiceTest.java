@@ -30,7 +30,7 @@ class MemberServiceTest {
         //when
         MemberEntity member = memberService.signup(
                 MemberSignupDTO.builder()
-                .email("kkk@gmail.com")
+                .email("kkkb@gmail.com")
                 .password("password")
                 .name("김커널")
                 .nickname("커널킴")
@@ -40,7 +40,7 @@ class MemberServiceTest {
                 .build());
         //then
         then(member.getId()).isNotNull(); // id가 NotNull인지 검증
-        then(member.getEmail()).isEqualTo("kkk@gmail.com"); // 유저명이 user123인지 검증
+        then(member.getEmail()).isEqualTo("kkkb@gmail.com"); // 유저명이 user123인지 검증
         then(member.getUsername()).isEqualTo("김커널"); // 유저명이 user123인지 검증
         then(member.getPassword()).startsWith("{bcrypt}"); // 패스워드가 {bcrypt}로 시작하는지 검증
         then(member.getRole()).isEqualTo(MemberRole.ROLE_USER);

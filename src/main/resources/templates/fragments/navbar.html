@@ -21,6 +21,7 @@
 
                 <li class="nav-item"><a class="nav-link" aria-current="page" href="/books" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/books}">도서 관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="/book-reports" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/book-reports}">독후감 관리</a></li></th:block>
+                <li class="nav-item"><a class="nav-link" href="/admin/dashboard" sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/admin/dashboard}">통계</a></li></th:block>
 
                 <div class="vr" style="color: white; margin: 10px; width: 2px;" sec:authorize="hasAnyRole('ROLE_ADMIN')"></div>
 
