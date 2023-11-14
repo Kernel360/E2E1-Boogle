@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8">
+  <!-- 필요한 스타일시트 및 스크립트 로드 -->
+
+  <!-- 부트스트랩 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+  <!-- Font Awesome 스타일시트 추가 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+  <link href="./../../css/styles.css" rel="stylesheet" />
+
+  <!-- 추가적인 CSS 스타일 추가 -->
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 0px;
+    }
+
+    .book-box {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+    }
+
+    #searchInput {
+      width: 70%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    #searchButton {
+      background-color: #007bff;
+      color: #fff
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #searchButton i {
+      font-size: 18px;
+    }
+
+    .book-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .book-table th,
+    .book-table td {
+      border: none; /* 칼럼 간의 구분선 제거 */
+      padding: 24px; /* 각 행에 대한 세로 크기 3배로 증가 */
+      text-align: left;
+    }
+
+    /* 스타일 수정 - 현재 페이지 페이징에 'active' 클래스 적용 */
+    .pagination .page-item.active .page-link {
+      background-color: #110f0f;
+      color: #6dc571;
+    }
+  </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+
+<div style="width: 900px; height: 400px;">
+  <!--차트가 그려질 부분-->
+  <canvas id="myChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.addEventListener('DOMContentLoaded', function() {
+    var xData = /*[[${weekly_local_date_time}]]*/ "";
+    var yData =  /*[[${weekly_inflow}]]*/ "";
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: xData,
+        datasets: [{
+          label: 'Weekly User Inflow',
+          data: yData,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2,
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+              displayFormats: {
+                day: 'YYYY-MM-DD'
+              }
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+  /*]]>*/
+</script>
+
+<!--<div th:text="${weekly_local_date_time}"></div>-->
+<!--<div th:text="${weekly_inflow}"></div>-->
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+</body>
+</html>
