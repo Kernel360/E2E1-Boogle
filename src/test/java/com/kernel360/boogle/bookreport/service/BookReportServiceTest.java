@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
 class BookReportServiceTest {
 
     @Autowired

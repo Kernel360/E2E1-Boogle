@@ -12,7 +12,6 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 @SpringBootTest
 @Transactional
-@ActiveProfiles("test")
 class BookReportRepositoryTest {
 
     @Autowired
