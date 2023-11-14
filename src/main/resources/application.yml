@@ -1,84 +1,14 @@
 spring:
-  profiles:
-    active: local
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-  jpa:
-    show-sql: true
-    properties:
-      format_sql: true
-      dialect: org.hibernate.dialect.MySQL8Dialect
-      hibernate:
-        ddl-auto: validate
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  datasource:
-    driver-class name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/boogle?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    username: root
-    password: ""
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
-
 springfox:
   documenration:
     swagger:
       use-model-v3: false
-
 thymeleaf:
   cache: false
   check-template-location: true
   prefix: classpath:/templates/
   suffix: .html
   enabled: true
-
-logging:
-  file:
-    path: ./logs
-    name: log
-  logback:
-    rollingpolicy:
-      max-history: 20
-      total-size-cap: 100MB
-
----
-
-spring:
-  config:
-    activate:
-      on-profile: test
-  flyway:
-    enabled: true
-    baseline-on-migrate: true
-    location: ./src/test/resources/db/migration
-  datasource:
-    driver-class name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    username: root
-    password: admin1234
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
-        show_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
-  springfox:
-    documenration:
-      swagger:
-        use-model-v3: false
-logging:
-  file:
-    path: ./logs
-    name: log
-  logback:
-    rollingpolicy:
-      max-history: 0
-      total-size-cap: 1KB
