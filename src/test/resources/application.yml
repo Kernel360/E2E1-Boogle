@@ -1,0 +1,43 @@
+spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/test-migration
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  datasource:
+    driver-class name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: ENC(qDWkqiYMaDqXOBhjCB714dmEhVeyGjHp)
+    password: ENC(A9tUkNx8hWZx8oyExV7/Fh5KKJCeUKRT+4f0rV6gQv0=)
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+springfox:
+  documenration:
+    swagger:
+      use-model-v3: false
+logging:
+  file:
+    path: ./src/test/logs
+    name: log
+  logback:
+    rollingpolicy:
+      max-history: 10
+      total-size-cap: 10KB
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndTripleDES
+aladin:
+  api:
+    ttb-key: ENC(Jem/KbwMCD0y1OKbM+9vWzVpE116xZfxVl2kRL1YYUoqFUjYnoZ3Tw==)
+    output: js
+    version: 20131101
+    book-list.url: http://www.aladin.co.kr/ttb/api/ItemList.aspx
+    book-detail.url: http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx
