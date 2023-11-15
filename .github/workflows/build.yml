@@ -3,6 +3,7 @@ name: deploy
 on:
   push:
     branches: [ main ]
+    
   workflow_dispatch:
 
 env:
@@ -14,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     
   steps:
-    - name: Checkout
+    - name: Github checkout
       uses: actions/checkout@v3
-
+      
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
       shell: bash
