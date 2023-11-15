@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Blog Home - Start Bootstrap Template</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="../css/styles.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+            float: left;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 50px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 50px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 50px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            border: 1px solid #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            background-color: #000;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body style="position: relative; min-height: 100vh;">
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<header class="py-1 bg-light border-bottom mb-4">
+    <div class="text-center my-5">
+        <h1 class="fw-bolder">Welcome to Mypage!</h1>
+        <div class="container">
+            <div class="btn-group-vertical">
+                <a class="btn btn-primary mb-2" href="@{/mypage/memberInfo}" target="_blank">개인정보</a>
+                <a class="btn btn-secondary mb-2" href="@{/mypage/bookReport}" target="_blank">내가 쓴 독후감</a>
+                <a class="btn btn-success mb-2" href="@{/mypage/communityReply}" target="_blank">내가 쓴 댓글</a>
+                <a class="btn btn-info" href="sample.com" target="_blank">사용자정의조건</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>이름</th>
+            <th>이메일</th>
+            <th>패스워드</th>
+            <th>닉네임</th>
+            <th>전화번호</th>
+            <th>회원가입날짜</th>
+        </tr>
+        </thead>
+<!--        <tbody>-->
+<!--        <tr th:if="${member != null}">-->
+<!--            <td th:text="${member.name}">이름</td>-->
+<!--            <td th:text="${member.email}">이메일</td>-->
+<!--            <td>*******</td>-->
+<!--            <td th:text="${member.nickname}">닉네임</td>-->
+<!--            <td th:text="${member.phoneNumber}">전화번호</td>-->
+<!--            <td th:text="${#temporals.format(member.signupDate, 'yyyy-MM-dd')}">회원가입날짜</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+    </table>
+</div>
+
+
+<!--<div class="container">-->
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>책 제목</th>-->
+<!--            <th>내용</th>-->
+<!--            <th>댓글 작성일</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="reply : ${replies.content}">-->
+<!--            <td th:text="${reply.title}">책 제목</td>-->
+<!--            <td th:text="${reply.content}">내용</td>-->
+<!--            <td th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd')}">작성일</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+<!--<div class="pagination">-->
+<!--    <a th:if="${replies.hasPrevious()}" th:href="@{/mypage/communityReply(page=${replies.number - 1})}">이전</a>-->
+<!--    <span th:text="${replies.number + 1}" class="active"></span>-->
+<!--    <a th:if="${replies.hasNext()}" th:href="@{/mypage/communityReply(page=${replies.number + 1})}">다음</a>-->
+<!--</div>-->
+<!--<script>-->
+
+
+<!--</script>-->
+
+
+
+
+
+
+</body>
+<footer style="position: absolute; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5;">
+    <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+</footer>
+</html>

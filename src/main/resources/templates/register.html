@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http//www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/basic.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script layout:fragment="script" th:inline="javascript">
+        const auth = [[${#authentication.principal}]]
+        const errors = [[${errors}]]
+        console.log(errors)
+    </script>
+</head>
+<body>
+    <div class="input-group mb-3">
+        <span class="input-group-text">Writer</span>
+        <input type="text" name="writer" class="form-control" placeholder="Writer"
+               th:value="${#authentication.principal.username}" readonly>
+    </div>
+
+</body>
+</html>

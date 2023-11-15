@@ -489,6 +489,7 @@ progress {
 .lead {
   font-size: 1.25rem;
   font-weight: 300;
+  text-align: center;
 }
 
 .display-1 {
@@ -1104,6 +1105,7 @@ progress {
   .col-md-2 {
     flex: 0 0 auto;
     width: 16.66666667%;
+
   }
   .col-md-3 {
     flex: 0 0 auto;
@@ -7964,6 +7966,7 @@ textarea.form-control-lg {
 
 .fw-bolder {
   font-weight: bolder !important;
+  text-align: center;
 }
 
 .lh-1 {
@@ -7991,7 +7994,7 @@ textarea.form-control-lg {
 }
 
 .text-center {
-  text-align: center !important;
+  text-align: right !important;
 }
 
 .text-decoration-none {
@@ -10823,4 +10826,8 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+
+
+
 }
+

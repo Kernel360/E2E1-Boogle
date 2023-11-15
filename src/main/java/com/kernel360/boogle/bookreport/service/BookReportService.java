@@ -74,5 +74,8 @@ public class BookReportService {
     }
 
 
-
+    public Optional<List<BookReportEntity>> getBookReportsByMemberId(Long memberId) {
+        return
+                bookReportRepository.findAllByMemberId(memberId);
+    }
 }

@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class  MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+
 
     public MemberEntity signup(MemberSignupDTO member) {
         if (memberRepository.findByEmail(member.getEmail()) != null) {
@@ -52,5 +53,9 @@ public class MemberService {
 
     public MemberEntity findByEmail(String email) {
         return memberRepository.findByEmail(email);
+    }
+
+    public MemberEntity findById(Long id){
+        return memberRepository.findById(id).get();
     }
 }

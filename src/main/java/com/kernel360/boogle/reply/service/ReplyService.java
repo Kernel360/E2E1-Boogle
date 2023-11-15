@@ -42,4 +42,11 @@ public class ReplyService {
     public void deleteReply(ReplyDTO reply) {
         replyRepository.deleteById(reply.getId());
     }
+
+    public Optional<List<ReplyDTO>> getRepliesByMemberId(Long memberId) {
+        return Optional.of(replyRepository.findAllByMemberId(memberId)
+                .stream()
+                .map(ReplyDTO::from)
+                .toList());
+    }
 }

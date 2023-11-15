@@ -46,6 +46,7 @@ public class BookAdminController {
         ModelAndView mv = new ModelAndView("book/admin/books");
         Page<BookEntity> books = null;
 
+
         if(searchType.equals(BookSearchType.TITLE.getType())) {
             books = bookService.getBooksByTitle(page, searchWord);
         } else if (searchType.equals(BookSearchType.AUTHOR.getType())) {
