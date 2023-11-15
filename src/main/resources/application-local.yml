@@ -1,0 +1,37 @@
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: validate
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class name: com.mysql.cj.jdbc.Driver
+    url: ENC(6JQHjqQjEGeJ6jfG+S1EKlQxkHRBhIT4r0rVQTLjjNs37JbuGNQHpEXL1MQ+ZRdpoHR3wZzpzncoCNGfbYk7Jd3Cq+8Y+4dAuAgfzvSphqUtrxDS1Qt6qAJi75uPXmJS3lyFh1uKJbSZe8avOBIB6z1phkGdM0utzSSAsVaMl0Un0vE9oxb3nFTH7HcifF2kp1jaauvYxJwAlYbSomNR0KM1Cmt7J1gurNBBFPbG8JmcFG3eZJbZrRECGO0w8jbXU0Uf/c3Ffk0AYwxzcjetkuRkb0wUhwHHO1MGre17owY=)
+    username: ENC(4qqyBBJ1/pEgP875b4FekQ5lrFb+jURl)
+    password: ENC(QhJiDo9z0eB274742Xv6UTWKvM+E+c1ieAoZ6txWshrcY39cgMu1Sw==)
+logging:
+  file:
+    path: ./logs
+    name: log
+  logback:
+    rollingpolicy:
+      max-history: 20
+      total-size-cap: 100MB
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndTripleDES
+aladin:
+  api:
+    ttb-key: ENC(Jem/KbwMCD0y1OKbM+9vWzVpE116xZfxVl2kRL1YYUoqFUjYnoZ3Tw==)
+    output: js
+    version: 20131101
+    book-list.url: http://www.aladin.co.kr/ttb/api/ItemList.aspx
+    book-detail.url: http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx

@@ -3,10 +3,7 @@ package com.kernel360.boogle.statistics.memberinflow.business;
 import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.member.db.MemberRepository;
 import com.kernel360.boogle.statistics.memberinflow.db.MemberInflowRepository;
-import com.kernel360.boogle.statistics.memberinflow.service.MemberInflowService;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
