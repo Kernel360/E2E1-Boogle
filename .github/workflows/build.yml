@@ -29,9 +29,7 @@ jobs:
         shell: bash
   
       - name: Build with Gradle
-        run: ./gradlew build
-        env:
-          JASYPT_ENCRYPTOR_PASSWORD: ${{ secrets.JASYPT_KEY }}
+        run: ./gradlew bootjar
         shell: bash
   
       - name: Make zip file
