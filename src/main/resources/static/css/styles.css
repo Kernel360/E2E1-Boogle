@@ -3508,7 +3508,7 @@ textarea.form-control-lg {
 
 .btn-group,
 .btn-group-vertical {
-  position: relative;
+  position: fixed;
   display: inline-flex;
   vertical-align: middle;
 }
@@ -3583,7 +3583,7 @@ textarea.form-control-lg {
 }
 
 .btn-group-vertical {
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: center;
 }

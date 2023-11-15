@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Api(tags = {"마이페이지 관련 API"})
@@ -27,13 +26,15 @@ public class MyPageController {
             @AuthenticationPrincipal MemberEntity member
             ){
         final Long memberId = member.getId();
-        Map<String, Object> model = new HashMap<>();
-        model.put("member", member);
+//        Map<String, Object> model = new HashMap<>();
+//        model.put("member", member);
+
+
 
         return new ModelAndView("mypage/main")
                 .addAllObjects(
-                        Map.of("member", model,
-                                "replies" , replyService.getRepliesByMemberId(memberId).get(),
+                        Map.of("member", member,
+                                "replies" , replyService.getRecentRepliesByMemberId(memberId,3).get(),
                                 "bookreports", bookReportService.getBookReportsByMemberId(memberId).get())
                 );
     }
@@ -57,7 +58,7 @@ public class MyPageController {
             @AuthenticationPrincipal MemberEntity member
     ){
         return new ModelAndView("/mypage/communityReply")
-                .addObject("communityReply", replyService.getRepliesByMemberId(member.getId()));
+                .addObject("communityReply", replyService.getRecentRepliesByMemberId(member.getId(),3));
     }
 
 
