@@ -9,7 +9,6 @@ on:
 env:
   S3_BUKET_NAME: ${{ secrets.S3_BUKET_NAME }}
   AWS_REGION: ap-northeast-2
-  JASYPT_KEY: ${{ secrets.JASYPT_KEY }}
 
 jobs:
   build:
@@ -26,7 +25,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Set environment variable for Jasypt
-        run: echo "JASYPT_ENCRYPTOR_PASSWORD=$JASYPT_KEY" >> $GITHUB_ENV
+        run: echo "JASYPT_ENCRYPTOR_PASSWORD=${{ secrets.JASYPT_KEY }}" >> $GITHUB_ENV
         
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
