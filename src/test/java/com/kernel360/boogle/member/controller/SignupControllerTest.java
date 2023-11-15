@@ -43,8 +43,8 @@ class SignupControllerTest {
     @Test
     void signup() throws Exception {
         MultiValueMap<String, String> mvMap = new LinkedMultiValueMap<>();
-        mvMap.add("email", "kkk@gmail.com");
-        mvMap.add("password", "password");
+        mvMap.add("email", "kernel@gmail.com");
+        mvMap.add("password", "qwer1234");
         mvMap.add("name", "김커널");
         mvMap.add("nickname", "커널킴");
         mvMap.add("gender", "M");
