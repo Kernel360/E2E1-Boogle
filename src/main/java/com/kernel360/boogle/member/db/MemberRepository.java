@@ -17,4 +17,6 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
+
+
 }

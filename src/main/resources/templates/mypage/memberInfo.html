@@ -1,30 +1,56 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Blog Home - Start Bootstrap Template</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <link href="../css/styles.css" rel="stylesheet" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="boogle-site"/>
+    <meta name="author" content="boogle"/>
+    <title>Boogle</title>
+    <link href="../css/styles.css" rel="stylesheet"/>
 </head>
-
 <body>
 <nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
-<!-- Page header with logo and tagline-->
-<header class="py-1 bg-light border-bottom mb-4">
-    <div class="container">
-        <div class="text-center my-5">
-            <h1 class="fw-bolder">Welcome to Boogle!</h1>
-            <img src="images/logo.png" style="width: 18%;">
-            <p class="lead mb-0 mt-3">Boogle can make your life Better!</p>
+<br/>
+<div class="container">
+    <form id="updateMemberInfoForm" class="form-signin" method="post" th:action="@{/mypage/memberInfo}">
+        <h2 class="form-signin-heading">회원정보수정</h2>
+        <p>
+            <label for="name" class="sr-only">이름</label>
+            <input type="text" id="name" name="name" class="form-control" style="width: 30%" placeholder="name"
+                   th:value="${member.name}" required autofocus>
+        </p>
+        <p>
+            <label for="password" class="sr-only">비밀번호</label>
+            <input type="password" id="password" name="password" class="form-control" style="width: 30%"
+                   placeholder="input password" required autofocus>
+        </p>
+        <p>
+            <label for="email" class="sr-only">이메일</label>
+            <input type="text" id="email" name="email" class="form-control" style="width: 30%" placeholder="email"
+                   th:value="${member.email}" required autofocus>
+        </p>
+        <p>
+            <label for="nickname" class="sr-only">닉네임</label>
+            <input type="text" id="nickname" name="nickname" class="form-control" style="width: 30%"
+                   placeholder="nickname" th:value="${member.nickname}" required autofocus>
+        </p>
+        <p>
+            <label for="phoneNumber" class="sr-only">휴대폰 번호</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" style="width: 30%"
+                   placeholder="phoneNumber" th:value="${member.phoneNumber}">
+        </p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">수정하기</button>
+        <div th:if="${error}" style="color: red">
+            <br/>
+            <p th:text="${error}"></p>
         </div>
-    </div>
-</header>
-<h1>main page</h1>
-<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </form>
+</div>
+</form>
+</div>
+
 </body>
+<footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5;">
+    <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+</footer>
 </html>
