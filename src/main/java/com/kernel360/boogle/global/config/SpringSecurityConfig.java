@@ -77,10 +77,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return username -> {
-            MemberEntity member = memberService.findByEmail(username);
+        return email -> {
+            MemberEntity member = memberService.findByEmail(email);
             if (member == null) {
-                throw new UsernameNotFoundException(username);
+                throw new UsernameNotFoundException(email);
             }
             return member;
         };

@@ -10,12 +10,6 @@ public class LoginController {
 
     @GetMapping("/login")
     public ModelAndView login(String errorCode, String logout) {
-
-        log.info("login get ..........");
-        log.info("logout: " + logout);
-        if (logout != null) {
-            log.info("user logout.........");
-        }
         return new ModelAndView("login");
     }
 }
