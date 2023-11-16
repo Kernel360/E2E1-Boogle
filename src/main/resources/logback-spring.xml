@@ -29,7 +29,7 @@
 
     <!--  local 환경  -->
     <springProfile name="local">
-        <root level="debug">
+        <root level="info">
             <appender-ref ref="STDOUT" />
             <appender-ref ref="FILE" />
         </root>
