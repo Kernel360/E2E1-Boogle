@@ -15,5 +15,8 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 
     Optional<List<ReplyEntity>> findAllByParentReplyId(Long parentReplyId);
 
+
+    List<ReplyEntity> findAllByMemberId(Long MemberId);
+
     void deleteById(Long id);
 }
