@@ -42,4 +42,13 @@ public class ReplyService {
     public void deleteReply(ReplyDTO reply) {
         replyRepository.deleteById(reply.getId());
     }
+
+    public Optional<List<ReplyDTO>> getRecentRepliesByMemberId(Long memberId, int cnt) {
+        return Optional.of(replyRepository.findAllByMemberId(memberId)
+                .stream()
+                .map(ReplyDTO::from)
+                .sorted((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()))
+                .limit(cnt)
+                .toList());
+    }
 }

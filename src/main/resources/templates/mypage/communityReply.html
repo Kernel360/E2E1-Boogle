@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog Home - Start Bootstrap Template</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="../css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<!-- Page header with logo and tagline-->
+<header class="py-1 bg-light border-bottom mb-4">
+    <div class="container">
+        <div class="text-center my-5">
+            <h1 class="fw-bolder">Welcome to Boogle!</h1>
+            <img src="images/logo.png" style="width: 18%;">
+            <p class="lead mb-0 mt-3">Boogle can make your life Better!</p>
+        </div>
+    </div>
+</header>
+<h1>community Reply page</h1>
+<footer th:replace="~{fragments/footer :: footerFragment}"></footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

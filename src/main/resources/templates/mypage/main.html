@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Blog Home - Start Bootstrap Template</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="../css/styles.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        container {
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: center;
+            float: left;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 50px;
+        }
+
+        .btn {
+            width: 10%;
+            height: 40px;
+            background-color: lightgoldenrodyellow;
+            color: #000;
+            border-radius: 50px;
+            font-size: 15px;
+            border: 1px solid #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease-in-out;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .btn:hover {
+            background-color: #000;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .heading {
+            font-size: 30px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            float: left;
+        }
+
+        .container:nth-child(2) {
+            float: right;
+        }
+
+        .table.table-bordered > thead > tr > th, .table.table-bordered > tbody > tr > th,
+        .table.table-bordered > tfoot > tr > th, .table.table-bordered > tbody > tr > td,
+        .table.table-bordered > tfoot > tr > td {
+            border: 1px solid #ddd !important;
+        }
+
+        .table.table-striped > tbody > tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        .table-primary {
+            --bs-table-bg: #0d6efd !important;
+            --bs-table-border-color: #b0dbed !important;
+        }
+
+        .table-secondary {
+            --bs-table-bg: #6c757d !important;
+            --bs-table-border-color: #a88730 !important;
+        }
+
+        .table-success {
+            --bs-table-bg: #28a745 !important;
+            --bs-table-border-color: #a7d8c3 !important;
+        }
+
+        .table-info {
+            --bs-table-bg: #17a2b8 !important;
+            --bs-table-border-color: #b0dbed !important;
+        }
+
+        .scrollable-table {
+            height: 300px; /* Adjust as needed */
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body style="position: relative; min-height: 100vh;">
+<nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
+<div class="heading">Welcome to Mypage!</div>
+
+<div th:if="${error}" class="alert alert-danger">
+    <p th:text="${error}"></p>
+
+</div>
+</header>
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col text-right">
+            <a th:href="@{/mypage/memberInfo}" class="btn btn-primary">회원정보수정</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead class="table-dark">
+        <tr>
+            <th class="text-center">이름</th>
+            <th class="text-center">이메일</th>
+            <th class="text-center">패스워드</th>
+            <th class="text-center">닉네임</th>
+            <th class="text-center">전화번호</th>
+            <th class="text-center">회원가입날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="text-center" th:text="${member.name}">이름</td>
+            <td class="text-center" th:text="${member.email}">이메일</td>
+            <td class="text-center">*******</td>
+            <td class="text-center" th:text="${member.nickname}">닉네임</td>
+            <td class="text-center" th:text="${member.phoneNumber}">전화번호</td>
+            <td class="text-center" th:text="${#temporals.format(member.signupDate, 'yyyy-MM-dd')}">회원가입날짜</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-4 scrollable-table" >
+    <div class="row mb-3">
+        <div class="col text-right">
+            <a th:href="@{/mypage/communityReply}" class="btn btn-secondary">내가 쓴 댓글보기</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead class="table-success">
+        <tr>
+            <th>책 제목</th>
+            <th>내용</th>
+            <th>댓글 작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reply : ${replies}">
+            <td th:text="${reply.bookReportEntity.title}">책 제목</td>
+            <td th:text="${reply.content}">내용</td>
+            <td th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd')}">작성일</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col text-right">
+            <a th:href="@{/mypage/bookReport}" class="btn btn-info">내가 쓴 독후감</a>
+        </div>
+    </div>
+    <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead class="table-info">
+        <tr>
+            <th>책 제목</th>
+            <th>독후감 제목</th>
+            <th>독후감 내용</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bookReport : ${bookReports}">
+            <td th:text="${bookReport.bookEntity.title}">책 제목</td>
+            <td th:text="${bookReport.title}">독후감 제목</td>
+            <td th:text="${bookReport.content}">독후감 내용</td>
+            <td th:text="${#temporals.format(bookReport.createdAt, 'yyyy-MM-dd')}">작성일</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector(".form-signin").addEventListener("submit", function(e) {
+            var password = document.getElementById("password").value;
+            if (password === "") {
+                alert("비밀번호를 입력해주세요.");
+                e.preventDefault(); // 폼 제출 중단
+            }
+        });
+    });
+</script>
+
+</body>
+<footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5;">
+    <th:block th:replace="~{fragments/footer :: footerFragment}"></th:block>
+</footer>
+</html>
