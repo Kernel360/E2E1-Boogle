@@ -29,11 +29,57 @@
             if (xhr.status === 200) {
                 alert('댓글이 생성되었습니다.');
                 window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
+            } else if (xhr.status === 400) {
+                alert('댓글 생성 중 오류가 발생했습니다: ' + xhr.responseText);
             } else {
                 alert('댓글 생성 중 오류가 발생했습니다.');
             }
         };
         xhr.send(JSON.stringify(data));
+    }
+
+    function showUpdateForm(replyId, currentContent, isChildReply) {
+        if (isChildReply) {
+            document.getElementById(`update-child-reply-textbox-${replyId}`).value = currentContent;
+            document.getElementById(`update-child-reply-form-${replyId}`).style.display = 'block';
+        } else {
+            document.getElementById(`update-reply-textbox-${replyId}`).value = currentContent;
+            document.getElementById(`update-reply-form-${replyId}`).style.display = 'block';
+        }
+    }
+
+    async function updateReply(replyId, isChildReply) {
+        let data = {
+            replyEntity: {
+                id: replyId,
+                bookReportEntity: { id: document.getElementById('bookReportId').value },
+                content: isChildReply
+                    ? document.getElementById(`update-child-reply-textbox-${replyId}`).value
+                    : document.getElementById(`update-reply-textbox-${replyId}`).value,
+                parentReplyId: isChildReply ? document.getElementById('check-parent-reply-id-' + replyId).value : null
+            }
+        };
+
+        try {
+            const response = await fetch('/reply', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) {
+                alert('댓글이 수정되었습니다.');
+                window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
+            } else {
+                const errorMessage = await response.text();
+                alert('댓글 수정 중 오류가 발생했습니다: ' + errorMessage);
+            }
+        } catch (error) {
+            console.error('댓글 수정 중 오류가 발생했습니다.', error);
+            alert('댓글 수정 중 오류가 발생했습니다.');
+        }
     }
 
     async function deleteBookReport(bookReportId) {
@@ -151,7 +197,7 @@
                     <!-- Add more content placeholders as needed -->
                 </section>
 
-                <form class="reply-form" th:action="@{/reply}" th:method="post">
+                <form class="row reply-form" th:action="@{/reply}" th:method="post">
                     <input type="hidden" class="book-report-id" th:name="bookReportId" th:value="${bookReport.id}" />
                     <div class="col-md-9 col-lg-8">
                         <label for="reply-textbox" hidden>댓글</label>
@@ -162,17 +208,24 @@
                         <button class="btn btn-primary" id="reply-submit" type="button" th:onclick="|createReply(false);|">쓰기</button>
                     </div>
                 </form>
-                <ul id="article-replys" class="row col-md-10 col-lg-8 pt-3">
+                <ul id="article-replys" class="row col-md-11 col-lg-10 pt-3">
                     <li class="parent-reply" th:each="reply, replyIndex : ${replies}">
                         <form class="reply-delete-form">
                             <input type="hidden" class="book-report-id" th:name="id" th:value="${bookReport.id}" />
                             <div class="row">
                                 <div class="col-md-10 col-lg-9">
-                                    <strong th:text="${reply.memberId}"></strong>
+                                    <strong th:text="${reply.memberNickname}"></strong>
                                     <small><time th:datetime="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></time></small>
                                     <p class="mb-1" th:text="${reply.content}"></p>
+                                    <div th:id="'update-reply-form-' + ${reply.id}" style="display: none;">
+                                        <textarea class="form-control reply-textbox" th:id="'update-reply-textbox-' + ${reply.id}" rows="3" required></textarea>
+                                        <button class="btn btn-primary" type="submit" th:onclick="|updateReply(${reply.id}, false);|">수정 완료</button>
+                                    </div>
                                 </div>
-                                <div class="col-2 mb-3 align-self-center">
+                                <div class="col-2 mb-3 align-self-center" th:if="${#authorization.expression('isAuthenticated()')} and ${reply.memberId} == ${#authentication.principal.id}">
+                                    <button type="button" class="btn btn-outline-primary"
+                                            th:attr="data-reply-id=${reply.id}, data-reply-content=${reply.content}"
+                                            th:onclick="|showUpdateForm(this.getAttribute('data-reply-id'), this.getAttribute('data-reply-content'), false);|">수정</button>
                                     <button type="submit" class="btn btn-outline-danger" th:onclick="|deleteReply(${reply.id});|">삭제</button>
                                 </div>
                             </div>
@@ -183,11 +236,19 @@
                                     <input type="hidden" class="book-report-id" th:name="id" th:value="${bookReport.id}" />
                                     <div class="row">
                                         <div class="col-md-10 col-lg-9">
-                                            <strong th:text="${childReply.memberId}"></strong>
+                                            <strong th:text="${childReply.memberNickname}"></strong>
                                             <small><time th:datetime="${#temporals.format(childReply.createdAt, 'yyyy-MM-dd HH:mm:ss')}" th:text="${#temporals.format(childReply.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></time></small>
                                             <p class="mb-1" th:text="${childReply.content}"></p>
+                                            <div th:id="'update-child-reply-form-' + ${childReply.id}" style="display: none;">
+                                                <textarea class="form-control reply-textbox" th:id="'update-child-reply-textbox-' + ${childReply.id}" rows="3" required></textarea>
+                                                <input type="hidden" th:id="'check-parent-reply-id-' + ${childReply.id}" th:value="${reply.id}">
+                                                <button class="btn btn-primary" type="submit" th:onclick="|updateReply(${childReply.id}, true);|">수정 완료</button>
+                                            </div>
                                         </div>
-                                        <div class="col-2 mb-3 align-self-center">
+                                        <div class="col-2 mb-3 align-self-center" th:if="${#authorization.expression('isAuthenticated()')} and ${childReply.memberId} == ${#authentication.principal.id}">
+                                            <button type="button" class="btn btn-outline-primary"
+                                                    th:attr="data-child-reply-id=${childReply.id}, data-child-reply-content=${childReply.content}"
+                                                    th:onclick="|showUpdateForm(this.getAttribute('data-child-reply-id'), this.getAttribute('data-child-reply-content'), true);|">수정</button>
                                             <button type="submit" class="btn btn-outline-danger" th:onclick="|deleteReply(${childReply.id});|">삭제</button>
                                         </div>
                                     </div>
