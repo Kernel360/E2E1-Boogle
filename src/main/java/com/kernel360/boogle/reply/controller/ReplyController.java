@@ -43,7 +43,7 @@ public class ReplyController {
 
     @DeleteMapping("/reply")
     public void deleteReply(@RequestBody ReplyDTO reply) {
-        logger.info("댓글 삭제가 수행됨. 삭제된 댓글 정보: " + replyService.getReplyById(reply.getId()));
+        logger.info("댓글/대댓글 삭제가 수행됨. 삭제된 댓글 정보: " + replyService.getReplyById(reply.getId()) + " 추가로 삭제된 대댓글 정보: " + replyService.getRepliesByParentReplyId(reply.getId()));
         replyService.deleteReply(reply);
     }
 }

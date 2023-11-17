@@ -48,6 +48,10 @@ public class ReplyService {
                 .toList());
     }
 
+    public Optional<List<ReplyEntity>> getRepliesByParentReplyId(Long parentReplyId) {
+        return replyRepository.findAllByParentReplyId(parentReplyId);
+    }
+
     public void updateReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
