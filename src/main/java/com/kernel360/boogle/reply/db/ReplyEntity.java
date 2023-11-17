@@ -2,6 +2,7 @@ package com.kernel360.boogle.reply.db;
 
 
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
+import com.kernel360.boogle.member.db.MemberEntity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -25,10 +26,9 @@ public class ReplyEntity {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    //    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
-    //    @JoinColumn(name = "member_id", nullable = false)
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private MemberEntity memberEntity;
 
     @ManyToOne
     @JoinColumn(name = "book_report_id", nullable = false)
