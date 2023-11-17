@@ -34,7 +34,14 @@
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
-    <!--  local 환경  -->
+    <!--  test 환경  -->
     <springProfile name="test">
+    </springProfile>
+    <!--  prod 환경  -->
+    <springProfile name="prod">
+        <root level="info">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
+        </root>
     </springProfile>
 </configuration>
