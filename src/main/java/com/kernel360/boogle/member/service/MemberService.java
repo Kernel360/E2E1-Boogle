@@ -5,7 +5,7 @@ import com.kernel360.boogle.member.db.MemberRepository;
 import com.kernel360.boogle.member.db.MemberRole;
 import com.kernel360.boogle.member.exception.AlreadySignedupMemberException;
 import com.kernel360.boogle.member.model.MemberSignupDTO;
-import com.kernel360.boogle.mypage.model.RequestMemberDTO;
+import com.kernel360.boogle.mypage.model.MemberRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class  MemberService {
                                         .build());
     }
 
-    public MemberEntity updateMemberInfo(RequestMemberDTO memberDTO) {
+    public MemberEntity updateMemberInfo(MemberRequestDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findByEmail(memberDTO.getEmail());
 
         memberEntity.setName(memberDTO.getName());

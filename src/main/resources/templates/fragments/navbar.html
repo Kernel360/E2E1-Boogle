@@ -12,10 +12,9 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-<!--                <li class="nav-item"><span sec:authorize="isAuthenticated()" sec:authentication="name">님, 안녕하세요</li>-->
                 <li class="nav-item"><a class="nav-link" href="/books" th:href="@{/books}">도서</a></li>
                 <li class="nav-item"><a class="nav-link" href="/book-reports" th:href="@{/book-reports}">독후감</a></li>
-                <li class="nav-item"><a class="nav-link" href="/mypage/main" th:href="@{/mypage/main}">마이페이지</a></li>
+                <li class="nav-item"><a class="nav-link" href="/mypage/main" sec:authorize="hasAnyRole('ROLE_USER')" th:href="@{/mypage/main}">마이페이지</a></li>
 
                 <div class="vr" style="color: white; margin: 10px; width: 2px;"></div>
 

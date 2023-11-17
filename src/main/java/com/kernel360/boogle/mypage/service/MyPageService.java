@@ -1,7 +1,7 @@
 package com.kernel360.boogle.mypage.service;
 
 import com.kernel360.boogle.member.db.MemberEntity;
-import com.kernel360.boogle.mypage.model.RequestMemberDTO;
+import com.kernel360.boogle.mypage.model.MemberRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class MyPageService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public boolean checkPassword(MemberEntity memberEntity, RequestMemberDTO member) {
+    public boolean checkPassword(MemberEntity memberEntity, MemberRequestDTO member) {
         if (memberEntity == null || member == null) {
             return false;
         }

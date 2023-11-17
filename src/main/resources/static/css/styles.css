@@ -1739,7 +1739,7 @@ progress {
     --bs-gutter-y: 3rem;
   }
 }
-.table {
+table {
   --bs-table-color: var(--bs-body-color);
   --bs-table-bg: transparent;
   --bs-table-border-color: var(--bs-border-color);
@@ -7994,7 +7994,7 @@ textarea.form-control-lg {
 }
 
 .text-center {
-  text-align: right !important;
+  text-align: center !important;
 }
 
 .text-decoration-none {

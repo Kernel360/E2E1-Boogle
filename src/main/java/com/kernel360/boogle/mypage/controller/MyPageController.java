@@ -4,7 +4,7 @@ import com.kernel360.boogle.book.service.BookService;
 import com.kernel360.boogle.bookreport.service.BookReportService;
 import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.member.service.MemberService;
-import com.kernel360.boogle.mypage.model.RequestMemberDTO;
+import com.kernel360.boogle.mypage.model.MemberRequestDTO;
 import com.kernel360.boogle.mypage.service.MyPageService;
 import com.kernel360.boogle.reply.service.ReplyService;
 import io.swagger.annotations.Api;
@@ -41,7 +41,7 @@ public class MyPageController {
         return new ModelAndView("mypage/main")
                 .addAllObjects(
                         Map.of("member", member,
-                                "replies" , replyService.getRecentRepliesByMemberId(memberId,3).get(),
+                                "replies" , replyService.getRecentRepliesByMemberId(memberId,10).get(),
                                 "bookreports", bookReportService.getBookReportsByMemberId(memberId).get())
                 );
     }
@@ -72,7 +72,7 @@ public class MyPageController {
     @PostMapping("/mypage/memberInfo")
     public ModelAndView updateMemberInfo(
             @AuthenticationPrincipal MemberEntity memberEntity,
-            @ModelAttribute RequestMemberDTO member,
+            @ModelAttribute MemberRequestDTO member,
             RedirectAttributes redirectAttributes
     ){
         ModelAndView modelAndView = new ModelAndView();

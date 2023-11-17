@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
 @Data
-public class RequestMemberDTO {
+public class MemberRequestDTO {
 
     private String name;
     private String password;
