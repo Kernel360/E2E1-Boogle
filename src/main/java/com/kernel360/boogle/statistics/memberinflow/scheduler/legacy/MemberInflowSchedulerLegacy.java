@@ -37,7 +37,7 @@ public class MemberInflowSchedulerLegacy {
                         .year((int)inflow.get(0))
                         .month((int)inflow.get(1))
                         .week((int)inflow.get(2))
-                        .inflow(memberInflowAggregation.getWeeklyInflow(LocalDate.parse((String)inflow.get(3))))
+                        .inflow(memberInflowAggregation.getSingleWeeklyInflow(LocalDate.parse((String)inflow.get(3))))
                         .build());
             }
         }
