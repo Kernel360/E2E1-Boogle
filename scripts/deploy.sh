@@ -22,4 +22,4 @@ fi
 
 DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
 echo "##### Deploy DEPLOY_JAR"    >> /home/ec2-user/e2e-boogle/deploy.log
-nohup java -jar $DEPLOY_JAR --spring.config.location=/home/ec2-user/e2e-boogle-config/application-prod.yml >> /home/ec2-user/deploy.log 2>/home/ec2-user/e2e-boogle/deploy_err.log &
+nohup java -jar $DEPLOY_JAR --spring.config.location=/home/ec2-user/e2e-boogle-config/application-prod.yml --spring.profiles.active=prod >> /home/ec2-user/deploy.log 2>/home/ec2-user/e2e-boogle/deploy_err.log &
