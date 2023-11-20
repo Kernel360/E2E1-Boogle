@@ -1,9 +1,10 @@
 package com.kernel360.boogle.member.service;
 
+import com.kernel360.boogle.global.error.code.MemberErrorCode;
+import com.kernel360.boogle.global.error.exception.BusinessException;
 import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.member.db.MemberRepository;
 import com.kernel360.boogle.member.db.MemberRole;
-import com.kernel360.boogle.member.exception.AlreadySignedupMemberException;
 import com.kernel360.boogle.member.model.MemberDataDTO;
 import com.kernel360.boogle.member.model.MemberSignupDTO;
 import com.kernel360.boogle.mypage.model.MemberRequestDTO;
@@ -22,7 +23,7 @@ public class MemberService {
 
     public MemberEntity signup(MemberSignupDTO member) {
         if (memberRepository.findByEmail(member.getEmail()) != null) {
-            throw new AlreadySignedupMemberException();
+            throw new BusinessException(MemberErrorCode.ALREADY_SIGNED_UP_MEMBER);
         }
 
         return memberRepository.save(MemberEntity.builder()
@@ -37,7 +38,7 @@ public class MemberService {
 
     public MemberEntity signupAdmin(MemberSignupDTO member) {
         if (memberRepository.findByEmail(member.getEmail()) != null) {
-            throw new AlreadySignedupMemberException();
+            throw new BusinessException(MemberErrorCode.ALREADY_SIGNED_UP_MEMBER);
         }
 
         return memberRepository.save(MemberEntity.builder()
