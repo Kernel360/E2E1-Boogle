@@ -30,7 +30,7 @@ public class ReplyEntity {
     @JoinColumn(name = "member_id", nullable = false)
     private MemberEntity memberEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_report_id", nullable = false)
     private BookReportEntity bookReportEntity;
 

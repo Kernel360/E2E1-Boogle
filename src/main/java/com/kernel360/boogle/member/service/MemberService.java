@@ -10,10 +10,11 @@ import com.kernel360.boogle.mypage.model.MemberRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class  MemberService {
+public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -53,7 +54,8 @@ public class  MemberService {
                 .build());
     }
 
-    public MemberEntity updateMemberInfo(MemberRequestDTO memberDTO) {
+    @Transactional
+    public void updateMemberInfo(MemberRequestDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findByEmail(memberDTO.getEmail());
 
         memberEntity.setName(memberDTO.getName());
@@ -61,17 +63,13 @@ public class  MemberService {
         memberEntity.setPassword(passwordEncoder.encode(memberDTO.getPassword()));
         memberEntity.setEmail(memberDTO.getEmail());
         memberEntity.setPhoneNumber(memberDTO.getPhoneNumber());
-
-        return memberRepository.save(memberEntity);
     }
 
-
-    public MemberEntity findByEmail(String email) {
+        public MemberEntity findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-
-    public MemberEntity findById(Long id) {
+    public MemberEntity findById(Long id){
         return memberRepository.findById(id).orElse(null);
     }
 

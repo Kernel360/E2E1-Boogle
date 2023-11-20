@@ -12,7 +12,8 @@
 <nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
 <br/>
 <div class="container">
-    <form id="updateMemberInfoForm" class="form-signin" method="post" th:action="@{/mypage/memberInfo}">
+    <form id="updateMemberInfoForm"
+          class="form-signin" method="post" th:action="@{/mypage/memberInfo} ">
         <h2 class="form-signin-heading">회원정보수정</h2>
         <p>
             <label for="name" class="sr-only">이름</label>
@@ -48,6 +49,18 @@
 </div>
 </form>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector(".form-signin").addEventListener("submit", function(e) {
+            var password = document.getElementById("password").value;
+            if (password === "") {
+                alert("비밀번호를 입력해주세요.");
+                e.preventDefault(); // 폼 제출 중단
+            }
+        });
+    });
+</script>
 
 </body>
 <footer style="position: fixed; bottom: 0; width: 100%; height: 60px; background-color: #f5f5f5;">

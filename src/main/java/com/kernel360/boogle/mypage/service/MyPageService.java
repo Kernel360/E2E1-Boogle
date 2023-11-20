@@ -14,7 +14,7 @@ public class MyPageService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public boolean checkPassword(MemberEntity memberEntity, MemberRequestDTO member) {
+    public boolean validatePassword(MemberEntity memberEntity, MemberRequestDTO member) {
         if (memberEntity == null || member == null) {
             return false;
         }

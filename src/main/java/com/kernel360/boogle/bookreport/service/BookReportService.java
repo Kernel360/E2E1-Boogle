@@ -50,7 +50,7 @@ public class BookReportService {
         return bookReportRepository.findAllByIsDeletedNotOrderByIdDesc("Y", pageable);
     }
 
-    public Optional<List<BookReportEntity>> getPublicBookReportsByBookId(Long bookId) {
+    public List<BookReportEntity> getPublicBookReportsByBookId(Long bookId) {
         return bookReportRepository.findAllByBookEntity_IdAndIsDeletedAndIsPublicOrderByCreatedAtDesc(bookId, "N", "Y");
     }
 
@@ -74,8 +74,7 @@ public class BookReportService {
     }
 
 
-    public Optional<List<BookReportEntity>> getBookReportsByMemberId(Long memberId) {
-        return
-                bookReportRepository.findAllByMemberId(memberId);
+    public List<BookReportEntity> getBookReportsByMemberId(Long memberId) {
+        return bookReportRepository.findAllByMemberId(memberId);
     }
 }

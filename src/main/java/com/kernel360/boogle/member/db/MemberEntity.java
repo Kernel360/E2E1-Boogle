@@ -27,7 +27,6 @@ public class MemberEntity implements UserDetails {
 
     @Column(name = "email", nullable = false)
     private String email;
-
     @Column(name = "password", nullable = false)
     private String password;
 

@@ -18,8 +18,8 @@ public interface BookReportRepository extends JpaRepository<BookReportEntity, Lo
 
     Optional<BookReportEntity> findById(Long bookReportId);
 
-    Optional<List<BookReportEntity>> findAllByBookEntity_IdAndIsDeletedAndIsPublicOrderByCreatedAtDesc(Long bookId, String isDelete, String isPublic);
+    List<BookReportEntity> findAllByBookEntity_IdAndIsDeletedAndIsPublicOrderByCreatedAtDesc(Long bookId, String isDelete, String isPublic);
 
-    Optional<List<BookReportEntity>> findAllByMemberId(Long MemberId);
+    List<BookReportEntity> findAllByMemberId(Long MemberId);
 
 }

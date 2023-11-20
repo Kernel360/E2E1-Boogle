@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Api(tags = {"독후감 관련 API"})
 @RestController
@@ -47,8 +46,8 @@ public class BookReportController {
         BookReportEntity bookReport = bookReportService.getBookReportById(id).get();
         mv.addObject("bookReport", bookReport);
 
-        Optional<List<ReplyDTO>> replyDTOS = replyService.getRepliesByBookReportId(id);
-        var replies = ReplyResponse.organizeChildReplies(replyDTOS.get());
+        List<ReplyDTO> replyDTOS = replyService.getRepliesByBookReportId(id);
+        var replies = ReplyResponse.organizeChildReplies(replyDTOS);
         mv.addObject("replies", replies);
         return mv;
     }
