@@ -1,12 +1,11 @@
 package com.kernel360.boogle.statistics.memberinflow.scheduler;
 
 import com.kernel360.boogle.statistics.memberinflow.business.MemberInflowAggregation;
-import com.kernel360.boogle.statistics.memberinflow.db.MemberInflowEntity;
 import com.kernel360.boogle.statistics.memberinflow.db.MemberInflowRepository;
 import com.kernel360.boogle.statistics.memberinflow.model.MemberInflowDTO;
 import com.kernel360.boogle.statistics.memberinflow.service.MemberInflowConverter;
 import com.kernel360.boogle.statistics.memberinflow.service.MemberInflowService;
-import io.swagger.models.auth.In;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -14,9 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Component
@@ -36,9 +33,9 @@ public class MemberInflowScheduler {
      */
     @Scheduled(cron="0 0 2 * * MON")
     public void scheduledWeeklyMemberInflow() {
-        LocalDateTime updateDate = LocalDateTime.now().minusWeeks(1);
+        LocalDate updateDate = LocalDate.now().minusWeeks(1);
 
-        List<Integer> monthAndWeekNumber = memberInflowAggregation.getMonthAndWeekNumber(updateDate.toLocalDate());
+        List<Integer> monthAndWeekNumber = memberInflowAggregation.getMonthAndWeekNumber(updateDate);
 
         if(
                 memberInflowRepository.findByYearAndMonthAndWeek(
@@ -51,7 +48,7 @@ public class MemberInflowScheduler {
                     .year(updateDate.getYear())
                     .month(monthAndWeekNumber.get(0))
                     .week(monthAndWeekNumber.get(1))
-                    .inflow(memberInflowAggregation.getWeeklyInflow(updateDate.toLocalDate()))
+                    .inflow(memberInflowAggregation.getSingleWeeklyInflow(updateDate))
                     .build(), memberInflowConverter::toEntity);
         }
     }

@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 @Builder
 public class MemberInflowDTO {
-    private Integer year;
-    private Integer month;
-    private Integer week;
-    private Integer inflow;
+    private int year;
+    private int month;
+    private int week;
+    private int inflow;
 }

@@ -10,13 +10,9 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
     MemberEntity findByEmail(String email);
-
     Optional<MemberEntity> findById(Long Id);
-
     List<MemberEntity> findAllBySignupDateBetween(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
-
-
 }

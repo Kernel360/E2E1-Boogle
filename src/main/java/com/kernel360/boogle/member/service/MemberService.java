@@ -4,6 +4,7 @@ import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.member.db.MemberRepository;
 import com.kernel360.boogle.member.db.MemberRole;
 import com.kernel360.boogle.member.exception.AlreadySignedupMemberException;
+import com.kernel360.boogle.member.model.MemberDataDTO;
 import com.kernel360.boogle.member.model.MemberSignupDTO;
 import com.kernel360.boogle.mypage.model.MemberRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +25,15 @@ public class  MemberService {
         }
 
         return memberRepository.save(MemberEntity.builder()
-                                        .email(member.getEmail())
-                                        .password(passwordEncoder.encode(member.getPassword()))
-                                        .name(member.getName())
-                                        .nickname(member.getNickname())
-                                        .gender(member.getGender())
-                                        .birthdate(member.getBirthdate())
-                                        .phoneNumber(member.getPhoneNumber())
-                                        .role(MemberRole.ROLE_USER)
-                                        .build());
+                .email(member.getEmail())
+                .password(passwordEncoder.encode(member.getPassword()))
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .gender(member.getGender())
+                .birthdate(member.getBirthdate())
+                .phoneNumber(member.getPhoneNumber())
+                .role(MemberRole.ROLE_USER)
+                .build());
     }
 
     public MemberEntity signupAdmin(MemberSignupDTO member) {
@@ -41,15 +42,15 @@ public class  MemberService {
         }
 
         return memberRepository.save(MemberEntity.builder()
-                                        .email(member.getEmail())
-                                        .password(passwordEncoder.encode(member.getPassword()))
-                                        .name(member.getName())
-                                        .nickname(member.getNickname())
-                                        .gender(member.getGender())
-                                        .birthdate(member.getBirthdate())
-                                        .phoneNumber(member.getPhoneNumber())
-                                        .role(MemberRole.ROLE_ADMIN)
-                                        .build());
+                .email(member.getEmail())
+                .password(passwordEncoder.encode(member.getPassword()))
+                .name(member.getName())
+                .nickname(member.getNickname())
+                .gender(member.getGender())
+                .birthdate(member.getBirthdate())
+                .phoneNumber(member.getPhoneNumber())
+                .role(MemberRole.ROLE_ADMIN)
+                .build());
     }
 
     public MemberEntity updateMemberInfo(MemberRequestDTO memberDTO) {
@@ -65,12 +66,21 @@ public class  MemberService {
     }
 
 
-
-        public MemberEntity findByEmail(String email) {
+    public MemberEntity findByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 
-    public MemberEntity findById(Long id){
+
+    public MemberEntity findById(Long id) {
         return memberRepository.findById(id).orElse(null);
+    }
+
+    public MemberDataDTO findByIdForDashboard(Long id) {
+        MemberEntity memberEntity = memberRepository.findById(id).get();
+        return MemberDataDTO.builder()
+                .email(memberEntity.getEmail())
+                .name(memberEntity.getName())
+                .nickname(memberEntity.getNickname())
+                .build();
     }
 }

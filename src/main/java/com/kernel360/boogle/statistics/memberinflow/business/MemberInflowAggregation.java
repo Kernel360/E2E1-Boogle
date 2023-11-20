@@ -2,6 +2,7 @@ package com.kernel360.boogle.statistics.memberinflow.business;
 
 import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.member.db.MemberRepository;
+import com.kernel360.boogle.statistics.memberinflow.db.MemberInflowEntity;
 import com.kernel360.boogle.statistics.memberinflow.db.MemberInflowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class MemberInflowAggregation{
         return firstDayOfMonth;
     }
 
-    public int getWeeklyInflow(LocalDate localDate) {
+    public int getSingleWeeklyInflow(LocalDate localDate) {
         LocalDateTime startDateTime = localDate.atStartOfDay();
 
         List<MemberEntity> memberList = memberRepository.findAllBySignupDateBetween(
@@ -97,6 +98,32 @@ public class MemberInflowAggregation{
         List<String> xList = new ArrayList<>();
         for (List<Object> timeline : getWeeklyTimeline(Optional.empty())) {
             xList.add(timeline.get(3).toString());
+        }
+        return xList;
+    }
+
+    public List<Integer> getMonthlyInflow() {
+        List<Integer> yList = new ArrayList<>();
+        for (String dateTime : getMonthlyLocalDate()) {
+            int monthlyInflow = 0;
+            LocalDate localDate = LocalDate.parse(dateTime, dateFormatter);
+            for (MemberInflowEntity weeklyInflow : memberInflowRepository.findAllByYearAndMonth(localDate.getYear(), localDate.getMonthValue())) {
+                monthlyInflow += weeklyInflow.getInflow();
+            }
+            yList.add(monthlyInflow);
+        }
+        return yList;
+    }
+
+    public List<String> getMonthlyLocalDate() {
+        LocalDate currentDate = LocalDate.now().withDayOfMonth(1);
+        LocalDate startDate = serviceStartTime.toLocalDate();
+        List<String> xList = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        while (startDate.isBefore(currentDate)) {
+            xList.add(startDate.format(formatter));
+            startDate = startDate.plusMonths(1);
         }
         return xList;
     }

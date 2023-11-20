@@ -67,13 +67,74 @@
   </style>
 </head>
 <body>
+<script src='https://cdn.plot.ly/plotly-2.27.0.min.js'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"
+        integrity="sha384-eMNCOz1R1FliBHeUE6kZlSHL9Cyg4SU1C+5woe5nIb4G7XiiRSthbGQEdh3OENKX"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyVn/Z9InBECEkewU6enDqC6P0b5u2b0W1"
+        crossorigin="anonymous"></script>
 <nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
 
-<div style="width: 900px; height: 400px;">
+<div class="container my-3">
   <!--차트가 그려질 부분-->
-  <canvas id="myChart"></canvas>
+  <div class="col-12">
+    <div class="col-12">
+      <div class="col-12 text-center">
+        <h5>주간 사용자 유입 통계</h5>
+        <canvas id="weeklyChart"></canvas>
+      </div>
+      <div class="col-12 text-center">
+        <h5>월간 사용자 유입 통계</h5>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-6 text-center">
+        <!-- Thymeleaf 반복문을 사용하여 카드 생성 -->
+        <h5 class="col-12 text-center" id="lastMonthText"></h5>
+        <div th:each="user : ${monthly_hot_members}" class="col-md-12 mb-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${user[2]}"></h5>
+              <div class="card-text">랭킹: <span th:text="${user[0]}"></span></div>
+              <div class="card-text">댓글수: <span th:text="${user[1]}"></span></div>
+              <div class="card-text">닉네임: <span th:text="${user[3]}"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 text-center">
+        <h5>최근 5개월 댓글 수 박스-수염 플롯</h5>
+        <div id='myDiv' class="col-12"></div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  const yData = /*[[${last_five_month_reply}]]*/ "";
+
+  var data = [
+    {
+      y: yData,
+      boxpoints: 'all',
+      jitter: 0.3,
+      pointpos: -1.8,
+      type: 'box'
+    }
+  ];
+
+  Plotly.newPlot('myDiv', data);
+  /*]]>*/
+</script>
 
 <script th:inline="javascript">
   /*<![CDATA[*/
@@ -81,7 +142,7 @@
     var xData = /*[[${weekly_local_date_time}]]*/ "";
     var yData =  /*[[${weekly_inflow}]]*/ "";
 
-    var ctx = document.getElementById('myChart').getContext('2d');
+    var ctx = document.getElementById('weeklyChart').getContext('2d');
 
     var myChart = new Chart(ctx, {
       type: 'line',
@@ -114,6 +175,72 @@
     });
   });
   /*]]>*/
+</script>
+
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  document.addEventListener('DOMContentLoaded', function() {
+    var xData = /*[[${monthly_local_date}]]*/ "";
+    var yData =  /*[[${monthly_inflow}]]*/ "";
+
+    var ctx = document.getElementById('monthlyChart').getContext('2d');
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: xData,
+        datasets: [{
+          label: 'monthly User Inflow',
+          data: yData,
+          borderColor: 'rgb(37,87,245)',
+          borderWidth: 2,
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            type: 'time',
+            time: {
+              unit: 'day',
+              displayFormats: {
+                day: 'YYYY-MM-DD'
+              }
+            }
+          },
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  });
+  /*]]>*/
+</script>
+
+<script>
+  // JavaScript로 현재 날짜를 가져오는 함수
+  function getCurrentDate() {
+    const now = new Date();
+    return {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1, // 월은 0부터 시작하므로 +1
+    };
+  }
+
+  // JavaScript로 지난 달의 이름을 가져오는 함수
+  function getLastMonthName() {
+    const current = getCurrentDate();
+    const lastMonth = current.month === 1 ? 12 : current.month - 1;
+
+    // 월 이름 배열 (1월부터 12월까지)
+    const monthNames = ["", "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+
+    return monthNames[lastMonth];
+  }
+
+  // HTML 요소에 지난 달 이름 주입
+  document.getElementById('lastMonthText').innerText = '지난달 (' + getLastMonthName() + ') 댓글 수 랭킹';
 </script>
 
 <footer th:replace="~{fragments/footer :: footerFragment}"></footer>
