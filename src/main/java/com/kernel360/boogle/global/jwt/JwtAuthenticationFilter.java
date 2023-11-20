@@ -56,11 +56,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     ) throws IOException {
         MemberEntity member = (MemberEntity) authResult.getPrincipal();
         String token = JwtUtils.createToken(member);
+        String refreshToken = JwtUtils.createRefreshToken(member);
+
         // 쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
         cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키의 만료시간 설정
         cookie.setPath("/");
         response.addCookie(cookie);
+
+        Cookie refreshCookie = new Cookie(JwtProperties.REFRESH_COOKIE_NAME, refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setMaxAge(JwtProperties.REFRESH_EXPIRATION_TIME);
+        refreshCookie.setPath("/");
+        response.addCookie(refreshCookie);
+
         response.sendRedirect("/book-reports");
     }
 

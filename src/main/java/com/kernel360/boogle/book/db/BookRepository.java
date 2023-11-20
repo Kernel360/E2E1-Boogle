@@ -14,9 +14,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     BookEntity save(BookEntity book);
     List<BookEntity> findAll();
     Page<BookEntity> findAll(Pageable pageable);
-    Page<BookEntity> findBookEntitiesByTitleContainingAndIsDeletedNotOrderByIdDesc(String title, Pageable pageable, String isDeleted);
-    Page<BookEntity> findBookEntitiesByAuthorContainingAndIsDeletedNotOrderByIdDesc(String author, Pageable pageable, String isDeleted);
-    Page<BookEntity> findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByIdDesc(String publisher, Pageable pageable, String isDeleted);
+    Page<BookEntity> findBookEntitiesByTitleContainingOrderByIdDesc(String title, Pageable pageable);
+    Page<BookEntity> findBookEntitiesByAuthorContainingOrderByIdDesc(String author, Pageable pageable);
+    Page<BookEntity> findBookEntitiesByPublisherContainingOrderByIdDesc(String publisher, Pageable pageable);
     Optional<BookEntity> findById(Long bookId);
-    Page<BookEntity> findAllByIsDeletedNotOrderByIdDesc(Pageable pageable, String isDeleted);
+    Page<BookEntity> findAllByOrderByIdDesc(Pageable pageable);
 }
