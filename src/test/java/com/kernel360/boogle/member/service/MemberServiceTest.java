@@ -34,8 +34,6 @@ class MemberServiceTest {
                 .password("password")
                 .name("김커널")
                 .nickname("커널킴")
-                .gender("M")
-                .birthdate(LocalDate.of(2000, 1, 1))
                 .phoneNumber("010-1111-2222")
                 .build());
         //then
