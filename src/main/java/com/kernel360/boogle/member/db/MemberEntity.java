@@ -1,6 +1,9 @@
 package com.kernel360.boogle.member.db;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -8,7 +11,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,12 +37,6 @@ public class MemberEntity implements UserDetails {
 
     @Column(name = "nickname", nullable = false)
     private String nickname;
-
-    @Column(name = "gender")
-    private String gender;
-
-    @Column(name = "birthdate")
-    private LocalDate birthdate;
 
     @Column(name = "phone_number")
     private String phoneNumber;
