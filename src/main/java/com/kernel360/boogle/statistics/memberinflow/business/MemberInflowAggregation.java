@@ -79,18 +79,10 @@ public class MemberInflowAggregation{
     public List<Integer> getWeeklyInflow() {
         List<Integer> yList = new ArrayList<>();
         for (List<Object> timeline : getWeeklyTimeline(Optional.empty())) {
-            if (memberInflowRepository.findByYearAndMonthAndWeek(
-                    (int)timeline.get(0),
-                    (int)timeline.get(1),
-                    (int)timeline.get(2)
-            ).isPresent()) {
-                yList.add(memberInflowRepository.findByYearAndMonthAndWeek(
-                        (int)timeline.get(0),
-                        (int)timeline.get(1),
-                        (int)timeline.get(2)
-                ).get().getInflow());
-            }
+            Optional<MemberInflowEntity> memberInflow = memberInflowRepository.findByYearAndMonthAndWeek((int) timeline.get(0), (int) timeline.get(1), (int) timeline.get(2));
+            memberInflow.ifPresent(memberInflowEntity -> yList.add(memberInflowEntity.getInflow()));
         }
+
         return yList;
     }
 

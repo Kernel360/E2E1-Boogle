@@ -17,6 +17,12 @@ spring:
     url: ENC(6JQHjqQjEGeJ6jfG+S1EKlQxkHRBhIT4r0rVQTLjjNs37JbuGNQHpEXL1MQ+ZRdpoHR3wZzpzncoCNGfbYk7Jd3Cq+8Y+4dAuAgfzvSphqUtrxDS1Qt6qAJi75uPXmJS3lyFh1uKJbSZe8avOBIB6z1phkGdM0utzSSAsVaMl0Un0vE9oxb3nFTH7HcifF2kp1jaauvYxJwAlYbSomNR0KM1Cmt7J1gurNBBFPbG8JmcFG3eZJbZrRECGO0w8jbXU0Uf/c3Ffk0AYwxzcjetkuRkb0wUhwHHO1MGre17owY=)
     username: ENC(4qqyBBJ1/pEgP875b4FekQ5lrFb+jURl)
     password: ENC(QhJiDo9z0eB274742Xv6UTWKvM+E+c1ieAoZ6txWshrcY39cgMu1Sw==)
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
 logging:
   file:
     path: ./logs
@@ -25,6 +31,7 @@ logging:
     rollingpolicy:
       max-history: 20
       total-size-cap: 100MB
+
 jasypt:
   encryptor:
     algorithm: PBEWithMD5AndTripleDES

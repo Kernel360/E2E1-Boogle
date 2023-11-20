@@ -3,6 +3,7 @@ package com.kernel360.boogle.reply.db;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,7 +24,9 @@ public interface ReplyRepository extends JpaRepository<ReplyEntity, Long> {
 
     Optional<List<ReplyEntity>> findAllByParentReplyId(Long parentReplyId);
 
-    List<ReplyEntity> findAllByMemberEntityIdOrderByCreatedAtDesc(Long MemberId);
+
+    @Query(nativeQuery = true, value = "select * from REPLY where member_id = ?1 order by created_at desc limit ?2 ")
+    List<ReplyEntity> findAllByMemberId(Long memberId, int cnt);
 
     void deleteById(Long id);
 }
