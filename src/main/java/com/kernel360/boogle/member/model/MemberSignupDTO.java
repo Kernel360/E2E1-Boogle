@@ -36,5 +36,4 @@ public class MemberSignupDTO {
 
     @PastOrPresent(message = "등록일은 미래값이 될 수 없습니다.")
     private LocalDateTime signupDate;
-
 }

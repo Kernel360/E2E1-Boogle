@@ -33,23 +33,23 @@ public class BookService {
 
     public Page<BookEntity> getBooks(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookRepository.findAllByIsDeletedNotOrderByIdDesc(pageable, "Y");
+        return bookRepository.findAllByOrderByIdDesc(pageable);
     }
 
     public Page<BookEntity> getBooksByAuthor(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookRepository.findBookEntitiesByAuthorContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+        return bookRepository.findBookEntitiesByAuthorContainingOrderByIdDesc(searchWord, pageable);
     }
 
     public Page<BookEntity> getBooksByTitle(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookRepository.findBookEntitiesByTitleContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+        return bookRepository.findBookEntitiesByTitleContainingOrderByIdDesc(searchWord, pageable);
 
     }
 
     public Page<BookEntity> getBooksByPublisher(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookRepository.findBookEntitiesByPublisherContainingAndIsDeletedNotOrderByIdDesc(searchWord, pageable, "Y");
+        return bookRepository.findBookEntitiesByPublisherContainingOrderByIdDesc(searchWord, pageable);
     }
 
     public void updateBook(BookDTO book) {
@@ -61,8 +61,8 @@ public class BookService {
         bookRepository.findById(bookViewRequest.getId())
                 .map(
                         it -> {
-                            it.setIsDeleted("Y");
-                            it.setDeletedAt(LocalDateTime.now());
+                            // it.setIsDeleted("Y");
+                            // it.setDeletedAt(LocalDateTime.now());
                             bookRepository.save(it);
                             return it;
                         }

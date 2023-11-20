@@ -41,12 +41,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         // jwt filter
         http.addFilterBefore(
                 new JwtAuthenticationFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class
         ).addFilterBefore(
-                new JwtAuthorizationFilter(memberRepository),
+                new JwtAuthorizationFilter(memberService),
                 BasicAuthenticationFilter.class
         );
 
@@ -66,7 +67,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/book-reports")
                 .invalidateHttpSession(true)
-                .deleteCookies(JwtProperties.COOKIE_NAME);
+                .deleteCookies(JwtProperties.COOKIE_NAME)
+                .deleteCookies(JwtProperties.REFRESH_COOKIE_NAME);
     }
 
     @Override

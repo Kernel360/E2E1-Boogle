@@ -1,7 +1,8 @@
 package com.kernel360.boogle.global.jwt;
 
 import com.kernel360.boogle.member.db.MemberEntity;
-import com.kernel360.boogle.member.db.MemberRepository;
+import com.kernel360.boogle.member.service.MemberService;
+import io.jsonwebtoken.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,17 +14,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
+import java.security.Key;
+import java.util.function.Function;
 
 /**
  * JWT를 이용한 인증
  */
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
-    public JwtAuthorizationFilter (MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
+    public JwtAuthorizationFilter (MemberService memberService) {
+        this.memberService = memberService;
     }
 
     @Override
@@ -32,24 +34,59 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain chain
     ) throws IOException, ServletException {
-        String token = null;
+        String accessToken = null;
+        String refreshToken = null;
+
         try {
             // cookie 에서 JWT token을 가져옵니다.
-            token = Arrays.stream(request.getCookies())
-                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME)).findFirst()
-                    .map(Cookie::getValue)
-                    .orElse(null);
+//            token = Arrays.stream(request.getCookies())
+//                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME)).findFirst()
+//                    .map(Cookie::getValue)
+//                    .orElse(null);
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null) {
+                for(Cookie cookie : cookies) {
+                    if(cookie.getName().equals(JwtProperties.COOKIE_NAME)) {
+                        accessToken = cookie.getValue();
+                    } else if (cookie.getName().equals(JwtProperties.REFRESH_COOKIE_NAME)) {
+                        refreshToken = cookie.getValue();
+                    }
+                }
+            }
         } catch (Exception ignored) {
         }
-        if (token != null) {
+
+        boolean validAccessToken = false;
+        if(accessToken != null) {
             try {
-                Authentication authentication = getUsernamePasswordAuthenticationToken(token);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (Exception e) {
-                Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
+                validAccessToken = JwtUtils.validateToken(accessToken);
+                if(validAccessToken) {
+                    Authentication authentication = getUsernamePasswordAuthenticationToken(accessToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            } catch (Exception ignored) {
             }
+        }
+
+        if(!validAccessToken && refreshToken != null && JwtUtils.validateRefreshToken(refreshToken)) {
+            String userEmail = getUserEmailFromRefreshToken(refreshToken);
+            try {
+                MemberEntity member = memberService.findByEmail(userEmail);
+                String newAccessToken = JwtUtils.createToken(member);
+                Authentication newAuth = new UsernamePasswordAuthenticationToken(member, null, member.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+                Cookie newAccessTokenCookie = new Cookie(JwtProperties.COOKIE_NAME, newAccessToken);
+                newAccessTokenCookie.setPath("/");
+                newAccessTokenCookie.setMaxAge(JwtProperties.EXPIRATION_TIME);
+                response.addCookie(newAccessTokenCookie);
+            } catch(Exception ignored) {
+            }
+        } else if (!validAccessToken) {
+            Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, null);
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
         }
         chain.doFilter(request, response);
     }
@@ -57,7 +94,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private Authentication getUsernamePasswordAuthenticationToken(String token) {
         String userName = JwtUtils.getUsername(token);
         if (userName != null) {
-            MemberEntity member = memberRepository.findByEmail(userName);
+            MemberEntity member = memberService.findByEmail(userName);
             return new UsernamePasswordAuthenticationToken(
                     member, // principal
                     null,
@@ -65,5 +102,27 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             );
         }
         return null; // 회원이 없으면 NULL
+    }
+    private String getUserEmailFromRefreshToken(String token) {
+        return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    private static <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+        try {
+            Jws<Claims> claims = Jwts.parserBuilder()
+                    .setSigningKeyResolver(new SigningKeyResolverAdapter() {
+                        @Override
+                        public Key resolveSigningKey(JwsHeader header, Claims claims) {
+                            String kid = header.getKeyId();
+                            return JwtKey.getKey(kid);
+                        }
+                    })
+                    .build()
+                    .parseClaimsJws(token);
+
+            return claimsResolver.apply(claims.getBody());
+        } catch (JwtException | IllegalArgumentException e) {
+            return null;
+        }
     }
 }
