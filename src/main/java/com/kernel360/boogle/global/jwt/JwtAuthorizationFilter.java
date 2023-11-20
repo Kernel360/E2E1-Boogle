@@ -38,11 +38,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String refreshToken = null;
 
         try {
-            // cookie 에서 JWT token을 가져옵니다.
-//            token = Arrays.stream(request.getCookies())
-//                    .filter(cookie -> cookie.getName().equals(JwtProperties.COOKIE_NAME)).findFirst()
-//                    .map(Cookie::getValue)
-//                    .orElse(null);
             Cookie[] cookies = request.getCookies();
             if(cookies != null) {
                 for(Cookie cookie : cookies) {

@@ -22,8 +22,6 @@ public class BookConverter {
                 .createdAt(bookEntity.getCreatedAt())
                 .lastModifiedBy(bookEntity.getLastModifiedBy())
                 .lastModifiedAt(bookEntity.getLastModifiedAt())
-                // .isDeleted(bookEntity.getIsDeleted())
-                // .deletedAt(bookEntity.getDeletedAt())
                 .build();
 
     }

@@ -65,10 +65,4 @@ public class BookEntity {
     @LastModifiedDate
     @Column(name = "last_modified_at", columnDefinition = "DATETIME")
     private LocalDateTime lastModifiedAt;
-
-//    @Column(name = "is_deleted")
-//    private String isDeleted = "N";
-
-//    @Column(name = "deleted_at")
-//    private LocalDateTime deletedAt;
 }

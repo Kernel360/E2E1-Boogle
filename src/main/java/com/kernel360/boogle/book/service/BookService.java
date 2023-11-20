@@ -61,8 +61,6 @@ public class BookService {
         bookRepository.findById(bookViewRequest.getId())
                 .map(
                         it -> {
-                            // it.setIsDeleted("Y");
-                            // it.setDeletedAt(LocalDateTime.now());
                             bookRepository.save(it);
                             return it;
                         }
