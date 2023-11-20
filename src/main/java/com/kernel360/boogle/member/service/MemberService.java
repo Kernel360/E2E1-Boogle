@@ -30,8 +30,6 @@ public class MemberService {
                 .password(passwordEncoder.encode(member.getPassword()))
                 .name(member.getName())
                 .nickname(member.getNickname())
-                .gender(member.getGender())
-                .birthdate(member.getBirthdate())
                 .phoneNumber(member.getPhoneNumber())
                 .role(MemberRole.ROLE_USER)
                 .build());
@@ -47,8 +45,6 @@ public class MemberService {
                 .password(passwordEncoder.encode(member.getPassword()))
                 .name(member.getName())
                 .nickname(member.getNickname())
-                .gender(member.getGender())
-                .birthdate(member.getBirthdate())
                 .phoneNumber(member.getPhoneNumber())
                 .role(MemberRole.ROLE_ADMIN)
                 .build());
