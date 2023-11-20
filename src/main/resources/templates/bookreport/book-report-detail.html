@@ -29,7 +29,7 @@
             if (xhr.status === 200) {
                 alert('댓글이 생성되었습니다.');
                 window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
-            } else if (xhr.status === 401) {
+            } else if (xhr.status === 400) {
                 alert('댓글 생성 중 오류가 발생했습니다: ' + xhr.responseText);
             } else {
                 alert('댓글 생성 중 오류가 발생했습니다.');
