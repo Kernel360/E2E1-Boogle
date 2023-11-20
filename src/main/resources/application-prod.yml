@@ -1,0 +1,36 @@
+spring:
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      hibernate:
+        ddl-auto: validate
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  datasource:
+    driver-class name: com.mysql.cj.jdbc.Driver
+    url: ${url}
+    username: ${username}
+    password: ${password}
+logging:
+  file:
+    path: /var/log/applog/boogle
+    name: boogle-app-log
+  logback:
+    rollingpolicy:
+      max-history: 20
+      total-size-cap: 100MB
+aladin:
+  api:
+    ttb-key: ${ttb-key}
+    output: js
+    version: 20131101
+    book-list.url: http://www.aladin.co.kr/ttb/api/ItemList.aspx
+    book-detail.url: http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx
+server:
+  port: 8421
