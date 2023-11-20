@@ -2,10 +2,11 @@ package com.kernel360.boogle.reply.service;
 
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.db.BookReportRepository;
+import com.kernel360.boogle.global.error.code.ReplyErrorCode;
+import com.kernel360.boogle.global.error.exception.BusinessException;
 import com.kernel360.boogle.member.db.MemberEntity;
 import com.kernel360.boogle.reply.db.ReplyEntity;
 import com.kernel360.boogle.reply.db.ReplyRepository;
-import com.kernel360.boogle.reply.exception.EmptyContentException;
 import com.kernel360.boogle.reply.model.ReplyDTO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class ReplyService {
     public void createReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
-            throw new EmptyContentException();
+            throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
         }
 
         reply.getReplyEntity().setMemberEntity(member);
@@ -52,7 +53,7 @@ public class ReplyService {
     public void updateReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
-            throw new EmptyContentException();
+            throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
         }
 
         reply.getReplyEntity().setMemberEntity(member);
