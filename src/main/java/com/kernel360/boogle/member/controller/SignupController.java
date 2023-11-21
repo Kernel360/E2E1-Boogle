@@ -1,6 +1,6 @@
 package com.kernel360.boogle.member.controller;
 
-import com.kernel360.boogle.global.error.exception.ValidationException;
+import com.kernel360.boogle.global.error.exception.BusinessException;
 import com.kernel360.boogle.member.model.MemberSignupDTO;
 import com.kernel360.boogle.member.service.MemberService;
 import io.swagger.annotations.ApiResponse;
@@ -42,8 +42,8 @@ public class SignupController {
         try {
             memberService.signup(memberSignupDTO);
             return "redirect:login";
-        } catch (ValidationException e) {
-            model.addAttribute("validerror", e.getErrorCode().getMessage());
+        } catch (BusinessException e) {
+            model.addAttribute("duplicatedError", e.getErrorCode().getMessage());
             return "signup";
         }
     }

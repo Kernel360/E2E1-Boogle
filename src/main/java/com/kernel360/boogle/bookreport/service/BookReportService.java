@@ -37,21 +37,21 @@ public class BookReportService {
 
     public Page<BookReportEntity> getPublicBookReports(String isPublic, int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookReportRepository.findAllByIsPublicEqualsAndIsDeletedNotOrderByIdDesc(isPublic, "Y", pageable);
+        return bookReportRepository.findAllByIsPublicOrderByIdDesc(isPublic, pageable);
     }
 
     public Page<BookReportEntity> getMyBookReports(Long memberId, int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookReportRepository.findAllByMemberIdEqualsAndIsDeletedNotOrderByIdDesc(memberId, "Y", pageable);
+        return bookReportRepository.findAllByMemberIdOrderByIdDesc(memberId, pageable);
     }
 
     public Page<BookReportEntity> getAllBookReports(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookReportRepository.findAllByIsDeletedNotOrderByIdDesc("Y", pageable);
+        return bookReportRepository.findAllByOrderByIdDesc(pageable);
     }
 
     public List<BookReportEntity> getPublicBookReportsByBookId(Long bookId) {
-        return bookReportRepository.findAllByBookEntity_IdAndIsDeletedAndIsPublicOrderByCreatedAtDesc(bookId, "N", "Y");
+        return bookReportRepository.findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(bookId,"Y");
     }
 
     public void updateBookReport(BookReportDTO bookReport) {
@@ -62,15 +62,7 @@ public class BookReportService {
     }
 
     public void deleteBookReport(Long bookReportId) {
-        bookReportRepository.findById(bookReportId)
-                .map(
-                        it -> {
-                            it.setIsDeleted("Y");
-                            it.setDeletedAt(LocalDateTime.now());
-                            bookReportRepository.save(it);
-                            return it;
-                        }
-                );
+        bookReportRepository.deleteById(bookReportId);
     }
 
 

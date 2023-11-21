@@ -2,7 +2,6 @@ package com.kernel360.boogle.global.error;
 
 import com.kernel360.boogle.global.error.dto.ErrorResponse;
 import com.kernel360.boogle.global.error.exception.BusinessException;
-import com.kernel360.boogle.global.error.exception.ValidationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,13 +16,5 @@ public class GlobalExceptionHandler{
         return ResponseEntity.status(e.getErrorCode().getStatus())
                 .body(ErrorResponse.of(e.getErrorCode()));
     }
-
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ErrorResponse> handlerConstraintViolationException(
-            ValidationException e, HttpServletRequest request) {
-        return ResponseEntity.status(e.getErrorCode().getStatus())
-                .body(ErrorResponse.of(e.getErrorCode()));
-    }
-
 
 }

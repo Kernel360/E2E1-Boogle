@@ -60,8 +60,8 @@
 
             try {
                 // 서버로 PATCH 요청을 보냄
-                const response = await fetch('/admin/book-report/delete', {
-                    method: 'PATCH',
+                const response = await fetch('/admin/book-report', {
+                    method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
                     },
