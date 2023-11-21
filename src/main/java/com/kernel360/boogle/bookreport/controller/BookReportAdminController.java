@@ -25,11 +25,6 @@ public class BookReportAdminController {
         ModelAndView mv = new ModelAndView("bookreport/admin/book-reports");
         Page<BookReportEntity> bookReports = bookReportService.getAllBookReports(page);
         mv.addObject("bookReports", bookReports);
-
-        int currentPageNumber = bookReports.getNumber();
-        int totalPagesNumber = bookReports.getTotalPages();
-        mv.addObject("currentPageNumber", currentPageNumber);
-        mv.addObject("totalPagesNumber", totalPagesNumber);
         return mv;
     }
 

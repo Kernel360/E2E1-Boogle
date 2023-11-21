@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome 스타일시트 추가 -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <title>Boogle</title>
     <link href="./../../css/styles.css" rel="stylesheet" />
     <!-- 추가적인 CSS 스타일 추가 -->
     <style>
@@ -54,6 +55,12 @@
     </style>
     <script type="text/javascript">
         async function deleteBookReport() {
+            const confirmed = confirm('정말로 이 독후감을 삭제하시겠습니까?');
+
+            if (!confirmed) {
+                return;
+            }
+
             let data = {
                 id: document.getElementById('id').value
             };

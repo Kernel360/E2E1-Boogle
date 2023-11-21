@@ -24,9 +24,7 @@ public class ReplyService {
 
     public void createReply(ReplyDTO reply, MemberDTO memberDTO) {
 
-        if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
-            throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
-        }
+        validateReplyContent(reply);
 
         reply.getReplyEntity().setMemberEntity(memberDTO.getMemberEntity());
         replyRepository.save(reply.getReplyEntity());
@@ -51,9 +49,7 @@ public class ReplyService {
 
     public void updateReply(ReplyDTO reply, MemberDTO memberDTO) {
 
-        if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
-            throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
-        }
+        validateReplyContent(reply);
 
         reply.getReplyEntity().setMemberEntity(memberDTO.getMemberEntity());
         replyRepository.save(reply.getReplyEntity());
@@ -75,5 +71,11 @@ public class ReplyService {
                 .stream()
                 .map(ReplyDTO::from)
                 .toList();
+    }
+
+    private void validateReplyContent(ReplyDTO reply) {
+        if (reply.getReplyEntity().getContent().trim().isEmpty()) {
+            throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
+        }
     }
 }
