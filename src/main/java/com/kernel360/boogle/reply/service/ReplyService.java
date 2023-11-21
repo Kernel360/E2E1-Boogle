@@ -23,6 +23,7 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final BookReportRepository bookReportRepository;
 
+    @Transactional
     public void createReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
@@ -32,7 +33,7 @@ public class ReplyService {
         reply.getReplyEntity().setMemberEntity(member);
         replyRepository.save(reply.getReplyEntity());
     }
-
+    @Transactional(readOnly = true)
     public Optional<ReplyEntity> getReplyById(Long id) {
         return replyRepository.findById(id);
     }
@@ -45,11 +46,12 @@ public class ReplyService {
                 .map(ReplyDTO::from)
                 .toList();
     }
-
+    @Transactional(readOnly = true)
     public Optional<List<ReplyEntity>> getRepliesByParentReplyId(Long parentReplyId) {
         return replyRepository.findAllByParentReplyId(parentReplyId);
     }
 
+    @Transactional
     public void updateReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
@@ -60,6 +62,7 @@ public class ReplyService {
         replyRepository.save(reply.getReplyEntity());
     }
 
+    @Transactional
     public void deleteReply(ReplyDTO reply) {
 
         replyRepository.deleteById(reply.getId());
