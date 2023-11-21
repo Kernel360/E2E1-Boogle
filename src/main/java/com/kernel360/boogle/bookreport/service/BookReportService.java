@@ -3,6 +3,7 @@ package com.kernel360.boogle.bookreport.service;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.db.BookReportRepository;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
+import com.kernel360.boogle.member.model.MemberDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,9 +26,9 @@ public class BookReportService {
         this.bookReportRepository = bookReportRepository;
     }
 
-    public void createBookReport(BookReportDTO bookReport) {
-        bookReport.getBookReportEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
-        bookReport.getBookReportEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함
+    public void createBookReport(BookReportDTO bookReport, MemberDTO memberDTO) {
+        bookReport.getBookReportEntity().setCreatedBy(memberDTO.getEmail());
+        bookReport.getBookReportEntity().setMemberEntity(memberDTO.getMemberEntity());
         bookReportRepository.save(bookReport.getBookReportEntity());
     }
 
@@ -42,7 +43,7 @@ public class BookReportService {
 
     public Page<BookReportEntity> getMyBookReports(Long memberId, int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
-        return bookReportRepository.findAllByMemberIdOrderByIdDesc(memberId, pageable);
+        return bookReportRepository.findAllByMemberEntity_IdOrderByIdDesc(memberId, pageable);
     }
 
     public Page<BookReportEntity> getAllBookReports(int page) {
@@ -54,10 +55,10 @@ public class BookReportService {
         return bookReportRepository.findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(bookId,"Y");
     }
 
-    public void updateBookReport(BookReportDTO bookReport) {
-        bookReport.getBookReportEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야 함
-        bookReport.getBookReportEntity().setMemberId(1L); // 로그인 사용자 정보 들어가야 함
-        bookReport.getBookReportEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
+    public void updateBookReport(BookReportDTO bookReport, MemberDTO memberDTO) {
+        bookReport.getBookReportEntity().setLastModifiedBy(memberDTO.getEmail());
+        bookReport.getBookReportEntity().setMemberEntity(memberDTO.getMemberEntity());
+        System.out.println("bookReport = " + bookReport);
         bookReportRepository.save(bookReport.getBookReportEntity());
     }
 
@@ -67,6 +68,6 @@ public class BookReportService {
 
 
     public List<BookReportEntity> getBookReportsByMemberId(Long memberId) {
-        return bookReportRepository.findAllByMemberId(memberId);
+        return bookReportRepository.findAllByMemberEntity_Id(memberId);
     }
 }

@@ -1,6 +1,7 @@
 package com.kernel360.boogle.bookreport.db;
 
 import com.kernel360.boogle.book.db.BookEntity;
+import com.kernel360.boogle.member.db.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,11 +29,9 @@ public class BookReportEntity {
     @JoinColumn(name = "book_id", nullable = false)
     private BookEntity bookEntity;
 
-//    @ManyToOne (멤버 엔티티 생성 이후 주석 해제 필요)
-//    @JoinColumn(name = "member_id", nullable = false)
-    @Column(name = "member_id")
-    private Long memberId;
-//    private MemberEntity memeberEntity;
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    private MemberEntity memberEntity;
 
     @Column(name = "is_public", nullable = false)
     private String isPublic;

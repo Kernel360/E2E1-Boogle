@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Boogle</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="css/styles.css" rel="stylesheet" />
 </head>
@@ -100,7 +100,7 @@
                     <div class="col-md-6 d-flex flex-column justify-content-center">
                         <div class="text-center mb-2">
                             <h2 class="card-title h4" th:text="${bookReport.title}"></h2>
-                            <p class="card-text" th:text="${bookReport.content}"></p>
+                            <p class="card-text" th:text="${bookReport.memberEntity.getNickname}"></p>
                         </div>
                         <div class="text-center mb-3">
                             <div class="small text-muted" th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')}"></div>

@@ -2,6 +2,7 @@ package com.kernel360.boogle.bookreport.model;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
+import com.kernel360.boogle.member.db.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,7 @@ import java.time.LocalDateTime;
 public class BookReportDTO {
     private Long id;
     private BookEntity bookEntity;
-    private Long memberId;
-    //    private MemberEntity memeberEntity;
+    private MemberEntity memberEntity;
     private String isPublic;
     private String title;
     private String content;

@@ -3,6 +3,8 @@ package com.kernel360.boogle.bookreport.controller;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
+import com.kernel360.boogle.member.db.MemberEntity;
+import com.kernel360.boogle.member.model.MemberDTO;
 import com.kernel360.boogle.reply.model.ReplyDTO;
 import com.kernel360.boogle.reply.model.ReplyResponse;
 import com.kernel360.boogle.reply.service.ReplyService;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,8 +41,8 @@ public class BookReportController {
     }
 
     @PostMapping("/book-report")
-    public void createBookReport(@RequestBody BookReportDTO bookReport) {
-        bookReportService.createBookReport(bookReport);
+    public void createBookReport(@RequestBody BookReportDTO bookReport , @AuthenticationPrincipal MemberEntity memberEntity) {
+        bookReportService.createBookReport(bookReport, MemberDTO.from(memberEntity));
     }
 
     @GetMapping("/book-report")
@@ -91,8 +94,8 @@ public class BookReportController {
     }
 
     @PatchMapping("/book-report")
-    public void updateBookReport(@RequestBody BookReportDTO bookReport) {
-        bookReportService.updateBookReport(bookReport);
+    public void updateBookReport(@RequestBody BookReportDTO bookReport, @AuthenticationPrincipal MemberEntity memberEntity) {
+        bookReportService.updateBookReport(bookReport, MemberDTO.from(memberEntity));
     }
 
     @DeleteMapping("/book-report")
