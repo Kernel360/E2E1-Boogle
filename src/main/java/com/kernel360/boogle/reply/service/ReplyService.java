@@ -4,11 +4,10 @@ import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.db.BookReportRepository;
 import com.kernel360.boogle.global.error.code.ReplyErrorCode;
 import com.kernel360.boogle.global.error.exception.BusinessException;
-import com.kernel360.boogle.member.db.MemberEntity;
+import com.kernel360.boogle.member.model.MemberDTO;
 import com.kernel360.boogle.reply.db.ReplyEntity;
 import com.kernel360.boogle.reply.db.ReplyRepository;
 import com.kernel360.boogle.reply.model.ReplyDTO;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,13 +22,13 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final BookReportRepository bookReportRepository;
 
-    public void createReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
+    public void createReply(ReplyDTO reply, MemberDTO memberDTO) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
             throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
         }
 
-        reply.getReplyEntity().setMemberEntity(member);
+        reply.getReplyEntity().setMemberEntity(memberDTO.getMemberEntity());
         replyRepository.save(reply.getReplyEntity());
     }
 
@@ -50,13 +49,13 @@ public class ReplyService {
         return replyRepository.findAllByParentReplyId(parentReplyId);
     }
 
-    public void updateReply(ReplyDTO reply, @AuthenticationPrincipal MemberEntity member) {
+    public void updateReply(ReplyDTO reply, MemberDTO memberDTO) {
 
         if (reply.getReplyEntity().getContent().replaceAll("\\s", "").equals("")) {
             throw new BusinessException(ReplyErrorCode.EMPTY_CONTENT_REPLY);
         }
 
-        reply.getReplyEntity().setMemberEntity(member);
+        reply.getReplyEntity().setMemberEntity(memberDTO.getMemberEntity());
         replyRepository.save(reply.getReplyEntity());
     }
 

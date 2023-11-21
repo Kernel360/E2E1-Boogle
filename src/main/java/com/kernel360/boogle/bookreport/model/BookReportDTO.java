@@ -25,7 +25,5 @@ public class BookReportDTO {
     private LocalDateTime createdAt;
     private String lastModifiedBy;
     private LocalDateTime lastModifiedAt;
-    private String isDeleted;
-    private LocalDateTime deletedAt;
     private BookReportEntity bookReportEntity;
 }

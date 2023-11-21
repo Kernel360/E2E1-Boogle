@@ -7,6 +7,7 @@ import com.kernel360.boogle.reply.model.ReplyDTO;
 import com.kernel360.boogle.reply.model.ReplyResponse;
 import com.kernel360.boogle.reply.service.ReplyService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Api(tags = {"독후감 관련 API"})
 @RestController
+@Slf4j
 public class BookReportController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -93,8 +95,9 @@ public class BookReportController {
         bookReportService.updateBookReport(bookReport);
     }
 
-    @PatchMapping("/book-report/delete")
+    @DeleteMapping("/book-report")
     public void deleteBookReport(@RequestBody BookReportDTO bookReport) {
+        log.info("USER에 의해 독후감 삭제가 수행됨. 삭제된 독후감 정보: " + bookReportService.getBookReportById(bookReport.getId()));
         bookReportService.deleteBookReport(bookReport.getId());
     }
 }

@@ -4,12 +4,14 @@ import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Api(tags = {"독후감 관련 Admin API"})
 @RestController
+@Slf4j
 public class BookReportAdminController {
 
     private final BookReportService bookReportService;
@@ -39,8 +41,9 @@ public class BookReportAdminController {
         return mv;
     }
 
-    @PatchMapping("admin/book-report/delete")
+    @DeleteMapping("admin/book-report")
     public void deleteBookReport(@RequestBody BookReportDTO bookReport) {
+        log.info("ADMIN에 의해 독후감 삭제가 수행됨. 삭제된 독후감 정보: " + bookReportService.getBookReportById(bookReport.getId()));
         bookReportService.deleteBookReport(bookReport.getId());
     }
 
