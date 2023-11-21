@@ -119,8 +119,8 @@
 
     <!-- Pagination-->
     <nav aria-label="Pagination">
-        <input type="hidden" id="currentPage" name="currentPage" th:value="${currentPageNumber}">
-        <input type="hidden" id="totalPages" name="totalPages" th:value="${totalPagesNumber}">
+        <input type="hidden" id="currentPage" name="currentPage" th:value="${bookReports.getNumber()}">
+        <input type="hidden" id="totalPages" name="totalPages" th:value="${bookReports.getTotalPages()}">
         <hr class="my-3 center" />
         <ul class="pagination justify-content-center">
             <li th:if="${bookReports.hasPrevious()}" class="page-item">

@@ -64,10 +64,6 @@ public class BookReportController {
         ModelAndView mv = new ModelAndView("bookreport/book-reports");
         Page<BookReportEntity> bookReports = bookReportService.getMyBookReports(memberId, page);
         mv.addObject("bookReports", bookReports);
-        int currentPageNumber = bookReports.getNumber();
-        int totalPagesNumber = bookReports.getTotalPages();
-        mv.addObject("currentPageNumber", currentPageNumber);
-        mv.addObject("totalPagesNumber", totalPagesNumber);
         return mv;
     }
 
@@ -78,10 +74,6 @@ public class BookReportController {
         ModelAndView mv = new ModelAndView("bookreport/book-reports");
         Page<BookReportEntity> bookReports = bookReportService.getPublicBookReports("Y", page);
         mv.addObject("bookReports", bookReports);
-        int currentPageNumber = bookReports.getNumber();
-        int totalPagesNumber = bookReports.getTotalPages();
-        mv.addObject("currentPageNumber", currentPageNumber);
-        mv.addObject("totalPagesNumber", totalPagesNumber);
         return mv;
     }
 
