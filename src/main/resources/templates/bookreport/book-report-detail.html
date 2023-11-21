@@ -83,6 +83,12 @@
     }
 
     async function deleteBookReport(bookReportId) {
+        const confirmed = confirm('정말로 이 독후감을 삭제하시겠습니까?');
+
+        if (!confirmed) {
+            return;
+        }
+
         // JSON 데이터를 생성
         let data = {
             id: bookReportId
@@ -114,6 +120,12 @@
     }
 
     async function deleteReply(replyId) {
+        const confirmed = confirm('정말로 이 댓글을 삭제하시겠습니까?');
+
+        if (!confirmed) {
+            return;
+        }
+
         // JSON 데이터를 생성
         let data = {
             id: replyId
