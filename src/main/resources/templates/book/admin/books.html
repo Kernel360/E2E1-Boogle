@@ -76,8 +76,8 @@
 
     try {
       // 서버로 PATCH 요청을 보냄
-      const response = await fetch('/admin/book/delete', {
-        method: 'PATCH',
+      const response = await fetch('/admin/book', {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },

@@ -4,14 +4,16 @@ import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.db.BookRepository;
 import com.kernel360.boogle.book.model.BookDTO;
 import com.kernel360.boogle.book.model.BookViewRequest;
+import com.kernel360.boogle.member.db.MemberEntity;
+import com.kernel360.boogle.member.model.MemberDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -22,8 +24,8 @@ public class BookService {
     private final BookRepository bookRepository;
     private static final Integer PAGE_SIZE = 6;
 
-    public void createBook(BookDTO book) {
-        book.getBookEntity().setCreatedBy("TEST"); // 로그인 사용자 정보 들어가야 함
+    public void createBook(BookDTO book, MemberEntity memberEntity) {
+        book.getBookEntity().setCreatedBy(memberEntity.getEmail());
         bookRepository.save(book.getBookEntity());
     }
 
@@ -52,19 +54,13 @@ public class BookService {
         return bookRepository.findBookEntitiesByPublisherContainingOrderByIdDesc(searchWord, pageable);
     }
 
-    public void updateBook(BookDTO book) {
-        book.getBookEntity().setLastModifiedBy("TEST"); // 로그인 사용자 정보 들어가야함
+    public void updateBook(BookDTO book, @AuthenticationPrincipal MemberEntity member) {
+        book.getBookEntity().setLastModifiedBy(member.getEmail());
         bookRepository.save(book.getBookEntity());
     }
 
     public void deleteBook(BookViewRequest bookViewRequest) {
-        bookRepository.findById(bookViewRequest.getId())
-                .map(
-                        it -> {
-                            bookRepository.save(it);
-                            return it;
-                        }
-                );
+        bookRepository.deleteById(bookViewRequest.getId());
     }
 
 
