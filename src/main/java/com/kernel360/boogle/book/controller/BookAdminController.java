@@ -6,6 +6,7 @@ import com.kernel360.boogle.book.model.BookSearchType;
 import com.kernel360.boogle.book.model.BookViewRequest;
 import com.kernel360.boogle.book.service.BookService;
 import com.kernel360.boogle.member.db.MemberEntity;
+import com.kernel360.boogle.member.model.MemberDTO;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class BookAdminController {
 
     @PostMapping("/admin/book")
     public void createBook(@RequestBody BookDTO book, @AuthenticationPrincipal MemberEntity memberEntity) {
-        bookService.createBook(book, memberEntity);
+        bookService.createBook(book, MemberDTO.from(memberEntity));
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -74,8 +75,8 @@ public class BookAdminController {
     }
 
     @PatchMapping("/admin/book")
-    public void updateBook(@RequestBody BookDTO book, @AuthenticationPrincipal MemberEntity member) {
-        bookService.updateBook(book, member);
+    public void updateBook(@RequestBody BookDTO book, @AuthenticationPrincipal MemberEntity memberEntity) {
+        bookService.updateBook(book, MemberDTO.from(memberEntity));
     }
 
     @DeleteMapping("/admin/book")
