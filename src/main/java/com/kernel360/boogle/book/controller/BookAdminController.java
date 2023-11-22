@@ -59,7 +59,7 @@ public class BookAdminController {
         } else if (searchType.equals(BookSearchType.PUBLISHER.getType())) {
             books = bookService.getBooksByPublisher(page, searchWord);
         } else {
-            books = bookService.getBooks(page, searchWord);
+            books = bookService.getBooks(page);
         }
 
         mv.addObject( "books",books);

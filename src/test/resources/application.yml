@@ -16,9 +16,9 @@ spring:
         default_schema: ""
   datasource:
     driver-class name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3308/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    username: root
-    password: root1234!
+    url: jdbc:mysql://localhost:3306/E2E_BOOGLE?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: ""
+    password: ""
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER

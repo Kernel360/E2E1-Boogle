@@ -23,6 +23,5 @@ public class BookConverter {
                 .lastModifiedBy(bookEntity.getLastModifiedBy())
                 .lastModifiedAt(bookEntity.getLastModifiedAt())
                 .build();
-
     }
 }
