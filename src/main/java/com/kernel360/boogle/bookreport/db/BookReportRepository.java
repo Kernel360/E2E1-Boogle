@@ -18,7 +18,7 @@ public interface BookReportRepository extends JpaRepository<BookReportEntity, Lo
 
     Optional<BookReportEntity> findById(Long bookReportId);
 
-    Optional<List<BookReportEntity>> findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(Long bookId, String isPublic);
+    List<BookReportEntity> findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(Long bookId, String isPublic);
 
     List<BookReportEntity> findAllByMemberEntity_Id(Long memberId);
 

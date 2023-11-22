@@ -54,7 +54,7 @@ public class BookController {
         ModelAndView mv = new ModelAndView("book/book-detail");
         BookEntity book = bookService.getBookById(id).get();
         mv.addObject("book", book);
-        Optional<List<BookReportEntity>> bookReports = bookReportService.getPublicBookReportsByBookId(id);
+        Optional<List<BookReportEntity>> bookReports = Optional.of(bookReportService.getPublicBookReportsByBookId(id));
         mv.addObject("bookReports", bookReports);
         return mv;
     }
