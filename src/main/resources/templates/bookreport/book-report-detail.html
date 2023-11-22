@@ -175,7 +175,7 @@
                         <!-- Post title -->
                         <h1 class="fw-bolder mb-1" th:text="${bookReport.title}"></h1>
                         <!-- Post meta content -->
-                        <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')} + ' by ' + '멤버 DB 추가 시, 연결 필요합니다.'"></div>
+                        <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')} + ' by ' + ${bookReport.memberEntity.getNickname}"></div>
                     </header>
                     <div class="col-4 text-end" th:if="${#authorization.expression('isAuthenticated()')} and ${bookReport.memberEntity.getId} == ${#authentication.principal.id}">
                         <!-- Submit button -->
