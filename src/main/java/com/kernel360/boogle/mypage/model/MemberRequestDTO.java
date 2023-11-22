@@ -30,7 +30,7 @@ public class MemberRequestDTO {
     @Size(min = 2, max = 10, message = "닉네임은 2 ~ 10 글자만 가능합니다.")
     private String nickname;
 
-    @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "전화번호형식은 000-0000-0000 입니다.")
+    @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "전화번호형식은 000-000/0000-0000 입니다.")
     private String phoneNumber;
 
 }

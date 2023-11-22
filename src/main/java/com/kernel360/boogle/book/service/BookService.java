@@ -31,7 +31,7 @@ public class BookService {
         return bookRepository.findById(bookId);
     }
 
-    public Page<BookEntity> getBooks(int page, String searchWord) {
+    public Page<BookEntity> getBooks(int page) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return bookRepository.findAllByOrderByIdDesc(pageable);
     }

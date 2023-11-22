@@ -10,10 +10,8 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -48,33 +46,40 @@ public class MyPageController {
             @AuthenticationPrincipal MemberEntity member) {
 
         return new ModelAndView("mypage/memberInfo")
-                .addObject("member", member);
+                .addObject("member", member)
+                .addObject("memberRequestDTO", new MemberRequestDTO());
     }
 
 
     @PostMapping("/mypage/memberInfo")
+    @CrossOrigin
     public ModelAndView updateMemberInfo(
             @AuthenticationPrincipal MemberEntity memberEntity,
-            @Valid
-            @ModelAttribute MemberRequestDTO member,
-
+            @Valid @ModelAttribute MemberRequestDTO memberRequestDTO,
+            BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
-        ModelAndView modelAndView = new ModelAndView();
-
-        if (myPageService.validatePassword(memberEntity, member)) {
-            memberService.updateMemberInfo(member);
-            redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
-            modelAndView.setViewName("redirect:/mypage/main");
-            log.info("회원 정보가 성공적으로 업데이트되었습니다.");
-            return modelAndView;
+        if (bindingResult.hasErrors()) {
+            log.error("Binding errors: {}", bindingResult.getAllErrors());
+            return new ModelAndView("mypage/memberInfo")
+                    .addObject("member", memberEntity)
+                    .addObject("memberRequestDTO", memberRequestDTO)
+                    .addObject("errors", bindingResult.getAllErrors());
         }
 
-        redirectAttributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
-        modelAndView.setViewName("redirect:/mypage/memberInfo");
-        log.error("비밀번호가 일치하지 않습니다.");
+        if (!myPageService.validatePassword(memberEntity, memberRequestDTO)) {
+            redirectAttributes.addFlashAttribute("error", "비밀번호가 일치하지 않습니다.");
+            log.error("비밀번호가 일치하지 않습니다.");
+            return new ModelAndView("redirect:/mypage/memberInfo");
+        }
 
-        return modelAndView;
+        memberService.updateMemberInfo(memberRequestDTO);
+        redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
+        log.info("회원 정보가 성공적으로 업데이트되었습니다.");
+        return new ModelAndView("redirect:/mypage/main")
+                .addObject("member", memberEntity)
+                .addObject("memberRequestDTO", memberRequestDTO);
     }
+
 
 }
