@@ -48,7 +48,7 @@
                 <tbody>
                 <tr th:each="bookReport : ${bookReports.get()}">
                     <td><a th:href="@{'/book-report?id=' + ${bookReport.id}}" th:text="${bookReport.title}"></a></td>
-                    <td th:text="${bookReport.memberId}"></td>
+                    <td th:text="${bookReport.memberEntity.getNickname}"></td>
                     <td th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일')}"></td>
                 </tr>
                 </tbody>

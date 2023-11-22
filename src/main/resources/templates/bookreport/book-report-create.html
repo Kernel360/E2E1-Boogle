@@ -29,8 +29,8 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 alert('독후감이 생성되었습니다.');
-                let memberId = 1; // 동적으로 memberId를 설정하고자 하는 값으로 변경할 수 있음
-                window.location.href = '/my-book-reports?memberId=' + memberId;// 멤버 테이블 생성 후 수정해야 하는 작업입니다.
+                let memberId = document.getElementById('memberId').value;
+                window.location.href = '/my-book-reports?memberId=' + memberId;
             } else {
                 alert('독후감 생성 중 오류가 발생했습니다.');
             }
@@ -39,8 +39,8 @@
         xhr.send(JSON.stringify(data));
     }
     function cancel() {
-        let memberId = 1; // 동적으로 memberId를 설정하고자 하는 값으로 변경할 수 있음
-        window.location.href = '/my-book-reports?memberId=' + memberId; // 취소 버튼 누르면 my-book-reports 이동
+        let memberId = document.getElementById('memberId').value;
+        window.location.href = '/my-book-reports?memberId=' + memberId;
     }
 </script>
 <body>
@@ -49,6 +49,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-lg-12">
+            <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.id}">
             <!-- Review form -->
             <form>
                 <!-- Title input -->
