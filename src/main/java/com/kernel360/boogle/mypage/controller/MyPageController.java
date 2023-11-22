@@ -40,7 +40,7 @@ public class MyPageController {
                 .addAllObjects(
                         Map.of("member", member,
                                 "replies" , replyService.getRecentRepliesByMemberId(memberId,10),
-                                "bookreports", bookReportService.getBookReportsByMemberId(memberId))
+                                "bookReports", bookReportService.getBookReportsByMemberId(memberId))
                 );
     }
     @GetMapping("/mypage/memberInfo")
