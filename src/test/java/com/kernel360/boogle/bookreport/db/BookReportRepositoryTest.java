@@ -1,11 +1,11 @@
 package com.kernel360.boogle.bookreport.db;
 
 import com.kernel360.boogle.book.db.BookRepository;
+import com.kernel360.boogle.member.db.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -20,11 +20,14 @@ class BookReportRepositoryTest {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    MemberRepository memberRepository;
+
     @Test
     void save() {
         BookReportEntity bookReport = BookReportEntity.builder()
                 .bookEntity(bookRepository.findById(4L).get())
-                .memberId(1L)
+                .memberEntity(memberRepository.findById(1L).get())
                 .isPublic("Y")
                 .title("test report")
                 .content("test content")
@@ -40,9 +43,8 @@ class BookReportRepositoryTest {
     }
 
     @Test
-    void findAllByIsPublicEqualsAndIsDeletedNotOrderByIdDesc() {
-        then(bookReportRepository.findAllByIsPublicEqualsAndIsDeletedNotOrderByIdDesc(
-                "Y",
+    void findAllByIsPublicOrderByIdDesc() {
+        then(bookReportRepository.findAllByIsPublicOrderByIdDesc(
                 "Y",
                 PageRequest.of(0, 6)
         ).getContent().size()).isEqualTo(6);
@@ -50,20 +52,17 @@ class BookReportRepositoryTest {
 
 
     @Test
-    void findAllByMemberIdEqualsAndIsDeletedNotOrderByIdDesc() {
-        then(bookReportRepository.findAllByMemberIdEqualsAndIsDeletedNotOrderByIdDesc(
+    void findAllByMemberIdOrderByIdDesc() {
+        then(bookReportRepository.findAllByMemberEntity_IdOrderByIdDesc(
                 1L,
-                "Y",
                 PageRequest.of(0, 6)
         ).getContent().size()).isEqualTo(6);
     }
 
     @Test
-    void findAllByIsDeletedNotOrderByIdDesc() {
-        then(bookReportRepository.findAllByIsDeletedNotOrderByIdDesc(
-                "Y",
-                PageRequest.of(0, 6)
-        ).getContent().size()).isEqualTo(6);
+    void findAllByOrderByIdDesc() {
+        then(bookReportRepository.findAllByOrderByIdDesc(PageRequest.of(0, 6))
+                .getContent().size()).isEqualTo(6);
     }
 
     @Test

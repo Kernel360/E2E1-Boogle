@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Write a Book Review - Start Bootstrap Template</title>
+    <title>Boogle</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -19,7 +19,8 @@
                 title: document.getElementById('title').value,
                 bookEntity: {id: document.getElementById('bookId').value},
                 content: document.getElementById('content').value,
-                isPublic: document.getElementById('isPrivate').checked === true ? 'N' : 'Y'
+                isPublic: document.getElementById('isPrivate').checked === true ? 'N' : 'Y',
+                createdBy: document.getElementById('createdBy').value
             }
         };
 
@@ -30,8 +31,8 @@
         xhr.onload = function() {
             if (xhr.status === 200) {
                 alert('독후감이 수정되었습니다.');
-                let memberId = 1; // 동적으로 memberId를 설정하고자 하는 값으로 변경할 수 있음
-                window.location.href = '/my-book-reports?memberId=' + memberId;// 멤버 테이블 생성 후 수정해야 하는 작업입니다.
+                let memberId = document.getElementById('memberId').value;
+                window.location.href = '/my-book-reports?memberId=' + memberId;
             } else {
                 alert('독후감 수정 중 오류가 발생했습니다.');
             }
@@ -73,6 +74,8 @@
                     <label class="form-check-label" for="isPrivate">비공개</label>
                 </div>
                 <input type="hidden" id="id" name="id" th:value="${bookReport.id}">
+                <input type="hidden" id="createdBy" name="created-by" th:value="${bookReport.createdBy}">
+                <input type="hidden" id="memberId" name="memberId" th:value="${#authentication.principal.id}">
                 <!-- Submit button -->
                 <button type="button" class="btn btn-primary" th:onclick="|updateBookReport();|">수정</button>
                 <button type="button" class="btn btn-secondary" th:onclick="|cancel();|">취소</button>

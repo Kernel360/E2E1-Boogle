@@ -10,6 +10,7 @@
 
   <!-- Font Awesome 스타일시트 추가 -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+  <title>Boogle</title>
   <link href="./../../css/styles.css" rel="stylesheet" />
 
   <!-- 추가적인 CSS 스타일 추가 -->
@@ -69,6 +70,12 @@
 <body>
 <script>
   async function deleteBook(bookId) {
+    const confirmed = confirm('정말로 이 도서를 삭제하시겠습니까?');
+
+    if (!confirmed) {
+      return;
+    }
+
     // JSON 데이터를 생성
     let data = {
       id: bookId

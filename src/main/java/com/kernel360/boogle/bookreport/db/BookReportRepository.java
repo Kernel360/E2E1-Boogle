@@ -12,7 +12,7 @@ public interface BookReportRepository extends JpaRepository<BookReportEntity, Lo
 
     Page<BookReportEntity> findAllByIsPublicOrderByIdDesc(String isPublic, Pageable pageable);
 
-    Page<BookReportEntity> findAllByMemberIdOrderByIdDesc(Long memberId, Pageable pageable);
+    Page<BookReportEntity> findAllByMemberEntity_IdOrderByIdDesc(Long memberId, Pageable pageable);
 
     Page<BookReportEntity> findAllByOrderByIdDesc(Pageable pageable);
 
@@ -20,7 +20,7 @@ public interface BookReportRepository extends JpaRepository<BookReportEntity, Lo
 
     List<BookReportEntity> findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(Long bookId, String isPublic);
 
-    List<BookReportEntity> findAllByMemberId(Long MemberId);
+    List<BookReportEntity> findAllByMemberEntity_Id(Long memberId);
 
     void deleteById(Long id);
 }

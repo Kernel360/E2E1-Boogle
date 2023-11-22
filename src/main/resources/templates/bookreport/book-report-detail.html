@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Blog Post - Start Bootstrap Template</title>
+    <title>Boogle</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -83,6 +83,12 @@
     }
 
     async function deleteBookReport(bookReportId) {
+        const confirmed = confirm('정말로 이 독후감을 삭제하시겠습니까?');
+
+        if (!confirmed) {
+            return;
+        }
+
         // JSON 데이터를 생성
         let data = {
             id: bookReportId
@@ -114,6 +120,12 @@
     }
 
     async function deleteReply(replyId) {
+        const confirmed = confirm('정말로 이 댓글을 삭제하시겠습니까?');
+
+        if (!confirmed) {
+            return;
+        }
+
         // JSON 데이터를 생성
         let data = {
             id: replyId
@@ -142,21 +154,6 @@
             alert('댓글 삭제 중 오류가 발생했습니다.');
             alert(error);
         }
-
-        // let xhr = new XMLHttpRequest();
-        // xhr.open('DELETE', '/reply', true);
-        // xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        //
-        // xhr.onload = function() {
-        //     if (xhr.status === 200) {
-        //         alert('댓글이 성공적으로 삭제되었습니다.');
-        //         window.location.href = '/book-report?id=' + document.getElementById('bookReportId').value;
-        //     } else {
-        //         alert('댓글 삭제 중 오류가 발생했습니다.');
-        //     }
-        // };
-        //
-        // xhr.send(JSON.stringify(data));
     }
 
     function updateBookReport(bookReportId) {
@@ -178,9 +175,9 @@
                         <!-- Post title -->
                         <h1 class="fw-bolder mb-1" th:text="${bookReport.title}"></h1>
                         <!-- Post meta content -->
-                        <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')} + ' by ' + '멤버 DB 추가 시, 연결 필요합니다.'"></div>
+                        <div class="text-muted fst-italic mb-2" th:text="'Posted on ' + ${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일 HH:mm')} + ' by ' + ${bookReport.memberEntity.getNickname}"></div>
                     </header>
-                    <div class="col-4 text-end">
+                    <div class="col-4 text-end" th:if="${#authorization.expression('isAuthenticated()')} and ${bookReport.memberEntity.getId} == ${#authentication.principal.id}">
                         <!-- Submit button -->
                         <button type="button" class="btn btn-primary" th:onclick="|updateBookReport(${bookReport.id});|">수정</button>
                         <button type="button" class="btn btn-danger" th:onclick="|deleteBookReport(${bookReport.id});|">삭제</button>

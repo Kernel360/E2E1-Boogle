@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Blog Home - Start Bootstrap Template</title>
+    <title>Boogle</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link href="css/styles.css" rel="stylesheet" />
 </head>
@@ -48,7 +48,7 @@
                 <tbody>
                 <tr th:each="bookReport : ${bookReports.get()}">
                     <td><a th:href="@{'/book-report?id=' + ${bookReport.id}}" th:text="${bookReport.title}"></a></td>
-                    <td th:text="${bookReport.memberId}"></td>
+                    <td th:text="${bookReport.memberEntity.getNickname}"></td>
                     <td th:text="${#temporals.format(bookReport.createdAt, 'yyyy년 MM월 dd일')}"></td>
                 </tr>
                 </tbody>
