@@ -2,7 +2,7 @@
 name: "[BUG]"
 about: Boogle의 개선을 위한 버그 리포트를 작성해주세요~!
 title: ''
-labels: ":rotating_light:  bugfix"
+labels: ":rotating_light:  bug"
 assignees: GBGreenBravo, HyunJunSon, linglong67, RossKWSang
 
 ---
