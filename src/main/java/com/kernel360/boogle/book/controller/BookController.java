@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Api(tags = "도서 관련 User API")
 @RestController
@@ -53,7 +54,7 @@ public class BookController {
         ModelAndView mv = new ModelAndView("book/book-detail");
         BookEntity book = bookService.getBookById(id).get();
         mv.addObject("book", book);
-        List<BookReportEntity> bookReports = bookReportService.getPublicBookReportsByBookId(id);
+        Optional<List<BookReportEntity>> bookReports = bookReportService.getPublicBookReportsByBookId(id);
         mv.addObject("bookReports", bookReports);
         return mv;
     }

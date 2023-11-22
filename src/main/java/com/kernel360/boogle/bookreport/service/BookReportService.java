@@ -53,7 +53,7 @@ public class BookReportService {
         return bookReportRepository.findAllByOrderByIdDesc(pageable);
     }
 
-    public List<BookReportEntity> getPublicBookReportsByBookId(Long bookId) {
+    public Optional<List<BookReportEntity>> getPublicBookReportsByBookId(Long bookId) {
         return bookReportRepository.findAllByBookEntity_IdAndIsPublicOrderByCreatedAtDesc(bookId,"Y");
     }
 
