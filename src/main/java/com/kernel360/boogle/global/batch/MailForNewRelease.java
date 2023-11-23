@@ -18,12 +18,12 @@ import java.util.Properties;
 @Component
 public class MailForNewRelease {
     @Value("${mail.batch.email}")
-    private String user_email;
+    private String userEmail;
 
     @Value("${mail.batch.password}")
-    private String user_pw;
-    static final String smtp_host = "smtp.gmail.com";
-    static final int tls_port = 587;
+    private String userPassword;
+    static final String smtpHost = "smtp.gmail.com";
+    static final int tlsPort = 587;
 
     private final BookRepository bookRepository;
 
@@ -31,10 +31,10 @@ public class MailForNewRelease {
         this.bookRepository = bookRepository;
     }
 
-    public void Send() throws Exception {
+    public void send() throws Exception {
         Properties props = System.getProperties();
-        props.put("mail.smtp.host", smtp_host);
-        props.put("mail.smtp.port", tls_port);
+        props.put("mail.smtp.host", smtpHost);
+        props.put("mail.smtp.port", tlsPort);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.starttls.required", "true");
@@ -43,19 +43,18 @@ public class MailForNewRelease {
         props.put("jdk.tls.client.protocols", "TLSv1.2");
         props.put("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
 
-        System.out.println("USER_EMAIL>>"+user_email);
         // 메일 세션 생성
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(user_email, user_pw);
+                        return new PasswordAuthentication(userEmail, userPassword);
                     }
                 });
         try {
 
             // 메일 메시지 생성
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user_email));
+            message.setFrom(new InternetAddress(userEmail));
 
 
             String[] recipientAddresses = {

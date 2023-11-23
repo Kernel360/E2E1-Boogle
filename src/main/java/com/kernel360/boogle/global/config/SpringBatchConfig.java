@@ -38,7 +38,7 @@ public class SpringBatchConfig {
     @Bean
     public Tasklet tasklet() {
         return ((contribution, chunkContext) -> {
-            mailForNewRelease.Send();
+            mailForNewRelease.send();
             return RepeatStatus.FINISHED;
         });
     }
