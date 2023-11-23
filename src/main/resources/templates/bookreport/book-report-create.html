@@ -80,11 +80,12 @@
                         var listItem = $('<li class="list-group-item">')
                             .text(book.title)
                             .data('book-id', book.id)
+                            .data('book-title', book.title)
                             .click(function () {
-                                selectedBookId = $(this).data('book-id');
                                 $('.list-group-item').removeClass('selected-book');
                                 $(this).addClass('selected-book');
                                 $('#bookId').val($(this).data('book-id'));
+                                $('#bookTitle').val($(this).data('book-title'));
                             })
                             .appendTo(bookSearchResults);
                     });
@@ -118,9 +119,10 @@
                 </div>
                 <!-- Book ID input with "Find Book" button -->
                 <div class="mb-3">
-                    <label for="bookId" class="form-label">도서 ID</label>
+                    <label for="bookId" class="form-label">도서</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" id="bookId" placeholder="도서 ID를 입력하세요">
+                        <input type="text" class="form-control" id="bookTitle" placeholder="'도서 찾기'를 통해 도서를 입력해 주세요">
+                        <input type="hidden" class="form-control" id="bookId">
                         <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#bookSearchModal">도서 찾기</button>
                     </div>
                 </div>
