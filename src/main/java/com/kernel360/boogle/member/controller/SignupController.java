@@ -5,36 +5,42 @@ import com.kernel360.boogle.member.model.MemberSignupDTO;
 import com.kernel360.boogle.member.service.MemberService;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/signup")
+@RequiredArgsConstructor
 public class SignupController {
 
     private final MemberService memberService;
 
-    public SignupController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
     @GetMapping
-    public String signup() {
+    public String signup(Model model) {
+        model.addAttribute("memberSignupDTO", new MemberSignupDTO());
         return "signup";
     }
 
     @PostMapping
     @ApiResponses({@ApiResponse(code = 409, message = "이미 등록된 유저입니다.")})
-    public String signup(@ModelAttribute MemberSignupDTO memberSignupDTO, Model model) {
+    public String signup(@Valid @ModelAttribute MemberSignupDTO memberSignupDTO,
+                         BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "signup";
+        }
+
         try {
             memberService.signup(memberSignupDTO);
             return "redirect:login";
         } catch (BusinessException e) {
-            model.addAttribute("error", e.getErrorCode().getMessage());
+            model.addAttribute("duplicatedError", e.getErrorCode().getMessage());
             return "signup";
         }
     }

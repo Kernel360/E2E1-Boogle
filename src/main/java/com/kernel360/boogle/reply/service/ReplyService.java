@@ -22,6 +22,7 @@ public class ReplyService {
     private final ReplyRepository replyRepository;
     private final BookReportRepository bookReportRepository;
 
+    @Transactional
     public void createReply(ReplyDTO reply, MemberDTO memberDTO) {
 
         validateReplyContent(reply);
@@ -29,7 +30,7 @@ public class ReplyService {
         reply.getReplyEntity().setMemberEntity(memberDTO.getMemberEntity());
         replyRepository.save(reply.getReplyEntity());
     }
-
+    @Transactional(readOnly = true)
     public Optional<ReplyEntity> getReplyById(Long id) {
         return replyRepository.findById(id);
     }
@@ -42,11 +43,12 @@ public class ReplyService {
                 .map(ReplyDTO::from)
                 .toList();
     }
-
+    @Transactional(readOnly = true)
     public Optional<List<ReplyEntity>> getRepliesByParentReplyId(Long parentReplyId) {
         return replyRepository.findAllByParentReplyId(parentReplyId);
     }
 
+    @Transactional
     public void updateReply(ReplyDTO reply, MemberDTO memberDTO) {
 
         validateReplyContent(reply);
@@ -55,6 +57,7 @@ public class ReplyService {
         replyRepository.save(reply.getReplyEntity());
     }
 
+    @Transactional
     public void deleteReply(ReplyDTO reply) {
 
         replyRepository.deleteById(reply.getId());

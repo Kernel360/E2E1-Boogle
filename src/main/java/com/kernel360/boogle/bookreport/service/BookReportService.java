@@ -69,7 +69,6 @@ public class BookReportService {
         bookReportRepository.deleteById(bookReportId);
     }
 
-
     public List<BookReportEntity> getBookReportsByMemberId(Long memberId) {
         return bookReportRepository.findAllByMemberEntity_Id(memberId);
     }
