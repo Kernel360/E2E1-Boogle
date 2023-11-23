@@ -53,9 +53,4 @@ public class MemberReplyScheduler {
                     );
                 });
     }
-
-//    @Scheduled(fixedRate=1000 * 1000)
-//    public void mailTest() throws Exception {
-//        mailForNewRelease.Send();
-//    }
 }

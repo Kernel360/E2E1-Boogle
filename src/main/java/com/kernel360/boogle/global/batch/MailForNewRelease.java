@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Properties;
 
 @Component
-//@AllArgsConstructor
 public class MailForNewRelease {
     @Value("${mail.batch.email}")
     private String user_email;
