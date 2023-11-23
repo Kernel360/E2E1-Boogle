@@ -59,6 +59,7 @@ fit=no" />
                         <a href="/signup">회원가입</a>
                     </div>
                 </div>
+                <div th:if="${param.errorMessage}" th:text="${param.errorMessage}" style="color: red;"></div>
             </form>
         </div></div></div>
 
