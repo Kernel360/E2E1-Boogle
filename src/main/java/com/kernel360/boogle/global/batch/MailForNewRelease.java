@@ -60,8 +60,6 @@ public class MailForNewRelease {
 
 
             String[] recipientAddresses = {
-                    "kyl8555@gmail.com",
-                    "bighitstory@kakao.com",
                     "2018190529@korea.ac.kr",
                     "rosskysoss@gmail.com"
             };
