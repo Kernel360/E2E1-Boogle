@@ -31,6 +31,8 @@ dependencies {
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	// spring batch
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	// devtools
 	implementation 'org.springframework.boot:spring-boot-devtools'
 	// flyway
@@ -53,6 +55,8 @@ dependencies {
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
+	// JavaMail
+	implementation group: 'javax.mail', name: 'mail', version: '1.4.7'
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

@@ -1,5 +1,6 @@
 package com.kernel360.boogle.statistics.memberreply.scheduler;
 
+import com.kernel360.boogle.global.batch.MailForNewRelease;
 import com.kernel360.boogle.reply.db.ReplyEntity;
 import com.kernel360.boogle.reply.db.ReplyRepository;
 import com.kernel360.boogle.statistics.memberreply.business.MemberReplyAggregation;
@@ -26,6 +27,8 @@ public class MemberReplyScheduler {
     private final ReplyRepository replyRepository;
     private final MemberReplyService memberReplyService;
     private final MemberReplyAggregation memberReplyAggregation;
+    private final MailForNewRelease mailForNewRelease;
+
 
     /**
      * 매월 1일 새벽 2시에 그 전월 MemberReply를 업데이트 할 것<br>

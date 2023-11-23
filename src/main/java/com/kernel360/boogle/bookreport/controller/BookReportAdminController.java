@@ -3,6 +3,7 @@ package com.kernel360.boogle.bookreport.controller;
 import com.kernel360.boogle.bookreport.db.BookReportEntity;
 import com.kernel360.boogle.bookreport.model.BookReportDTO;
 import com.kernel360.boogle.bookreport.service.BookReportService;
+import com.kernel360.boogle.global.batch.MailForNewRelease;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class BookReportAdminController {
 
     private final BookReportService bookReportService;
+
 
     public BookReportAdminController(BookReportService bookReportService) {
         this.bookReportService = bookReportService;
