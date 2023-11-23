@@ -1,5 +1,5 @@
 # Boogle
-<p align="center"><img width="345" alt="image" src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/22b8c434-6246-4f54-a59b-f12865d7b8fb" style="width: 50%"></p>
+<p align="center"><img width="345" alt="image" src="https://github.com/Kernel360/E2E1-Boogle/assets/88479739/dbeaff49-3337-4aa8-942a-56ea3a42cf1d" style="width: 50%"></p>
 
 ## 💌 서비스 소개 
 
