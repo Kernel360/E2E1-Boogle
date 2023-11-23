@@ -70,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         refreshCookie.setPath("/");
         response.addCookie(refreshCookie);
 
-        response.sendRedirect("/book-reports");
+        response.sendRedirect("/books");
     }
 
     @Override
