@@ -4,7 +4,6 @@ import com.kernel360.boogle.global.jwt.JwtAuthenticationFilter;
 import com.kernel360.boogle.global.jwt.JwtAuthorizationFilter;
 import com.kernel360.boogle.global.jwt.JwtProperties;
 import com.kernel360.boogle.member.db.MemberEntity;
-import com.kernel360.boogle.member.db.MemberRepository;
 import com.kernel360.boogle.member.service.MemberService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -25,11 +24,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final MemberService memberService;
-    private final MemberRepository memberRepository;
 
-    public SpringSecurityConfig(MemberService memberService, MemberRepository memberRepository) {
+    public SpringSecurityConfig(MemberService memberService) {
         this.memberService = memberService;
-        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -53,19 +50,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/book-reports", "/signup", "/login", "/books").permitAll()
-                .antMatchers("/my-book-reports", "/mypage/**" ).hasRole("USER")
+                .antMatchers("/mypage/**" ).hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/book", "/book-report", "/reply").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/book", "/book-report", "/my-book-reports", "/reply").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated();
 
         http.formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/book-reports")
+                .defaultSuccessUrl("/books")
                 .permitAll(); // 모두 허용
 
         http.logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/book-reports")
+                .logoutSuccessUrl("/books")
                 .invalidateHttpSession(true)
                 .deleteCookies(JwtProperties.COOKIE_NAME)
                 .deleteCookies(JwtProperties.REFRESH_COOKIE_NAME);

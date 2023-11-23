@@ -10,9 +10,27 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+    <style>
+        #bookSearchResults {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .selected-book {
+            background-color: #e0e0e0; /* 선택된 도서의 배경색 */
+        }
+    </style>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
     function createBookReport() {
+        let title = document.getElementById('title').value.trim();
+        let content = document.getElementById('content').value.trim();
+
+        if (title === '' || content === '') {
+            alert('독후감 제목과 내용을 모두 작성해주세요.');
+            return;
+        }
         let data = {
             bookReportEntity: {
                 title: document.getElementById('title').value,
@@ -42,6 +60,48 @@
         let memberId = document.getElementById('memberId').value;
         window.location.href = '/my-book-reports?memberId=' + memberId;
     }
+    function searchBooks() {
+        var searchWord = $('#bookSearchInput').val();
+        var bookSearchResults = $('#bookSearchResults');
+        var noResultsMessage = $('#noResultsMessage');
+
+        $.ajax({
+            url: '/books/search',
+            type: 'GET',
+            data: { searchWord: searchWord},
+            success: function (data) {
+                bookSearchResults.empty();
+                noResultsMessage.hide();
+
+                if (data.length === 0) {
+                    noResultsMessage.show();
+                } else {
+                    $.each(data, function(index, book) {
+                        var listItem = $('<li class="list-group-item">')
+                            .text(book.title)
+                            .data('book-id', book.id)
+                            .data('book-title', book.title)
+                            .click(function () {
+                                $('.list-group-item').removeClass('selected-book');
+                                $(this).addClass('selected-book');
+                                $('#bookId').val($(this).data('book-id'));
+                                $('#bookTitle').val($(this).data('book-title'));
+                            })
+                            .appendTo(bookSearchResults);
+                    });
+                }
+            },
+            error: function () {
+                console.error('도서 검색 중 오류가 발생했습니다.');
+            }
+        });
+    }
+    // 모달이 표시될 때 실행되는 이벤트 처리
+    $('#bookSearchModal').on('shown.bs.modal', function () {
+        // 모달이 표시될 때 이전 검색 결과를 지우고 검색 입력란에 포커스를 맞춥니다.
+        $('#bookSearchResults').empty();
+        $('#bookSearchInput').focus();
+    });
 </script>
 <body>
 <nav th:replace="~{fragments/navbar :: navbarFragment}"></nav>
@@ -57,10 +117,35 @@
                     <label for="title" class="form-label">독후감 제목</label>
                     <input type="text" class="form-control" id="title" placeholder="독후감 제목을 입력하세요.">
                 </div>
-                <!-- Book ID input -->
+                <!-- Book ID input with "Find Book" button -->
                 <div class="mb-3">
-                    <label for="bookId" class="form-label">도서 ID</label>
-                    <input type="text" class="form-control" id="bookId" placeholder="도서 ID를 입력하세요">
+                    <label for="bookId" class="form-label">도서</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="bookTitle" placeholder="'도서 찾기'를 통해 도서를 입력해 주세요">
+                        <input type="hidden" class="form-control" id="bookId">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#bookSearchModal">도서 찾기</button>
+                    </div>
+                </div>
+                <!-- Modal for book search -->
+                <div class="modal fade" id="bookSearchModal" tabindex="-1" aria-labelledby="bookSearchModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bookSearchModalLabel">도서 찾기</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="text" class="form-control mb-2" id="bookSearchInput" placeholder="도서 제목을 입력하세요">
+                                <p id="noResultsMessage" class="text-muted">검색 결과가 없습니다.</p>
+                                <ul class="list-group" id="bookSearchResults">
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" th:onclick="|searchBooks()|">검색</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- Review content input -->
                 <div class="mb-3">

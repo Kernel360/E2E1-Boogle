@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -50,6 +51,10 @@ public class BookService {
     public Page<BookEntity> getBooksByPublisher(int page, String searchWord) {
         Pageable pageable = PageRequest.of(page, PAGE_SIZE);
         return bookRepository.findBookEntitiesByPublisherContainingOrderByIdDesc(searchWord, pageable);
+    }
+
+    public List<BookEntity> searchBooksByTitle(String title) {
+        return bookRepository.findBookEntitiesByTitleIsContainingOrderByTitleAsc(title);
     }
 
     public void updateBook(BookDTO book, MemberDTO memberDTO) {

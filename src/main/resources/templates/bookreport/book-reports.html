@@ -86,6 +86,7 @@
     <div class="text-end mb-3">
         <a href="/book-report/create" class="btn btn-primary">독후감 작성</a>
     </div>
+    <h4 class="text-center my-5" th:if="${bookReports.isEmpty()}">작성하신 독후감이 없습니다. 독후감을 작성해 주세요.</h4>
     <!-- Blog entries-->
     <div class="row">
         <div class="col-4" th:each="bookReport, iterStat : ${bookReports}">

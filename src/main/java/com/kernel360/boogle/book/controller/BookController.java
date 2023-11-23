@@ -58,4 +58,11 @@ public class BookController {
         mv.addObject("bookReports", bookReports);
         return mv;
     }
+
+    @GetMapping("/books/search")
+    public Optional<List<BookEntity>> searchBooksByTitle(
+            @RequestParam(value = "searchWord", required = false, defaultValue = "") String searchWord) {
+        Optional<List<BookEntity>> books = Optional.of(bookService.searchBooksByTitle(searchWord));
+        return books;
+    }
 }
