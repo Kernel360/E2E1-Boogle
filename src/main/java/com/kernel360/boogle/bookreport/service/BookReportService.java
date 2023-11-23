@@ -60,7 +60,6 @@ public class BookReportService {
     public void updateBookReport(BookReportDTO bookReport, MemberDTO memberDTO) {
         bookReport.getBookReportEntity().setLastModifiedBy(memberDTO.getEmail());
         bookReport.getBookReportEntity().setMemberEntity(memberDTO.getMemberEntity());
-        System.out.println("bookReport = " + bookReport);
         bookReportRepository.save(bookReport.getBookReportEntity());
     }
 
