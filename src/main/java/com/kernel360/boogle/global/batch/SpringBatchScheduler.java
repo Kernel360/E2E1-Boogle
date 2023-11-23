@@ -25,8 +25,8 @@ public class SpringBatchScheduler {
     @Autowired
     private SpringBatchConfig springBatchConfig;
     @Scheduled(
-            initialDelay = 1000 * 60 * 60,
-            fixedDelay = 1000 * 60 * 60
+            initialDelay = 1000 * 60 * 60 * 2,
+            fixedDelay = 1000 * 60 * 60 * 2
     )
     public void runJob() {
         Map<String, JobParameter> confMap = new HashMap<>();
