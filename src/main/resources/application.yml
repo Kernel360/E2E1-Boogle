@@ -2,6 +2,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
+  batch:
+    jdbc:
+      initialize-schema: embedded
 springfox:
   documenration:
     swagger:
@@ -12,3 +15,8 @@ thymeleaf:
   prefix: classpath:/templates/
   suffix: .html
   enabled: true
+
+mail:
+  batch:
+    email: ENC(5scm9xx1SCH7uuydIwVBLy5PEvRrOFb0HKsdTVEpW4ldLIO94tOX5dUUSbf9yLvY)
+    password: ENC(tkM0HhbhIbnzx1i+wy/7/6OO48hEG3XilL9NTb0FuZujbrEzJVtINQ==)

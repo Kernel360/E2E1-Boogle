@@ -1,5 +1,6 @@
 package com.kernel360.boogle.global.annotation;
 
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -12,6 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @EnableScheduling
 @EnableAspectJAutoProxy
+@EnableBatchProcessing
 public @interface BoogleAnnotation {
 }
 
