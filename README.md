@@ -102,25 +102,30 @@
 <br><br>
 
 ## 👩‍👦‍👦👨‍👨‍👧‍👧 팀원소개
-<br><br>
 
 ### Backend
 
 <table>
   <tr>
     <td align="center" width="120px">
-      <a href="www.google.com">  
+      <a href="https://github.com/linglong67">  
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EA%B9%80%EC%98%81%EB%A1%B1.png" alt="김영롱 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
+      <a href="https://github.com/RossKWSang">  
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EA%B9%80%EC%9B%90%EC%83%81.png" alt="김원상 프로필" />
+      </a>
     </td>
     <td align="center" width="120px">
+      <a href="https://github.com/GBGreenBravo">  
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EA%B9%80%EB%AF%BC%ED%98%91.png" alt="김민협 프로필" />
+      </a>
     </td>
     <td align="center" width="120px">
+      <a href="https://github.com/HyunJunSon">  
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EC%86%90%ED%98%84%EC%A4%80.png" alt="손현준 프로필" />
+      </a>
     </td>
   </tr>
 
