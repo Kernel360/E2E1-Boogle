@@ -3,7 +3,7 @@
 
 ## 💌 서비스 소개 
 
-**Boogle**은 `IT 및 개발 관련 도서를 검색하고 리뷰를 작성할 수 있는 플랫폼`입니다. 사용자는 `다양한 개발 관련 도서를 검색`하고, 
+**Boogle**은 `IT 및 개발 관련 도서를 검색하고 독후감을 작성할 수 있는 플랫폼`입니다. 사용자는 `다양한 개발 관련 도서를 검색`하고, 
 이에 대한 `독후감을 남길 수 있으며, 다른 사용자들과 의견을 공유`할 수 있습니다. `마이 페이지를 통해 사용자의 활동을 조회하고 수정`할수 있습니다.
 관리자는 `도서 관리, 독후감 관리, 주간 및 월간 사용자 유입 통계, 댓글 랭킹 등의 기능을 통해 플랫폼을 관리`할 수 있습니다.
 배치 작업을 통해 `월간 신간 알림`을 받을 수 있습니다.
@@ -28,8 +28,31 @@
 <br><br>
 ## 🌱 주요 기능 시연 
 
-<img src="[https://files.slack.com/files-pri/T05PN75S6KB-F067144LMLJ/1.gif](https://files.slack.com/files-pri/T05PN75S6KB-F067144LMLJ/1.____________________________________________________________.gif)">
 
+<p align="center">
+  <h5>1. 도서검색 (비회원)</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/7dd524e5-f58e-4e90-8115-f96c2e21b167">
+</p><br>
+<p align="center">
+  <h5>2. 독후감 생성</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/99ae89b3-dc70-4eb5-aa47-22ca25d741d9">
+</p><br>
+<p align="center">
+  <h5>3. 댓글 생성-수정-삭제</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/264cfa57-17c0-4dfc-bc7f-f2a1a8dfbbfa">
+</p><br>
+<p align="center">
+  <h5>4. 마이페이지</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/0dd97fd6-1650-4308-9cb0-165254d12d96">
+</p><br>
+<p align="center">
+  <h5>5. 도서검색 (회원)</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/ae50073a-eb61-4642-a824-b8e55514c929">
+</p><br>
+<p align="center">
+  <h5>6. 관리자 화면</h5>
+  <img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/bdcdc87b-7abf-4a81-8293-3ec2e7da6a05">
+</p><br>
 
 
 <br><br>
@@ -80,15 +103,15 @@
 
 ## 👩‍👦‍👦👨‍👨‍👧‍👧 팀원소개
 <br><br>
-![image](https://github.com/Kernel360/E2E1-Boogle/assets/91066575/58fe6063-c0f5-464c-9e0c-c4b7a03e99e6)
-
 
 ### Backend
 
 <table>
   <tr>
     <td align="center" width="120px">
+      <a href="www.google.com">  
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EA%B9%80%EC%98%81%EB%A1%B1.png" alt="김영롱 프로필" />
+      </a>
     </td>
     <td align="center" width="120px">
         <img src="https://github.com/Kernel360/blog-image/blob/8b5c7975367ed48f7ccd0bd4490003e92f5479f6/kernel-crew-1/crew-image/%EA%B9%80%EC%9B%90%EC%83%81.png" alt="김원상 프로필" />
