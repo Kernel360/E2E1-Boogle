@@ -76,10 +76,5 @@ public class MyPageController {
         memberService.updateMemberInfo(memberRequestDTO);
         redirectAttributes.addFlashAttribute("message", "회원 정보가 성공적으로 업데이트되었습니다.");
         log.info("회원 정보가 성공적으로 업데이트되었습니다.");
-        return new ModelAndView("redirect:/mypage/main")
-                .addObject("member", memberEntity)
-                .addObject("memberRequestDTO", memberRequestDTO);
-    }
-
-
-}
+        return new ModelAndView("redirect:/mypage/main");
+    }}

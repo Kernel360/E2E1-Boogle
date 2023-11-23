@@ -27,6 +27,8 @@
         <p>
             <label for="password" class="sr-only">비밀번호</label>
             <input type="password" th:field="*{password}" id="password" class="form-control" style="width: 30%" placeholder="비밀번호를 입력하세요." required autofocus>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error" style="color: red;"></span>
+
         </p>
 
         <!-- 이메일 필드와 에러 메시지 -->
