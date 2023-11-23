@@ -1,28 +1,43 @@
 # Boogle
-<img width="345" alt="image" src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/22b8c434-6246-4f54-a59b-f12865d7b8fb">
+<p align="center"><img width="345" alt="image" src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/22b8c434-6246-4f54-a59b-f12865d7b8fb" style="width: 50%"></p>
 
-## 서비스 소개 💌
+## 💌 서비스 소개 
 
-**boogle**은 `IT 및 개발 관련 도서를 검색하고 리뷰를 작성할 수 있는 플랫폼`입니다. 사용자는 다양한 개발 관련 도서를 검색하고, 
-이에 대한 리뷰를 남길 수 있으며, 다른 사용자들과 의견을 공유할 수 있습니다. 마이 페이지를 통해 개인화된 경험을 제공받습니다. 
-관리자는 도서관 관리, 독서 리뷰 관리, 주간 및 월간 사용자 유입 통계, 댓글 랭킹 등의 기능을 통해 플랫폼을 관리할 수 있습니다.
+**Boogle**은 `IT 및 개발 관련 도서를 검색하고 리뷰를 작성할 수 있는 플랫폼`입니다. 사용자는 `다양한 개발 관련 도서를 검색`하고, 
+이에 대한 `독후감을 남길 수 있으며, 다른 사용자들과 의견을 공유`할 수 있습니다. `마이 페이지를 통해 사용자의 활동을 조회하고 수정`할수 있습니다.
+관리자는 `도서 관리, 독후감 관리, 주간 및 월간 사용자 유입 통계, 댓글 랭킹 등의 기능을 통해 플랫폼을 관리`할 수 있습니다.
+배치 작업을 통해 `월간 신간 알림`을 받을 수 있습니다.
+<br><br>
+<p align="center"><img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/90985b90-abe4-4350-b5cb-029c20b552ab" style="width: 60%" ></p>
 
-<img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/90985b90-abe4-4350-b5cb-029c20b552ab" style="width: 50%" >
-
-
-## 기능 🌱 
+<br><br>
+## 🌱 주요 기능 
 
 1️⃣ **사용자** 
   - IT 및 개발 도서 검색
-  - 도서 리뷰 작성
+  - 독후감 작성
   - 도서 리뷰 및 댓글 작성
   - 마이 페이지
-
+<br><br>
 2️⃣ **관리자** 
   - 도서 관리
-  - 독후감,리뷰 관리
+  - 독후감 관리
+  - 배치를 통한 신간도서 알림
   - 통계 보기 (주간/월간 사용자 유입 통계, 댓글 랭킹)
 
+<br><br>
+## 🌱 주요 기능 시연 
+
+<img src="[https://files.slack.com/files-pri/T05PN75S6KB-F067144LMLJ/1.gif](https://files.slack.com/files-pri/T05PN75S6KB-F067144LMLJ/1.____________________________________________________________.gif)">
+
+
+
+<br><br>
+## 🌱 DB ERD
+ <p align="center"><img src="https://github.com/Kernel360/E2E1-Boogle/assets/91066575/a584f31a-51d7-4eab-bf7b-5c9582f0d926" width="800"></p>
+
+
+<br><br>
 ## 🛠️ 주요 기술 스택
 
 <div>
@@ -58,52 +73,15 @@
 
 
 
-![image](https://github.com/Kernel360/E2E1-Boogle/assets/91066575/35d0c883-f58f-400d-b95f-1e7c8b0762f2)
+![image](https://github.com/Kernel360/E2E1-Boogle/assets/91066575/fe881c52-33b0-45f6-a445-de9780c32707)
 
 
-이 프로젝트는 다음과 같은 기술 스택을 사용합니다.
-
-* **Front-end:** HTML, JavaScript
-* **Back-end:** Java, Spring Framework, Spring Boot, JDBC, Hibernate, Spring MVC, Spring Batch
-* **External API:** Amazon RDS, MySQL
-* **Database:** MySQL
-* **DevOps:** Docker, Gradle, Flyway, Jasypt
-
-### Front-end
-
-* HTML은 웹 페이지의 구조를 정의하는 언어입니다.
-* JavaScript는 웹 페이지의 동작을 구현하는 언어입니다.
-* jQuery는 JavaScript의 라이브러리로, 웹 페이지의 동작을 보다 쉽게 구현할 수 있도록 도와줍니다.
-
-### Back-end
-
-* Java는 객체 지향 프로그래밍 언어로, 다양한 분야에서 사용되는 범용 언어입니다.
-* Spring Framework는 Java 기반의 애플리케이션 프레임워크로, 개발을 보다 쉽고 효율적으로 할 수 있도록 도와줍니다.
-* Spring Boot는 Spring Framework의 최신 버전으로, Spring Framework를 보다 쉽게 사용할 수 있도록 도와줍니다.
-* JDBC는 Java로 데이터베이스에 접근할 수 있도록 도와주는 API입니다.
-* Hibernate는 JDBC를 보다 쉽게 사용할 수 있도록 도와주는 ORM 프레임워크입니다.
-* Spring MVC는 Spring Framework의 모듈로, 웹 애플리케이션을 개발할 수 있도록 도와줍니다.
-* Spring Batch는 대규모 데이터 처리를 위한 프레임워크입니다.
-
-### External API
-
-* Amazon RDS는 Amazon Web Services에서 제공하는 관계형 데이터베이스 서비스입니다.
-* MySQL은 관계형 데이터베이스 시스템입니다.
-
-### Database
-
-* MySQL은 관계형 데이터베이스 시스템입니다.
-
-### DevOps
-
-* Docker는 컨테이너 기반의 플랫폼입니다.
-* Gradle은 빌드 자동화 도구입니다.
-* Flyway는 데이터베이스 마이그레이션을 위한 도구입니다.
-* Jasypt는 암호화를 위한 도구입니다.
+<br><br>
 
 ## 👩‍👦‍👦👨‍👨‍👧‍👧 팀원소개
+<br><br>
+![image](https://github.com/Kernel360/E2E1-Boogle/assets/91066575/58fe6063-c0f5-464c-9e0c-c4b7a03e99e6)
 
-![image](https://github.com/Kernel360/E2E1-Boogle/assets/91066575/29c6f98f-f206-450d-bbc5-b644c5a4e4a0)
 
 ### Backend
 
