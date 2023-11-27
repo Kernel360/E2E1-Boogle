@@ -3,8 +3,6 @@ package com.kernel360.boogle.global.batch;
 
 import com.kernel360.boogle.book.db.BookEntity;
 import com.kernel360.boogle.book.db.BookRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -56,10 +54,9 @@ public class MailForNewRelease {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(userEmail));
 
-
+            // 수신자 메일 목록을 아래에 작성
             String[] recipientAddresses = {
-                    "2018190529@korea.ac.kr",
-                    "rosskysoss@gmail.com"
+                "reciver@gmail.com"
             };
 
             InternetAddress[] recipientInternetAddresses = new InternetAddress[recipientAddresses.length];

@@ -38,7 +38,10 @@ public class SpringBatchConfig {
     @Bean
     public Tasklet tasklet() {
         return ((contribution, chunkContext) -> {
-            mailForNewRelease.send();
+            // 메일링 서비스를 수행하시려면 다음의 코드를 삽입하세요.
+            // mailForNewRelease.send();
+            // boogle.kernel360@gmail.com 메일은 삭제됩니다.
+            System.out.println("Spring Batch Job Done!");
             return RepeatStatus.FINISHED;
         });
     }
