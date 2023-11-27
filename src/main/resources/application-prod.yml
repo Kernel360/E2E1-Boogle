@@ -34,7 +34,3 @@ aladin:
     book-detail.url: http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx
 server:
   port: 8421
-mail:
-  batch:
-    email: ${email}
-    password: ${password}
