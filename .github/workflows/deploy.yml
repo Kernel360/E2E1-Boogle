@@ -32,8 +32,6 @@ jobs:
           spring.datasource.username: ${{ secrets.AWS_RDS_USER }}
           spring.datasource.password: ${{ secrets.AWS_RDS_PW }}
           aladin.api.ttb-key: ${{ secrets.ALADIN_API_KEY }}
-          mail.batch.email: ${{ secrets.BATCH_SOURCE_EMAIL }}
-          mail.batch.password: ${{ secrets.BATCH_SOURCE_EMAIL_PW }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
