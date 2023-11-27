@@ -15,10 +15,12 @@ import java.util.Properties;
 
 @Component
 public class MailForNewRelease {
-    @Value("${mail.batch.email}")
+    // Application.yaml에 인자(mail.batch.email)를 추가하여 아래 Annotation을 주석을 해제하세요.
+    // @Value("${mail.batch.email}")
     private String userEmail;
 
-    @Value("${mail.batch.password}")
+    // Application.yaml에 인자(mail.batch.password)를 추가하여 아래 Annotation을 주석을 해제하세요.
+    // @Value("${mail.batch.password}")
     private String userPassword;
     static final String smtpHost = "smtp.gmail.com";
     static final int tlsPort = 587;
